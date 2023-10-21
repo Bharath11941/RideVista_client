@@ -16,12 +16,13 @@ const GoogleButtonPartner = () => {
       const partner = jwt_decode(response.credential);
       const res = await partnerLoginWithGoogle(partner.email)
       if (res?.status === 200) {
-        const { token, partner } = res.data;
+        const { token, registeredPartner } = res.data;
+        console.log(registeredPartner,"from front end");
         localStorage.setItem("partnerToken", token);
         dispatch(
           partnerLogin({
             token: token,
-            partner: partner,
+            partner: registeredPartner,
           })
         );
         toast.success(res?.data?.message);

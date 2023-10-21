@@ -3,6 +3,7 @@ import './App.css'
 import UserRoute from './routes/UserRoute'
 import { ToastContainer } from 'react-toastify'
 import PartnerRoute from './routes/partnerRoute'
+import AdminRoute from './routes/AdminRoute'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/*' element={<UserRoute/>}/>
         <Route path='/partner/*' element={<PartnerRoute/>}/>
+        <Route path='/admin/*' element={<AdminRoute/>}/>
       </Routes>
     </Router>
   )

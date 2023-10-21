@@ -3,9 +3,7 @@
 import { userAxiosInstance } from "./axiosInstance";
 
 export const userSignup = async (signupData) => {
-  console.log("signup service");
   const data = await userAxiosInstance.post("/signup", signupData);
-  console.log(data, "data in service");
   return data;
 };
 
@@ -19,6 +17,7 @@ export const clientResendOtp = async ( userEmail) => {
   return data;
 };
 export const loginVerificaton = async (loginData) => {
+  console.log(loginData,"from instance");
   const data = await userAxiosInstance.post("/login", loginData);
   return data;
 };
@@ -38,3 +37,7 @@ export const userResetPassword = async(id,email,password) => {
   return data
 }
 
+export const HomeCarList = async () => {
+  const data = await userAxiosInstance.get('/homeCarList')
+  return data;
+}

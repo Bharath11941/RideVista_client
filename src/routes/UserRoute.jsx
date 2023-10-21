@@ -7,6 +7,7 @@ import UserPublic from "./userPrivate/UserPublic";
 import UserProtect from "./userPrivate/UserProtect";
 import ForgetPassword from "../pages/userPages/ForgetPassword";
 import ResetPassword from "../pages/userPages/ResetPassword";
+import PageNotFound from "../components/error/PageNotFound";
 
 const UserRoute = () => {
   return (
@@ -52,6 +53,7 @@ const UserRoute = () => {
           </UserPublic>
         }
       />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

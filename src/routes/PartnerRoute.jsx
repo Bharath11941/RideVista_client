@@ -3,13 +3,30 @@ import { Route, Routes } from 'react-router-dom'
 import PartnerSignup from '../pages/partnerPages/partnerSignup'
 import PartnerOtp from '../pages/partnerPages/PartnerOtp'
 import PartnerLogin from '../pages/partnerPages/PartnerLogin'
-
+import PartnerPublic from './partnerPrivate/PartnerPublic'
+import PartnerProtect from './partnerPrivate/PartnerProtect'
+import PartnerHome from '../pages/partnerPages/PartnerHome'
+import PartnerDashboard from '../pages/partnerPages/PartnerDashboard'
+import AddCarPage from '../pages/partnerPages/AddCarPage'
+import MyCarsPage from '../pages/partnerPages/MyCarsPage'
+import PartnerForgetPass from '../pages/partnerPages/PartnerForgetPass'
+import PartnerEditCarPage from '../pages/partnerPages/PartnerEditCarPage'
+import PartnerResetPassword from '../pages/partnerPages/PartnerResetPasswword'
+import PageNotFound from '../components/error/PageNotFound'
 const PartnerRoute = () => {
   return (
     <Routes>
-      <Route path='/signup' element={<PartnerSignup/>}/>
-      <Route path='/otp' element={<PartnerOtp/>}/>
-      <Route path='/login' element={<PartnerLogin/>}/>
+      <Route path='/signup' element={<PartnerPublic><PartnerSignup/></PartnerPublic>}/>
+      <Route path='/otp' element={<PartnerPublic><PartnerOtp/></PartnerPublic>}/>
+      <Route path='/login' element={<PartnerPublic><PartnerLogin/></PartnerPublic>}/>
+      <Route path='/partnerForget' element={<PartnerPublic><PartnerForgetPass/></PartnerPublic>}/>
+      <Route path='/partnerReset/:id/:token' element={<PartnerPublic><PartnerResetPassword/></PartnerPublic>}/>
+      <Route path='/' element={<PartnerProtect><PartnerHome/></PartnerProtect>}/>
+      <Route path='/dashboard' element={<PartnerProtect><PartnerDashboard/></PartnerProtect>}/>
+      <Route path='/addCar' element={<PartnerProtect><AddCarPage/></PartnerProtect>}/>
+      <Route path='/myCars' element={<PartnerProtect><MyCarsPage/></PartnerProtect>}/>
+      <Route path='/editCar/:carId' element={<PartnerProtect><PartnerEditCarPage/></PartnerProtect>}/>
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
 }
