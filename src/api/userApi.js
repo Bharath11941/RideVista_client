@@ -41,3 +41,21 @@ export const HomeCarList = async () => {
   const data = await userAxiosInstance.get('/homeCarList')
   return data;
 }
+export const allCarList = async () => {
+  const data = await userAxiosInstance.get('/allCars')
+  return data;
+}
+
+export const getCarDetails = async (carId) => {
+  const data = await userAxiosInstance.get(`/carDetails/${carId}`)
+  return data;
+}
+
+export const carBooking = async (bookingData) => {
+  const data = await userAxiosInstance.post('/carBooking',bookingData)
+  return data;
+}
+export const verifyPayment = async (response,bookingData) => {
+  const data = await userAxiosInstance.post('/verifyPayment',{response,bookingData})
+  return data;
+}

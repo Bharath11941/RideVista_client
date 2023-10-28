@@ -61,7 +61,6 @@ const AddCar = () => {
   };
 
   const setCarImageToBase = async (files) => {
-    console.log(files[0], files[1], files[2], "img 3 files");
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);

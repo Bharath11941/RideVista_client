@@ -2,14 +2,17 @@ import React from 'react'
 import UserHero from '../../components/userComponents/UserHero'
 import UserFooter from '../../components/userComponents/UserFooter'
 import UserNavbar from '../../components/userComponents/UserNavbar'
-import HomeCarCard from '../../components/userComponents/HomeCarCard'
+import RentingProcess from '../../components/userComponents/RentingProcess'
+import CarsForRental from '../../components/userComponents/CarsForRental'
 
 const UserHome = () => {
   return (
     <>
     <UserNavbar/>
     <UserHero/>
-    <HomeCarCard/>
+    <RentingProcess/>
+    {/* <HomeCarCard/> */}
+    <CarsForRental/>
     <UserFooter/>
     </>
   )

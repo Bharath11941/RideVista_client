@@ -22,6 +22,11 @@ export const singleCarDetails = async(carId) => {
   return data
 }
 
+export const verifyCar = async (carId,action) => {
+  const data = adminAxiosInstance.patch('/verifyCar',{carId,action})
+  return data
+}
+
 export const userBlock = async (userId, status) => {
   const data = await adminAxiosInstance.patch("/blockUser", { userId, status });
   return data;

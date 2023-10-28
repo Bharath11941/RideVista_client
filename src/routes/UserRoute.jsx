@@ -8,11 +8,16 @@ import UserProtect from "./userPrivate/UserProtect";
 import ForgetPassword from "../pages/userPages/ForgetPassword";
 import ResetPassword from "../pages/userPages/ResetPassword";
 import PageNotFound from "../components/error/PageNotFound";
+import AllCars from "../pages/userPages/AllCars";
+import SingleCarDetails from "../pages/userPages/SingleCarDetails";
+import BookingSuccessPage from "../pages/userPages/BookingSuccessPage";
 
 const UserRoute = () => {
   return (
     <Routes>
       <Route path="/" element={<UserHome />} />
+      <Route path="/allCars" element={<AllCars />} />
+      <Route path="/carDetails" element={<SingleCarDetails />} />
       <Route
         path="/signup"
         element={
@@ -53,6 +58,7 @@ const UserRoute = () => {
           </UserPublic>
         }
       />
+      <Route path="/bookingSuccess" element={<UserProtect><BookingSuccessPage/></UserProtect>}/>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
