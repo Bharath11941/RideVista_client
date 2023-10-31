@@ -41,9 +41,7 @@ const CarDetails = () => {
   const handleSubmit = async () => {
     try {
       if (totalAmount > 0) {
-        console.log(car,"from handle sumbit");
         const bookedDateRanges = car.bookingDates;
-        console.log(bookedDateRanges,"from handle submit");
         const selectedStartDate = new Date(startDate).getTime();
         const selectedEndDate = new Date(endDate).getTime();
         let isDateAvailable = true;

@@ -59,3 +59,7 @@ export const verifyPayment = async (response,bookingData) => {
   const data = await userAxiosInstance.post('/verifyPayment',{response,bookingData})
   return data;
 }
+export const filterCarsDateLocation = async (formData) => {
+  const data = await userAxiosInstance.post('/filterCars',formData)
+  return data;
+}

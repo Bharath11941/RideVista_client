@@ -14,7 +14,7 @@ const CarCard = ({ car }) => {
     price,
   } = car;
   return (
-    <div className="border border-gray-300 shadow-lg p-4 rounded-lg">
+    <div className="flex-shrink-0 pb-3 bg-white border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 rounded-md hover:bg-blue-100">
       <img
         src={carImages[0]}
         alt=""
