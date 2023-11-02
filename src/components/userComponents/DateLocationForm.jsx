@@ -1,10 +1,16 @@
 import { useFormik } from "formik";
 import { dateLocationFilter } from "../../validations/user/carFilterValidation.js";
 import { filterCarsDateLocation } from "../../api/userApi.js";
+import { useNavigate } from "react-router-dom";
 const DateLocationForm = () => {
+  const navigate = useNavigate()
   const onSubmit = async () => {
     try {
      const res = await filterCarsDateLocation(values)
+     if(res?.status === 200){
+      navigate('/allCars',{state:{filterCars:res?.data?.cars,values}})
+     }
+
     } catch (error) {
       console.log(error.message);
     }
@@ -20,14 +26,13 @@ const DateLocationForm = () => {
     validationSchema: dateLocationFilter,
     onSubmit,
   });
-  console.log(values);
   return (
     <div className="wrapper">
       <form onSubmit={handleSubmit}>
         <div className="relative bg-white px-10 sm:px-[76px] py-9 sm:py-[70px] mt-5 sm:-mt-[166px] min-h-[330px] shadow-lg rounded-xl flex flex-col gap-8">
           <div className="flex flex-col xl:flex-row gap-5">
             <div className="flex flex-col gap-2.5 w-full lg:w-2/3 mx-0 lg:mx-auto xl:w-[272px] max-w-full">
-              <label htmlFor="Pick up location" className="text-gray-500">
+              <label htmlFor="Pick up location" className="text-blue-500">
                 Pick up location
               </label>
               <div className="relative h-16 rounded-[4px]">
@@ -51,7 +56,7 @@ const DateLocationForm = () => {
             </div>
 
             <div className="flex flex-col gap-2.5 w-full lg:w-2/3 mx-0 lg:mx-auto xl:w-[272px] max-w-full">
-              <label htmlFor="Pick up location" className="text-gray-500">
+              <label htmlFor="Pick up location" className="text-blue-500">
                 Return location
               </label>
               <div className="relative h-16 rounded-[4px]">
@@ -75,7 +80,7 @@ const DateLocationForm = () => {
             </div>
 
             <div className="flex flex-col gap-2.5 w-full lg:w-2/3 mx-0 lg:mx-auto xl:w-[272px] max-w-full">
-              <label htmlFor="pick up date" className="text-gray-500">
+              <label htmlFor="pick up date" className="text-blue-500">
                 Pick up Date
               </label>
               <div className="relative h-16 rounded-[4px]">
@@ -95,7 +100,7 @@ const DateLocationForm = () => {
             </div>
 
             <div className="flex flex-col gap-2.5 w-full lg:w-2/3 mx-0 lg:mx-auto xl:w-[272px] max-w-full">
-              <label htmlFor="return date" className="text-gray-500">
+              <label htmlFor="return date" className="text-blue-500">
                 Return date
               </label>
               <div className="relative h-16 rounded-[4px]">

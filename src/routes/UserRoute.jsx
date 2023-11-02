@@ -11,6 +11,7 @@ import PageNotFound from "../components/error/PageNotFound";
 import AllCars from "../pages/userPages/AllCars";
 import SingleCarDetails from "../pages/userPages/SingleCarDetails";
 import BookingSuccessPage from "../pages/userPages/BookingSuccessPage";
+import CheckOutPage from "../components/userComponents/CheckOutPage";
 
 const UserRoute = () => {
   return (
@@ -58,6 +59,7 @@ const UserRoute = () => {
           </UserPublic>
         }
       />
+      <Route path="/checkOut" element={<CheckOutPage/>}/>
       <Route path="/bookingSuccess" element={<UserProtect><BookingSuccessPage/></UserProtect>}/>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

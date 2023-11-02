@@ -9,7 +9,8 @@ import { useSelector } from "react-redux";
 
 const CarDetails = () => {
   const { state } = useLocation();
-  const car = state.car;
+
+  const {car,values} = state
   const navigate = useNavigate()
   const {user} = useSelector((state) => state.userReducer)
   const [startDate, setStartDate] = useState("");
@@ -157,7 +158,7 @@ const CarDetails = () => {
           </p>
 
           <div className="mt-4">
-            <p className="text-lg font-semibold">Owner: {car.partnerId.name}</p>
+            <p className="text-lg font-semibold">Owner: {car.partner[0].name}</p>
             <p className="text-lg font-semibold">Category: {car.modelType}</p>
             <p className="text-lg font-semibold">Fuel Type: {car.fuelType}</p>
             <p className="text-lg font-semibold">
@@ -165,7 +166,7 @@ const CarDetails = () => {
             </p>
             <p className="text-lg font-semibold">Location: {car.location}</p>
           </div>
-          <div className="flex">
+          {/* <div className="flex">
             <div className="flex h-12 mt-6 ">
               <div className="relative " data-te-input-wrapper-init>
                 <input
@@ -203,7 +204,7 @@ const CarDetails = () => {
 
           {bookingMessage && !startDate && !endDate && (
             <p className="mt-4 text-red-500">{bookingMessage}</p>
-          )}
+          )} */}
           <div className="ml-3">
             <button
               onClick={handleSubmit}
