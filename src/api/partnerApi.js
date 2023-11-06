@@ -52,3 +52,7 @@ export const editCar = async (formData) => {
   const data = await partnerAxiosInstance.put(`/editCar`,{...formData})
   return data
 }
+export const deleteSingleImage = async (imageUrl,carId) => {
+  const data = await partnerAxiosInstance.patch('/deleteImage',{imageUrl,carId})
+  return data
+}

@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 
 const CarCard = ({ car,values }) => {
   const navigate = useNavigate();
@@ -14,11 +14,11 @@ const CarCard = ({ car,values }) => {
     price,
   } = car;
   return (
-    <div className="flex-shrink-0 pb-3 bg-white border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 rounded-md hover:bg-blue-100">
+    <div className="flex-shrink-0 pb-3  bg-white border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 rounded-md hover:bg-blue-100">
       <img
         src={carImages[0]}
         alt=""
-        className="mx-auto object-cover h-40 w-80"
+        className="mx-auto object-cover h-40 w-80 hover:scale-105 transition duration-500 cursor-pointer"
       />
       <div className="px-5 ">
         <div className="flex justify-between mr-1">
@@ -74,7 +74,7 @@ const CarCard = ({ car,values }) => {
           </h2>
           <button
             onClick={() => navigate("/carDetails", { state: { car,values } })}
-            className="block w-full xl:w-fit bg-blue-500 hover:bg-blue-800 text-white rounded-full uppercase font-bold py-2 px-4 text-center text-decoration-none"
+            className=" hover:scale-125 transition duration-500 cursor-pointer block w-full xl:w-fit bg-blue-500 hover:bg-blue-800 text-white rounded-full uppercase font-bold py-2 px-4 text-center text-decoration-none"
           >
             Details
           </button>

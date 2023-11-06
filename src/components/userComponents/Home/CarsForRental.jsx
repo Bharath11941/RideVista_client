@@ -1,7 +1,7 @@
 import React from "react";
-import CarCard from "./CarCard";
 import { useEffect, useState } from "react";
-import { HomeCarList } from "../../api/userApi";
+import { HomeCarList } from "../../../api/userApi";
+import HomeCarCard from "./HomeCarCard";
 
 const CarsForRental = () => {
   const [carList, setCarList] = useState([]);
@@ -22,7 +22,7 @@ const CarsForRental = () => {
         </h1>
         <div className="flex flex-col flex-wrap md:mx-14 md:flex-row gap-5 md:gap-10">
           {carList.map((car)=>(
-            <CarCard key={car._id} car={car}/>
+            <HomeCarCard key={car._id} car={car}/>
           ))}
         </div>
       </div>

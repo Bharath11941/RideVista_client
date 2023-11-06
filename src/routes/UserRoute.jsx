@@ -59,7 +59,7 @@ const UserRoute = () => {
           </UserPublic>
         }
       />
-      <Route path="/checkOut" element={<CheckOutPage/>}/>
+      <Route path="/checkOut" element={<UserProtect><CheckOutPage/></UserProtect>}/>
       <Route path="/bookingSuccess" element={<UserProtect><BookingSuccessPage/></UserProtect>}/>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

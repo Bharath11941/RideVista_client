@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
 function UserProtect(props) {
   try {
     const token = localStorage.getItem("userToken");
@@ -10,10 +11,12 @@ function UserProtect(props) {
         // eslint-disable-next-line react/prop-types
         return props.children;
       } else {
-        return <Navigate to="/" />;
+        toast.success("You must login first")
+        return <Navigate to="/login" />;
       }
     } else {
-      return <Navigate to="/" />;
+      toast.success("You must login first")
+      return <Navigate to="/login" />;
     }
   } catch (error) {
     console.log(error.message);

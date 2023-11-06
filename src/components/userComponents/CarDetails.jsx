@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 // import { faTicketAlt } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from "@material-tailwind/react";
 import { toast } from "react-toastify";
-import { carBooking, verifyPayment } from "../../api/userApi";
+
 import { useSelector } from "react-redux";
 
 const CarDetails = () => {
@@ -73,60 +73,8 @@ const CarDetails = () => {
       console.log(error.message);
     }
   };
-  function loadScript(src){
-    return new Promise((resolve) => {
-      const script = document.createElement('script')
-      script.src = src
-      script.onload = ()=>{
-        resolve(true)
-      }
-      script.onerror = () => {
-        resolve(false)
-      }
-      document.body.appendChild(script)
-    })
-  }
-  const razorpayPayment = async (bookingData) => {
-    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
-    if(!res){
-      toast.error("Razorpay sdk failed lodad")
-      return
-    }
-    var options = {
-      "key": 'rzp_test_pkUbv7xbv5KNrA', // Enter the Key ID generated from the Dashboard
-      "amount": bookingData.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      "currency": bookingData.currency,
-      "name": "Ride Vista",
-      "description": "Test Transaction",
-      "image": "https://example.com/your_logo",
-      "order_id": bookingData.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      "handler": async  (response) =>{
-          try {
-            const res = await verifyPayment(response,{...bookingData,carId:car._id,startDate:startDate,endDate:endDate})
-            if(res?.status === 200){
-              toast.success(res?.data?.message)
-              navigate("/bookingSuccess",{state:{orderDetails:res?.data?.bookingDetails,CarDetails:res?.data?.carDetails}})
-            }
-          } catch (error) {
-            toast.error(error.response?.data?.message);
-            console.log(error)
-          }
-      },
-      "prefill": {
-          "name": "Gaurav Kumar",
-          "email": "gaurav.kumar@example.com",
-          "contact": "9000090000"
-      },
-      "notes": {
-          "address": "Razorpay Corporate Office"
-      },
-      "theme": {
-          "color": "#3399cc"
-      }
-    };
-    var rzp1 = new window.Razorpay(options);
-    rzp1.open();
-  }
+  
+  
   return (
     <div className="mt-8 w-full bg-white py-16 px-4">
       <div className="max-w-[1240px] mx-auto grid md:grid-cols-2">
@@ -166,48 +114,9 @@ const CarDetails = () => {
             </p>
             <p className="text-lg font-semibold">Location: {car.location}</p>
           </div>
-          {/* <div className="flex">
-            <div className="flex h-12 mt-6 ">
-              <div className="relative " data-te-input-wrapper-init>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={handleStartDateChange}
-                  min={new Date().toISOString().split("T")[0]}
-                  className=" bg-black peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none text-blue-500 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                  placeholder="Select a date"
-                />
-                <label
-                  htmlFor="floatingInput"
-                  className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6]transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none text-blue-500 dark:peer-focus:text-primary"
-                ></label>
-              </div>
-            </div>
-            <div className="flex h-12 mt-6 ">
-              <div className="relative " data-te-input-wrapper-init>
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={handleEndDateChange}
-                  min={startDate}
-                  className=" bg-black peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none text-blue-500 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                  placeholder="Select a date"
-                />
-                <label
-                  htmlFor="floatingInput"
-                  className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6]transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none text-blue-500 dark:peer-focus:text-primary"
-                ></label>
-              </div>
-            </div>
-          </div>
-          <h1 className="mt-8 ml-3 font-bold">TOTAL = ₹ {totalAmount}</h1>
-
-          {bookingMessage && !startDate && !endDate && (
-            <p className="mt-4 text-red-500">{bookingMessage}</p>
-          )} */}
           <div className="ml-3">
             <button
-              onClick={handleSubmit}
+              onClick={() => navigate('/checkOut',{state:{car,values}})}
               className="  bg-blue-500 hover:bg-blue-800  text-white w-[200px] rounded-md font-medium my-6 mx-auto md:mx-0 py-3"
             >
               Book Now

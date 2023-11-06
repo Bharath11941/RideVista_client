@@ -1,15 +1,19 @@
 import { useFormik } from "formik";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { carValidationSchema } from "../../../validations/partner/carValidation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { editCar, editCarDetails } from "../../../api/partnerApi";
+import { deleteSingleImage, editCar, editCarDetails } from "../../../api/partnerApi";
 import Loading from "../../loading/Loading";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+
 
 const EditCar = () => {
   const [certificate, setCertificate] = useState([]);
   const [certificateImg, setCertificateImg] = useState({});
+  const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [carImage, setCarImage] = useState([]);
@@ -68,10 +72,12 @@ const EditCar = () => {
   const handleCarImagesChange = (event) => {
     const files = Array.from(event.target.files);
     setCarImageToBase(files);
+    const newImages = files.map((file) => URL.createObjectURL(file));
+    const allImages = [...newImages, ...car.carImages];
+    setSelectedImages(allImages);
   };
 
   const setCarImageToBase = async (files) => {
-    console.log(files[0], files[1], files[2], "img 3 files");
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
@@ -80,6 +86,18 @@ const EditCar = () => {
       };
     }
   };
+  const handleDeleteImage = async (imageSrc) => {
+    try {
+      const res = await deleteSingleImage(imageSrc,car._id)
+      if(res.status === 200){
+        toast.success(res?.data?.message)
+        setCar(res?.data?.updatedData)
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+      console.log(error.message);
+    }
+  }
   return (
     <>
       {loading ? (
@@ -206,19 +224,23 @@ const EditCar = () => {
                   accept="image/*" // Allow only image files
                   required
                 />
-                <div className="w-48 h-24 pb-32">
+                <div className="w-60 h-auto pb-5">
                   {certificateImg && certificateImg instanceof Blob ? (
-                    <img
-                      src={URL.createObjectURL(certificateImg)} // Use a default image if carImageURL is empty
-                      alt="Car Registration Certificate"
-                      className="mt-2 max-w-full h-auto"
-                    />
+                    <div>
+                      <img
+                        src={URL.createObjectURL(certificateImg)} 
+                        alt="Car Registration Certificate"
+                        className="mt-2 max-w-full h-auto"
+                      />
+                    </div>
                   ) : (
-                    <img
-                      src={car.certificate} // Use a default image if carImageURL is empty
-                      alt="Car Registration Certificate"
-                      className="mt-2 max-w-full h-auto"
-                    />
+                    <div>
+                      <img
+                        src={car.certificate}
+                        alt="Car Registration Certificate"
+                        className="mt-2 max-w-full h-auto"
+                      />
+                    </div>
                   )}
                 </div>
               </div>
@@ -240,16 +262,33 @@ const EditCar = () => {
                   multiple
                 />
                 <div className="w-60 h-auto overflow-x-auto flex space-x-2">
-                  {car.carImages &&
-                    car.carImages.map((imageURL, index) => (
-                      <div key={index}>
-                        <img
-                          src={imageURL}
-                          alt={`Car Image ${index + 1}`}
-                          className="max-w-full h-auto"
-                        />
-                      </div>
-                    ))}
+                  {selectedImages.length > 0
+                    ? selectedImages.map((imageURL, index) => (
+                        <div key={index}>
+                          <img
+                            src={imageURL}
+                            alt={`Car Image ${index + 1}`}
+                            className="max-w-full h-auto"
+                          />
+                        </div>
+                      ))
+                    : car.carImages &&
+                      car.carImages.map((imageURL, index) => (
+                        <div key={index}>
+                          <img
+                            src={imageURL}
+                            alt={`Car Image ${index + 1}`}
+                            className="max-w-full h-auto"
+                          />
+                          <p onClick={()=>{handleDeleteImage(imageURL)}}>
+                            <FontAwesomeIcon
+                              className="w-5 h-5"
+                              icon={faTrash}
+                              style={{ color: "#e70d23" }}
+                            />
+                          </p>
+                        </div>
+                      ))}
                 </div>
               </div>
 
