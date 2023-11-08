@@ -1,6 +1,10 @@
 import { Navigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../../reduxStore/slices/userSlice";
+import { toast } from "react-toastify";
 const UserPublic = (props) => {
+  const dispatch = useDispatch()
   try {
     const token = localStorage.getItem("userToken");
     if (token) {
@@ -9,7 +13,10 @@ const UserPublic = (props) => {
       if (decodedToken.exp > currentTime) {
         return <Navigate to="/" />;
       } else {
+        localStorage.removeItem("userToken");
+        dispatch(userLogout());
         <Navigate to="/login" />;
+        toast.success("You must login first");
         return props.children;
       }
     } else {

@@ -11,7 +11,10 @@ import PageNotFound from "../components/error/PageNotFound";
 import AllCars from "../pages/userPages/AllCars";
 import SingleCarDetails from "../pages/userPages/SingleCarDetails";
 import BookingSuccessPage from "../pages/userPages/BookingSuccessPage";
-import CheckOutPage from "../components/userComponents/CheckOutPage";
+import CheckOutPage from "../pages/userPages/CheckOutPage";
+import BookingList from "../pages/userPages/BookingList";
+import ProfilePage from "../pages/userPages/ProfilePage";
+import BookingDetailsUser from "../pages/userPages/BookingDetailsUser";
 
 const UserRoute = () => {
   return (
@@ -55,12 +58,50 @@ const UserRoute = () => {
         path="/resetPassword/:id/:token"
         element={
           <UserPublic>
-            <ResetPassword/>
+            <ResetPassword />
           </UserPublic>
         }
       />
-      <Route path="/checkOut" element={<UserProtect><CheckOutPage/></UserProtect>}/>
-      <Route path="/bookingSuccess" element={<UserProtect><BookingSuccessPage/></UserProtect>}/>
+      <Route
+        path="/checkOut"
+        element={
+          <UserProtect>
+            <CheckOutPage />
+          </UserProtect>
+        }
+      />
+      <Route
+        path="/bookingSuccess"
+        element={
+          <UserProtect>
+            <BookingSuccessPage />
+          </UserProtect>
+        }
+      />
+      <Route
+        path="/bookingList"
+        element={
+          <UserProtect>
+            <BookingList/>
+          </UserProtect>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <UserProtect>
+            <ProfilePage/>
+          </UserProtect>
+        }
+      />
+      <Route
+        path="/bookingDetails"
+        element={
+          <UserProtect>
+            <BookingDetailsUser/>
+          </UserProtect>
+        }
+      />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

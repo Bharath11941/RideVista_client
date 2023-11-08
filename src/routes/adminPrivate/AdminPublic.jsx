@@ -1,8 +1,12 @@
 import { Navigate } from "react-router-dom";
-import React from "react";
 import jwtDecode from "jwt-decode";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { adminLogout } from "../../reduxStore/slices/adminSlice";
+
 
 const AdminPublic = (props) => {
+  const dispatch = useDispatch()
   try {
     const token = localStorage.getItem("userToken");
     if (token) {
@@ -11,7 +15,10 @@ const AdminPublic = (props) => {
       if (decodedToken.exp > currentTime) {
         return <Navigate to="/dashboard" />;
       } else {
+        localStorage.removeItem("adminToken");
+        dispatch(adminLogout());
         <Navigate to="/admin" />;
+        toast.success("You need to login first")
         return props.children;
       }
     } else {

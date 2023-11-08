@@ -1,9 +1,11 @@
 import { Navigate } from "react-router-dom";
-
-import React from "react";
 import jwtDecode from "jwt-decode";
+import { adminLogout } from "../../reduxStore/slices/adminSlice";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const AdminProtect = (props) => {
+  const dispatch = useDispatch();
   try {
     const token = localStorage.getItem("adminToken");
 
@@ -14,6 +16,9 @@ const AdminProtect = (props) => {
         // eslint-disable-next-line react/prop-types
         return props.children;
       } else {
+        localStorage.removeItem("adminToken");
+        dispatch(adminLogout());
+        toast.success("You need to login first")
         return <Navigate to="/admin" />;
       }
     } else {

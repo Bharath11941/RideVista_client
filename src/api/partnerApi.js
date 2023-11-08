@@ -56,3 +56,16 @@ export const deleteSingleImage = async (imageUrl,carId) => {
   const data = await partnerAxiosInstance.patch('/deleteImage',{imageUrl,carId})
   return data
 }
+export const bookingsPartner = async (partnerId) => {
+  const data = await partnerAxiosInstance.get(`/bookingsPartner/${partnerId}`)
+  return data
+}
+export const cancelBookingPartner = async (bookingId,reason) => {
+  const data = await partnerAxiosInstance.post('/cancelBooking',{bookingId,reason})
+  return data
+}
+
+export const changeBookingStatus = async (status,bookingId,startDate,endDate,carId) => {
+  const data = await partnerAxiosInstance.patch('/changeStatus',{status,bookingId,startDate,endDate,carId})
+  return data
+}

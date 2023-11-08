@@ -34,7 +34,7 @@ const Mycars = () => {
       <h1 className="text-2xl font-semibold mb-8">Cars</h1>
         {cars.map((car) => {
           return (
-            <Card className="w-full max-w-[80rem] flex-row" key={car._id}>
+            <Card className="w-full max-w-[80rem] mb-6 flex-row" key={car._id}>
               <CardHeader
                 shadow={false}
                 floated={false}
@@ -64,10 +64,10 @@ const Mycars = () => {
                   Model : {car.modelType}
                 </Typography>
                 <Typography color="gray" className="mb-8 font-normal">
-                  {car.transitionType} Transiton || {car.fuelType}
+                  {car.transitionType} ||  {car.fuelType}
                 </Typography>
                 <Link to={`/partner/editCar/${car._id}`} className="inline-block">
-                  <Button variant="text" className="flex items-center gap-2">
+                  <Button variant="text" className="flex bg-blue-500 items-center gap-2">
                     Edit car
                   </Button>
                 </Link>

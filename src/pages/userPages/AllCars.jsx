@@ -9,10 +9,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterSideBar from "../../components/userComponents/AllCars/FilterSideBar";
 import Loading from "../../components/loading/Loading";
 const AllCars = () => {
-  const [cars, setCars] = useState([]);
+  
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const { filterCars, values } = location.state;
+  const [cars, setCars] = useState(filterCars);
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
     let sortedCars = [...cars];

@@ -13,6 +13,8 @@ import PartnerForgetPass from '../pages/partnerPages/PartnerForgetPass'
 import PartnerEditCarPage from '../pages/partnerPages/PartnerEditCarPage'
 import PartnerResetPassword from '../pages/partnerPages/PartnerResetPasswword'
 import PageNotFound from '../components/error/PageNotFound'
+import BookingListPartner from '../pages/partnerPages/BookingListPartner'
+import BookingDetailsPartner from '../pages/partnerPages/BookingDetailsPartner'
 const PartnerRoute = () => {
   return (
     <Routes>
@@ -26,6 +28,8 @@ const PartnerRoute = () => {
       <Route path='/addCar' element={<PartnerProtect><AddCarPage/></PartnerProtect>}/>
       <Route path='/myCars' element={<PartnerProtect><MyCarsPage/></PartnerProtect>}/>
       <Route path='/editCar/:carId' element={<PartnerProtect><PartnerEditCarPage/></PartnerProtect>}/>
+      <Route path='/bookings' element={<PartnerProtect><BookingListPartner/></PartnerProtect>}/>
+      <Route path='/bookingDetails' element={<PartnerProtect><BookingDetailsPartner/></PartnerProtect>}/>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
