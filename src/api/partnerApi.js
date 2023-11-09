@@ -48,7 +48,6 @@ export const editCarDetails = async (carId) => {
 }
 
 export const editCar = async (formData) => {
-  console.log(formData,"api instance");
   const data = await partnerAxiosInstance.put(`/editCar`,{...formData})
   return data
 }
@@ -67,5 +66,9 @@ export const cancelBookingPartner = async (bookingId,reason) => {
 
 export const changeBookingStatus = async (status,bookingId,startDate,endDate,carId) => {
   const data = await partnerAxiosInstance.patch('/changeStatus',{status,bookingId,startDate,endDate,carId})
+  return data
+}
+export const getReviews = async (carId) => {
+  const data = await partnerAxiosInstance.get(`/getReviews/${carId}`)
   return data
 }

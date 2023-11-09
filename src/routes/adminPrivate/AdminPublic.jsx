@@ -8,12 +8,14 @@ import { adminLogout } from "../../reduxStore/slices/adminSlice";
 const AdminPublic = (props) => {
   const dispatch = useDispatch()
   try {
-    const token = localStorage.getItem("userToken");
+    const token = localStorage.getItem("adminToken");
+    console.log(token)
+    console.log("hi from outside amdin public")
     if (token) {
       const decodedToken = jwtDecode(token);
       const currentTime = Date.now() / 1000;
       if (decodedToken.exp > currentTime) {
-        return <Navigate to="/dashboard" />;
+        return <Navigate to="/admin/dashboard" />;
       } else {
         localStorage.removeItem("adminToken");
         dispatch(adminLogout());

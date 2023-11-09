@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 const Mycars = () => {
   const { _id } = useSelector((state) => state.partnerReducer.partner);
   const [cars, setCars] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const partnerId = _id;
   useEffect(() => {
     myCarsList(partnerId)
@@ -21,17 +21,17 @@ const Mycars = () => {
         setCars(res?.data?.cars);
       })
       .catch((error) => {
-        console.log(error.message)
-        if(error.response?.status){
-          navigate('/partner/login')
-          toast.error(error.response?.data?.message)
-        } 
+        console.log(error.message);
+        if (error.response?.status) {
+          navigate("/partner/login");
+          toast.error(error.response?.data?.message);
+        }
       });
   }, []);
   return (
     <div className="p-4 sm:ml-64">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-      <h1 className="text-2xl font-semibold mb-8">Cars</h1>
+        <h1 className="text-2xl font-semibold mb-8">Cars</h1>
         {cars.map((car) => {
           return (
             <Card className="w-full max-w-[80rem] mb-6 flex-row" key={car._id}>
@@ -43,7 +43,7 @@ const Mycars = () => {
                 <img
                   src={car.carImages[0]}
                   alt="card-image"
-                  className="h-full w-full object-cover"
+                  className="h-96 w-96 object-cover"
                 />
               </CardHeader>
               <CardBody>
@@ -64,13 +64,30 @@ const Mycars = () => {
                   Model : {car.modelType}
                 </Typography>
                 <Typography color="gray" className="mb-8 font-normal">
-                  {car.transitionType} ||  {car.fuelType}
+                  {car.transitionType} || {car.fuelType}
                 </Typography>
-                <Link to={`/partner/editCar/${car._id}`} className="inline-block">
-                  <Button variant="text" className="flex bg-blue-500 items-center gap-2">
-                    Edit car
-                  </Button>
-                </Link>
+
+                <div className="flex justify-start gap-3">
+                  <Link
+                    to={`/partner/editCar/${car._id}`}
+                    className="inline-block"
+                  >
+                    <Button
+                      variant="text"
+                      className="flex bg-blue-500 items-center gap-2"
+                    >
+                      Edit car
+                    </Button>
+                  </Link>
+                  <Button
+                      variant="text"
+                      onClick={() => navigate('/partner/reviews',{state:{car}})}
+                      className="flex bg-blue-500 items-center gap-2"
+                    >
+                      Get Reviews
+                    </Button>
+                  
+                </div>
               </CardBody>
             </Card>
           );

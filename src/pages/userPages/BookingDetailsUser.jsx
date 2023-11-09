@@ -3,13 +3,15 @@ import UserNavbar from "../../components/userComponents/UserNavbar";
 import UserFooter from "../../components/userComponents/UserFooter";
 import { useState } from "react";
 import Rating from "react-rating-stars-component";
+import { reviewCar } from "../../api/userApi";
+import { toast } from "react-toastify";
 
 const BookingDetailsUser = () => {
   const { state } = useLocation();
   const { data } = state;
   const [bookingData, setBookingData] = useState(data);
   const [activeModal, setActiveModal] = useState(null);
-  const [rating, setRating] = useState(0); // State to hold the rating
+  const [rating, setRating] = useState(1); // State to hold the rating
   const [reason, setReason] = useState("");
   const handleReasonChange = (event) => {
     setReason(event.target.value);
@@ -21,17 +23,17 @@ const BookingDetailsUser = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case "Pending":
-        return "text-yellow-500"; // Apply the color class for 'Pending' status
+        return "text-yellow-500"; 
       case "Success":
-        return "text-green-500"; // Apply the color class for 'Success' status
+        return "text-green-500"; 
       case "Cancelled":
-        return "text-red-500"; // Apply the color class for 'Cancelled' status
+        return "text-red-500"; 
       case "Delivered":
-        return "text-blue-500"; // Apply the color class for 'Delivered' status
+        return "text-blue-500"; 
       case "Returned":
-        return "text-indigo-500"; // Apply the color class for 'Returned' status
+        return "text-indigo-500"; 
       default:
-        return "text-gray-500"; // Apply a default color or 'Unknown status' color
+        return "text-gray-500"; 
     }
   };
 
@@ -51,6 +53,38 @@ const BookingDetailsUser = () => {
         return "Unknown status";
     }
   };
+  const getRatingMessage = (value) => {
+    switch (value) {
+      case 1:
+        return "Very Bad";
+      case 2:
+        return "Bad";
+      case 3:
+        return "Good";
+      case 4:
+        return "Very Good";
+      case 5:
+        return "Excellent";
+      default:
+        return "";
+    }
+  };
+  const getRatingColour = (value) => {
+    switch (value) {
+      case 1:
+        return "text-red-500";
+      case 2:
+        return "text-orange-400";
+      case 3:
+        return "text-green-400";
+      case 4:
+        return "text-green-600";
+      case 5:
+        return "text-green-700";
+      default:
+        return "";
+    }
+  };
   const openModal = (modalId) => {
     setActiveModal(modalId);
   };
@@ -60,10 +94,26 @@ const BookingDetailsUser = () => {
   };
 
   const handleChange = (newRating) => {
-    // Update the rating when a new value is selected
     setRating(newRating);
   };
-  console.log(rating);
+  const handleReviewSubmit = async () => {
+    try {
+      const res = await reviewCar({
+        carId: bookingData.car._id,
+        userId: bookingData.user,
+        rating: rating,
+        reason:reason
+      })
+      if(res?.status === 200){
+        toast.success(res?.data?.message)
+      }
+      setReason("")
+      closeModal()
+    } catch (error) {
+      closeModal()
+      console.log(error.message)
+    }
+  }
   return (
     <>
       <UserNavbar />
@@ -77,10 +127,10 @@ const BookingDetailsUser = () => {
             />
             <button
               onClick={() => openModal("popup-modal")}
-              className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="block text-white mt-3 bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               type="button"
             >
-              Toggle modal
+              Review this car
             </button>
             <div
               id="popup-modal"
@@ -115,26 +165,42 @@ const BookingDetailsUser = () => {
                     <span className="sr-only">Close modal</span>
                   </button>
                   <div className="p-6 text-start">
-                    <Rating
-                      count={5} // Number of stars
-                      value={rating} // Current value of the rating
-                      size={30} // Size of the stars
-                      onChange={handleChange} // Function to handle changes in the rating
-                      isHalf={false} // Enable half star selections
-                      activeColor="#FAC201" // Color when mouse hover or rating is active
-                      color="#E5E7EB" // Inactive color of the stars
-                    />
+                    <h1 className="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Rate this car
+                    </h1>
+                    <div className="flex  justify-start gap-3 items-center">
+                      
+                      <Rating
+                        count={5}// Number of stars
+                        value={rating} // Current value of the rating
+                        size={30} // Size of the stars
+                        onChange={handleChange} // Function to handle changes in the rating
+                        isHalf={false} // Enable half star selections
+                        activeColor="#FAC201" // Color when mouse hover or rating is active
+                        color="#E5E7EB" // Inactive color of the stars
+                      />
+                      {rating !== 0 && (
+                        <p
+                          className={`font-bold text-sm text-ora ${getRatingColour(
+                            rating
+                          )}`}
+                        >
+                          {getRatingMessage(rating)}
+                        </p>
+                      )}
+                    </div>
 
                     <label
                       htmlFor="message"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Rate this car
+                      Review this car
                     </label>
                     <textarea
                       id="message"
                       rows={4}
                       value={reason}
+                      required
                       onChange={handleReasonChange}
                       className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Write your reason here..."
@@ -143,7 +209,8 @@ const BookingDetailsUser = () => {
                     <button
                       data-modal-hide="popup-modal"
                       type="button"
-                      className="text-gray-500 mt-2 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                      onClick={handleReviewSubmit}
+                      className="text-white-500 mt-2 bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
                     >
                       Submit
                     </button>

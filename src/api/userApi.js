@@ -71,3 +71,13 @@ export const cancelBookingUser = async (bookingId,reason) => {
   const data = await userAxiosInstance.post('/cancelBooking',{bookingId,reason})
   return data
 }
+
+export const getUserDetails = async (userId) => {
+  const data = await userAxiosInstance.get(`/userDetails/${userId}`)
+  return data
+}
+
+export const reviewCar = async (reviewData) => {
+  const data = await userAxiosInstance.put('/reviewCar',reviewData)
+  return data
+}

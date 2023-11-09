@@ -10,71 +10,9 @@ import { useSelector } from "react-redux";
 const CarDetails = () => {
   const { state } = useLocation();
 
-  const {car,values} = state
-  const navigate = useNavigate()
-  const {user} = useSelector((state) => state.userReducer)
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [bookingMessage, setBookingMessage] = useState("");
-  const handleStartDateChange = (e) => {
-    setStartDate(e.target.value);
-    calculateTotalAmount(e.target.value, endDate);
-  };
-  const handleEndDateChange = (e) => {
-    setEndDate(e.target.value);
-    calculateTotalAmount(startDate, e.target.value);
-  };
+  const { car, values } = state;
+  const navigate = useNavigate();
 
-  const calculateTotalAmount = (start, end) => {
-    if (start && end && car.price) {
-      const startTimestamp = new Date(start).getTime();
-      const endTimestamp = new Date(end).getTime();
-      const dayDifference =
-        (endTimestamp - startTimestamp) / (1000 * 3600 * 24);
-      const total = dayDifference * car.price;
-      setTotalAmount(total);
-    } else {
-      setTotalAmount(0);
-    }
-  };
-
-  const handleSubmit = async () => {
-    try {
-      if (totalAmount > 0) {
-        const bookedDateRanges = car.bookingDates;
-        const selectedStartDate = new Date(startDate).getTime();
-        const selectedEndDate = new Date(endDate).getTime();
-        let isDateAvailable = true;
-        for (const bookedDate of bookedDateRanges) {
-          const bookedStart = new Date(bookedDate.startDate).getTime();
-          const bookedEnd = new Date(bookedDate.endDate).getTime();
-          if (
-            (selectedStartDate >= bookedStart &&
-              selectedStartDate <= bookedEnd) ||
-            (selectedEndDate >= bookedStart && selectedEndDate <= bookedEnd)
-          ) {
-            isDateAvailable = false;
-            break;
-          }
-        }
-        if(isDateAvailable){
-          const res = await carBooking({...car,startDate,endDate,totalAmount,userId:user._id})
-          razorpayPayment(res?.data?.bookingData)
-          
-        }else{
-          toast.error("These dates are already booked.Please select another dates")
-        }
-      } else {
-        setBookingMessage("Please select the Date");
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message);
-      console.log(error.message);
-    }
-  };
-  
-  
   return (
     <div className="mt-8 w-full bg-white py-16 px-4">
       <div className="max-w-[1240px] mx-auto grid md:grid-cols-2">
@@ -95,6 +33,28 @@ const CarDetails = () => {
           <h1 className="md:text-4xl sm:text-3xl text-2xl font-bold py-2">
             {car.carName}
           </h1>
+          {car.ratings && car.totalRating && (
+            <div className="flex items-center justify-start my-3">
+            <svg
+              className="w-6 h-6 text-yellow-300 mr-1"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 22 20"
+            >
+              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+            </svg>
+            <p className="ml-2 text-lg font-bold text-gray-900 dark:text-white">
+              {car.totalRating}
+            </p>
+            <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
+            <p
+              className="text-lg font-medium text-gray-900 underline hover:no-underline dark:text-white"
+            >
+             {car.ratings.length} reviews
+            </p>
+          </div>
+          )}
           <p className=" font-semibold text-2xl text-blue-500">
             ₹{car.price} / Day
           </p>
@@ -106,7 +66,9 @@ const CarDetails = () => {
           </p>
 
           <div className="mt-4">
-            <p className="text-lg font-semibold">Owner: {car.partner[0].name}</p>
+            <p className="text-lg font-semibold">
+              Owner: {car.partner[0].name}
+            </p>
             <p className="text-lg font-semibold">Category: {car.modelType}</p>
             <p className="text-lg font-semibold">Fuel Type: {car.fuelType}</p>
             <p className="text-lg font-semibold">
@@ -116,7 +78,7 @@ const CarDetails = () => {
           </div>
           <div className="ml-3">
             <button
-              onClick={() => navigate('/checkOut',{state:{car,values}})}
+              onClick={() => navigate("/checkOut", { state: { car, values } })}
               className="  bg-blue-500 hover:bg-blue-800  text-white w-[200px] rounded-md font-medium my-6 mx-auto md:mx-0 py-3"
             >
               Book Now

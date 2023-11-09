@@ -9,7 +9,6 @@ const BookingDetailsPartner = () => {
   const { state } = useLocation();
   let { data } = state;
   const [bookingData,setBookingData] = useState(data)
-  console.log(state.bookingData);
   const startTimestamp = new Date(bookingData.startDate).getTime();
   const endTimestamp = new Date(bookingData.endDate).getTime();
   const dayDifference = (endTimestamp - startTimestamp) / (1000 * 3600 * 24);
@@ -74,6 +73,7 @@ const BookingDetailsPartner = () => {
                 <h1 className="mb-2 uppercase text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {bookingData.car.carName}
                 </h1>
+                
                 <div className="flex justify-end">
                   {bookingData.bookingStatus === "Success" && (
                     <button
@@ -95,6 +95,12 @@ const BookingDetailsPartner = () => {
                   )}
                 </div>
               </div>
+              <p className="my-5 text-lg font-semibold">
+                Rentar Name:
+                <span >
+                  {" "}{bookingData.user.name}
+                </span>
+              </p>
               <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Amount Paid: ₹ {bookingData.totalBookingCharge}
               </h1>
