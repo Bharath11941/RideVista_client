@@ -1,11 +1,11 @@
 import axios from "axios";
+
 import { toast } from "react-toastify";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 const userBaseURL = baseURL;
 const partnerBaseURL = `${baseURL}/partner`;
 const adminBaseURL = `${baseURL}/admin`;
-
 const createAxiosInstance = (baseURL) => {
   const instance = axios.create({
     baseURL,
@@ -62,17 +62,18 @@ partnerAxiosInstance.interceptors.response.use(
 );
 
 const handleAxiosError = (error, navigate) => {
-
   const errorMessage = error.response
     ? error.response.data.message
     : "An error occurred while request.";
 
   if (error.response) {
     if (error.response.status === 404) {
+
       toast.error("404 - Resource Not Found");
-      navigate("/PageNotFound");
+      navigate("/partner/pageNotFound");
     } else if (error.response.status === 500) {
       toast.error("500 - Internal Server Error");
+      navigate("/partner/pageNotFound");
     } else {
       toast.error(errorMessage);
     }

@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { deleteSingleImage, editCar, editCarDetails } from "../../../api/partnerApi";
 import Loading from "../../loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faL, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 const EditCar = () => {
@@ -69,6 +69,7 @@ const EditCar = () => {
       setCertificate(reader.result);
     };
   };
+
   const handleCarImagesChange = (event) => {
     const files = Array.from(event.target.files);
     setCarImageToBase(files);
@@ -88,12 +89,15 @@ const EditCar = () => {
   };
   const handleDeleteImage = async (imageSrc) => {
     try {
+      setLoading(true)
       const res = await deleteSingleImage(imageSrc,car._id)
       if(res.status === 200){
         toast.success(res?.data?.message)
         setCar(res?.data?.updatedData)
       }
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       toast.error(error.response?.data?.message);
       console.log(error.message);
     }

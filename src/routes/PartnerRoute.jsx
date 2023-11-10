@@ -32,7 +32,9 @@ const PartnerRoute = () => {
       <Route path='/bookings' element={<PartnerProtect><BookingListPartner/></PartnerProtect>}/>
       <Route path='/bookingDetails' element={<PartnerProtect><BookingDetailsPartner/></PartnerProtect>}/>
       <Route path='/reviews' element={<PartnerProtect><ReviewsList/></PartnerProtect>}/>
+      <Route path="/pageNotFound" element={<PageNotFound />} />
       <Route path="*" element={<PageNotFound />} />
+      
     </Routes>
   )
 }
