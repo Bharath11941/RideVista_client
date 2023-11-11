@@ -48,32 +48,40 @@ adminAxiosInstance.interceptors.request.use(async (req) => {
 
 userAxiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => handleAxiosError(error)
+  (error) => handleAxiosError(error,"user")
 );
 
 adminAxiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => handleAxiosError(error)
+  (error) => handleAxiosError(error,"admin")
 );
 
 partnerAxiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => handleAxiosError(error)
+  (error) => handleAxiosError(error,"partner")
 );
 
-const handleAxiosError = (error, navigate) => {
+const handleAxiosError = (error,role) => {
   const errorMessage = error.response
     ? error.response.data.message
     : "An error occurred while request.";
 
   if (error.response) {
     if (error.response.status === 404) {
-
+      if(role === "user"){
+        window.location.href = `/pageNotFound`;
+      }else{
+        window.location.href = `/${role}/pageNotFound`;
+      }
       toast.error("404 - Resource Not Found");
-      navigate("/partner/pageNotFound");
+      
     } else if (error.response.status === 500) {
       toast.error("500 - Internal Server Error");
-      navigate("/partner/pageNotFound");
+      if(role === "user"){
+        window.location.href = `/pageNotFound`;
+      }else{
+        window.location.href = `/${role}/pageNotFound`;
+      }
     } else {
       toast.error(errorMessage);
     }

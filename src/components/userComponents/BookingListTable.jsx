@@ -1,22 +1,36 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Pagination from "../common/Pagination";
+import Loading from "../loading/Loading";
 const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
   const [bookingList, setBookingList] = useState([]);
   const [activeModal, setActiveModal] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const dataPerPage = 5;
+  const lastIndex = currentPage * dataPerPage;
+  const firstIndex = lastIndex - dataPerPage;
+  const carsInSinglePage = bookingList.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(bookingList.length / dataPerPage);
+  const numbers = [...Array(totalPages + 1).keys()].slice(1);
+  const [loading, setLoading] = useState(false);
   const [reason, setReason] = useState("");
   const navigate = useNavigate();
   const handleReasonChange = (event) => {
     setReason(event.target.value);
   };
   useEffect(() => {
+    setLoading(true)
     BookingList(id)
       .then((res) => {
+        setLoading(false)
         setBookingList(res?.data?.bookingList);
+        
       })
       .catch((err) => {
+        setLoading(false)
         console.log(err.message);
-      });
+      })
   }, []);
   function getStatusColor(status) {
     switch (status) {
@@ -60,6 +74,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
   };
   const handleCancelBooking = async (bookingId) => {
     try {
+      setLoading(true)
       const res = await cancelBooking(bookingId, reason);
       console.log(res?.data?.bookingList, "fljlal");
       if (res?.status === 200) {
@@ -68,7 +83,9 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
         setReason("");
         setActiveModal(null);
       }
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.log(error.message);
     }
   };
@@ -81,39 +98,17 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
   };
 
   return (
-    <div className="container mx-auto pb-40">
+    <>
+    {loading ? (
+      <div className="fixed inset-0 flex items-center justify-center">
+        <div className="spinnerouter">
+          <Loading />
+        </div>
+      </div>
+    ) : (
+      <div className="container mx-auto pb-40">
       <h1 className="text-3xl px-3 mb-5 mt-5">My bookings</h1>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        {/* <div className="flex items-center justify-end pb-4 bg-white dark:bg-gray-900">
-          <label htmlFor="table-search" className="sr-only">
-            Search
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-            </div>
-            <input
-              type="text"
-              id="table-search-users"
-              className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Search for users"
-            />
-          </div>
-        </div> */}
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -144,7 +139,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
             </tr>
           </thead>
           <tbody>
-            {bookingList && bookingList.length > 0 ? (
+            {carsInSinglePage && carsInSinglePage.length > 0 ? (
               bookingList &&
               bookingList.map((data) => (
                 <tr
@@ -216,7 +211,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                     </button>
                   </td>
                   <td className="px-6 py-4">
-                    {data.bookingStatus === "Success" && (
+                    {data.bookingStatus === "Success" && !data.cancelStatus && (
                       <button
                         type="button"
                         onClick={() => openModal(data._id)}
@@ -225,19 +220,19 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                         Cancel
                       </button>
                     )}
-                    {data.bookingStatus === "Cancelled" && (
+                    {data.cancelStatus === "Pending" && (
                       <p className="text-red-700 font-semibold text-sm">
-                        {data.bookingStatus}
+                        Cancel request Pending
                       </p>
                     )}
-                    {data.bookingStatus === "Delivered" && (
-                      <p className="text-green-400 font-semibold text-sm">
-                        {data.bookingStatus}
+                    {data.cancelStatus === "Approved" && (
+                      <p className="text-red-700 font-semibold text-sm">
+                        Booking Cancelled
                       </p>
                     )}
-                    {data.bookingStatus === "Returned" && (
+                    {data.cancelStatus === "Rejected" && (
                       <p className="text-blue-700 font-semibold text-sm">
-                        {data.bookingStatus}
+                        Cancel request rejected by partner
                       </p>
                     )}
                   </td>
@@ -312,7 +307,11 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
           </tbody>
         </table>
       </div>
+      <Pagination totalPages={totalPages} numbers={numbers} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
     </div>
+    )}
+    
+    </>
   );
 };
 

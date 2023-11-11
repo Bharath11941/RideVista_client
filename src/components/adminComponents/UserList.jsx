@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { usersList, userBlock } from "../../api/adminApi"; // Replace 'your-api' with your actual API functions
 import { toast } from "react-toastify"; // Import the toast library
 import Loading from "../loading/Loading";
+import Pagination from "../common/Pagination";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [activeModal, setActiveModal] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const dataPerPage = 3;
 
   useEffect(() => {
     setLoading(true);
@@ -50,12 +53,16 @@ const UserList = () => {
     setActiveModal(null);
   };
 
-  const filtered = !searchInput
+  const filteredData = !searchInput
     ? users
     : users.filter((person) =>
         person.name.toLowerCase().includes(searchInput.toLowerCase())
       );
-
+      const lastIndex = currentPage * dataPerPage;
+      const firstIndex = lastIndex - dataPerPage;
+      const carsInSinglePage = filteredData.slice(firstIndex, lastIndex);
+      const totalPages = Math.ceil(filteredData.length / dataPerPage);
+      const numbers = [...Array(totalPages + 1).keys()].slice(1);
   return (
     <>
       {loading ? (
@@ -119,8 +126,8 @@ const UserList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filtered.length > 0 ? (
-                    filtered.map((user) => (
+                  {carsInSinglePage.length > 0 ? (
+                    carsInSinglePage.map((user) => (
                       <tr
                         key={user._id}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -251,6 +258,7 @@ const UserList = () => {
                                 </button>
                               </div>
                             </div>
+                            
                           </div>
                         </div>
                       </tr>
@@ -268,6 +276,7 @@ const UserList = () => {
                 </tbody>
               </table>
             </div>
+            <Pagination numbers={numbers} currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages}/>
           </div>
         </div>
       )}

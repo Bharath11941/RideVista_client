@@ -109,7 +109,27 @@ const PartnerSidebar = () => {
                   <path d="M4 18V8.5A4.5 4.5 0 018.5 4h7A4.5 4.5 0 0120 8.5v7a4.5 4.5 0 01-4.5 4.5H6a2 2 0 01-2-2z" />
                   <path d="M8 12h3.5a2 2 0 110 4H8V9a1 1 0 011-1h1.5a2 2 0 110 4H9M16 16h.01" />
                 </svg>
-                <span className="flex-1 ml-3 whitespace-nowrap">My bookings</span>
+                <span className="flex-1 ml-3 whitespace-nowrap">
+                  My bookings
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/partner/cancelRequests"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  height="1.5em"
+                  width="1.5em"
+                >
+                  <path d="M13 9h5.5L13 3.5V9M6 2h8l6 6v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4c0-1.11.89-2 2-2m4.5 9C8 11 6 13 6 15.5S8 20 10.5 20s4.5-2 4.5-4.5-2-4.5-4.5-4.5m0 1.5a3 3 0 013 3c0 .56-.15 1.08-.42 1.5L9 12.92c.42-.27.94-.42 1.5-.42m-3 3c0-.56.15-1.08.42-1.5L12 18.08c-.42.27-.94.42-1.5.42a3 3 0 01-3-3z" />
+                </svg>
+                <span className="flex-1 ml-3 whitespace-nowrap">
+                  Cancle requests
+                </span>
               </Link>
             </li>
           </ul>

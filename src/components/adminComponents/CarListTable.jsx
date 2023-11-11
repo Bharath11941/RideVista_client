@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { carList } from "../../api/adminApi";
+import Pagination from "../common/Pagination";
 
 const CarListTable = () => {
   const [cars, setCars] = useState([]);
-  const [searchInput,setSearchInput] = useState('')
+  const [searchInput, setSearchInput] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const carPerPage = 3;
+
   useEffect(() => {
     carList()
       .then((res) => {
@@ -20,6 +24,11 @@ const CarListTable = () => {
     : cars.filter((car) =>
         car.carName.toLowerCase().includes(searchInput.toLowerCase())
       );
+  const lastIndex = currentPage * carPerPage;
+  const firstIndex = lastIndex - carPerPage;
+  const carsInSinglePage = filteredCars.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(filteredCars.length / carPerPage);
+  const numbers = [...Array(totalPages + 1).keys()].slice(1);
   return (
     <div className="p-4 sm:ml-64">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
@@ -51,7 +60,7 @@ const CarListTable = () => {
                 type="text"
                 id="table-search-users"
                 value={searchInput}
-                onChange={(e)=>setSearchInput(e.target.value)}
+                onChange={(e) => setSearchInput(e.target.value)}
                 className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search for Cars"
               />
@@ -81,7 +90,7 @@ const CarListTable = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredCars.map((car) => (
+              {carsInSinglePage.map((car) => (
                 <tr
                   key={car._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -147,7 +156,7 @@ const CarListTable = () => {
                           )}
                           {car.verificationStatus === "Rejected" && (
                             <Link
-                              to={`/admin/carDetails/${car._id}`} 
+                              to={`/admin/carDetails/${car._id}`}
                               className="bg-red-500 text-white font-medium py-2 px-4 rounded-full hover:bg-red-600 inline-block"
                             >
                               Car Details
@@ -162,6 +171,12 @@ const CarListTable = () => {
             </tbody>
           </table>
         </div>
+        <Pagination
+          totalPages={totalPages}
+          numbers={numbers}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );

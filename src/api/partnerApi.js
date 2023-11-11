@@ -72,3 +72,11 @@ export const getReviews = async (carId) => {
   const data = await partnerAxiosInstance.get(`/getReviews/${carId}`)
   return data
 }
+export const allRequestCancel = async (partnerId) => {
+  const data = await partnerAxiosInstance.get(`/cancelRequests/${partnerId}`)
+  return data
+}
+export const cancelRequestApproval = async (bookingId,status) => {
+  const data = await partnerAxiosInstance.patch('/approveCancel',{bookingId,status})
+  return data
+}

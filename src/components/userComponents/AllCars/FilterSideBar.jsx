@@ -31,10 +31,9 @@ const FilterSideBar = ({ setCars, filterCars }) => {
       const transitionMatch =
         selectedTransitionTypes.length === 0 ||
         selectedTransitionTypes.includes(car.transitionType);
-      console.log(modelMatch, fuelMatch, transitionMatch, "from useeffect");
-
       return modelMatch && fuelMatch && transitionMatch;
     });
+    console.log(filteredCars,"from useeffect")
     setCars(filteredCars);
   }, [filterOptions, filterCars]);
 

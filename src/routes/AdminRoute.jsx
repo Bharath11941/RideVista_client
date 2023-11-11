@@ -20,6 +20,7 @@ const AdminRoute = () => {
       <Route path='/carList' element={<AdminProtect><CarListPage/></AdminProtect>}/>
       <Route path='/carDetails/:carId' element={<AdminProtect><CarDetailPage/></AdminProtect>}/>
       <Route path="*" element={<PageNotFound />} />
+      <Route path="/pageNotFound" element={<PageNotFound />} />
     </Routes>
   )
 }

@@ -103,6 +103,7 @@ const UserRoute = () => {
         }
       />
       <Route path="*" element={<PageNotFound />} />
+      <Route path="/pageNotFound" element={<PageNotFound />} />
     </Routes>
   );
 };

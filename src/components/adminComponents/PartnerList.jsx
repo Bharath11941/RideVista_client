@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { partnerBlock, partnerList } from "../../api/adminApi";
 import { toast } from "react-toastify";
 import Loading from "../loading/Loading";
+import Pagination from "../common/Pagination";
 
 const PartnerList = () => {
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
   const [searchInput,setSearchInput] = useState("")
+  const [currentPage, setCurrentPage] = useState(1);
+  const dataPerPage = 3;
   useEffect(() => {
     setLoading(true)
     partnerList()
@@ -47,7 +50,11 @@ const PartnerList = () => {
     setActiveModal(null);
   };
   const filteredData = searchInput ? partners.filter((partner) => partner.name.toLowerCase().includes(searchInput.toLowerCase())) : partners
-
+  const lastIndex = currentPage * dataPerPage;
+  const firstIndex = lastIndex - dataPerPage;
+  const carsInSinglePage = filteredData.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(filteredData.length / dataPerPage);
+  const numbers = [...Array(totalPages + 1).keys()].slice(1);
 
   return (
     <>
@@ -112,7 +119,7 @@ const PartnerList = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((partner) => (
+              {carsInSinglePage.map((partner) => (
                 <tr
                   key={partner._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -250,6 +257,7 @@ const PartnerList = () => {
             </tbody>
           </table>
         </div>
+        <Pagination setCurrentPage={setCurrentPage} numbers={numbers} currentPage={currentPage} totalPages={totalPages}/>
       </div>
     </div>
     )}

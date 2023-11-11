@@ -8,12 +8,23 @@ import { faCar, faBars } from "@fortawesome/free-solid-svg-icons"; // Import the
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterSideBar from "../../components/userComponents/AllCars/FilterSideBar";
 import Loading from "../../components/loading/Loading";
+import Pagination from "../../components/common/Pagination";
 const AllCars = () => {
-  
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const { filterCars, values } = location.state;
   const [cars, setCars] = useState(filterCars);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const carPerPage = 1;
+  const lastIndex = currentPage * carPerPage;
+  const firstIndex = lastIndex - carPerPage;
+  const carsInSinglePage = cars.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(cars.length / carPerPage);
+  const numbers = [...Array(totalPages + 1).keys()].slice(1);
+
+
+
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
     let sortedCars = [...cars];
@@ -25,7 +36,6 @@ const AllCars = () => {
 
     setCars(sortedCars);
   };
-
   return (
     <>
       <UserNavbar />
@@ -100,9 +110,13 @@ const AllCars = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {cars && cars.map((car) => <CarCard key={car._id} car={car} values={values} />)}
+              {carsInSinglePage &&
+                carsInSinglePage.map((car) => (
+                  <CarCard key={car._id} car={car} values={values} />
+                ))}
             </div>
           )}
+          <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} numbers={numbers} totalPages={totalPages}/>
         </div>
       </div>
 

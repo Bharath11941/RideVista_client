@@ -10,9 +10,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { myCarsList } from "../../../api/partnerApi";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Pagination from "../../common/Pagination";
 const Mycars = () => {
   const { _id } = useSelector((state) => state.partnerReducer.partner);
   const [cars, setCars] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const carPerPage = 2;
+  const lastIndex = currentPage * carPerPage;
+  const firstIndex = lastIndex - carPerPage;
+  const carsInSinglePage = cars.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(cars.length / carPerPage);
+  const numbers = [...Array(totalPages + 1).keys()].slice(1);
   const navigate = useNavigate();
   const partnerId = _id;
   useEffect(() => {
@@ -32,7 +40,7 @@ const Mycars = () => {
     <div className="p-4 sm:ml-64">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
         <h1 className="text-2xl font-semibold mb-8">Cars</h1>
-        {cars.map((car) => {
+        {carsInSinglePage.map((car) => {
           return (
             <Card className="w-full max-w-[80rem] mb-6 flex-row" key={car._id}>
               <CardHeader
@@ -92,6 +100,7 @@ const Mycars = () => {
             </Card>
           );
         })}
+        <Pagination totalPages={totalPages} numbers={numbers} setCurrentPage={setCurrentPage} currentPage={currentPage}/>
       </div>
     </div>
   );
