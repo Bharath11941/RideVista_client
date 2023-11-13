@@ -1,7 +1,7 @@
 
 import PartnerNavbar from "../../components/partnerComponents/PartnerNavbar";
 import PartnerSidebar from "../../components/partnerComponents/dashboard/PartnerSidebar";
-import BookingListTable from "../../components/userComponents/BookingListTable";
+import BookingListTable from "../../components/userComponents/Booking/BookingListTable";
 import { useSelector } from "react-redux";
 import { bookingsPartner } from "../../api/partnerApi";
 import { cancelBookingPartner } from "../../api/partnerApi";

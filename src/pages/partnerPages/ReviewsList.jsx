@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import PartnerNavbar from '../../components/partnerComponents/PartnerNavbar'
 import PartnerSidebar from '../../components/partnerComponents/dashboard/PartnerSidebar'
+import ReviewListTable from '../../components/partnerComponents/dashboard/booking/ReviewListTable'
 import { useLocation } from 'react-router-dom'
-import ReviewListTable from '../../components/partnerComponents/dashboard/ReviewListTable'
 import { getReviews } from '../../api/partnerApi'
 import { useState } from 'react'
 
@@ -24,7 +24,6 @@ const ReviewsList = () => {
       <PartnerNavbar/>
       <PartnerSidebar/>
       <ReviewListTable car={carData}/>
-
     </>
   )
 }

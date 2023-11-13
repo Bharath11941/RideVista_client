@@ -9,15 +9,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loadScript } from "../../utils/razorpay/loadScript";
 import Loading from "../loading/Loading";
+import { userLogin } from "../../reduxStore/slices/userSlice";
 
 const CheckOut = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const [walletChecked, setWalletChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { user } = useSelector((state) => state.userReducer);
+  const { user,token } = useSelector((state) => state.userReducer);
   const { car, values } = state;
   const startDate = values.pickUpDate;
   const endDate = values.returnDate;
@@ -40,8 +43,20 @@ const CheckOut = () => {
         pickUpLocation,
         returnLocation,
         userId: user._id,
+        walletChecked,
       });
-      razorpayPayment(res?.data?.bookingData);
+      if (walletChecked) {
+        toast.success(res?.data?.message);
+        dispatch(userLogin({user:res?.data?.user,token}))
+        navigate("/bookingSuccess", {
+          state: {
+            orderDetails: res?.data?.bookingDetails,
+            CarDetails: res?.data?.carDetails,
+          },
+        });
+      } else {
+        razorpayPayment(res?.data?.bookingData);
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -100,7 +115,10 @@ const CheckOut = () => {
     var rzp1 = new window.Razorpay(options);
     rzp1.open();
   };
-
+  const handleWalletUsed = (e) => {
+    setWalletChecked(e.target.checked);
+  };
+  console.log(walletChecked);
   return (
     <>
       <div className=" container pb-40 mx-auto mt-10 mb-52 dark:border-gray-700 shadow border border-gray-200">
@@ -241,12 +259,31 @@ const CheckOut = () => {
                   </div>
                   <hr />
                   <br />
-                  <br />
-                  <div className="flex justify-end mb-8">
-                    <h1 className="font-bold text-2xl text-black">
+                  <div className="flex justify-end ">
+                    <h1 className="font-bold text-2xl mb-2 text-black">
                       ₹ {totalAmount}
                     </h1>
                   </div>
+                  {user.wallet >= totalAmount && (
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <input
+                          id="default-checkbox"
+                          type="checkbox"
+                          checked={walletChecked}
+                          onChange={handleWalletUsed}
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        />
+                        <label
+                          htmlFor="default-checkbox"
+                          className="ms-2 text-sm font-semibold text-gray-900 dark:text-gray-300"
+                        >
+                          Use wallet payment
+                        </label>
+                      </div>
+                      <p>wallet balance: ₹ {user.wallet}</p>
+                    </div>
+                  )}
                   <button
                     onClick={handleSubmit}
                     className="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"

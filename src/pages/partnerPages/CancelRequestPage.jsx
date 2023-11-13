@@ -1,7 +1,8 @@
 import React from "react";
 import PartnerNavbar from "../../components/partnerComponents/PartnerNavbar";
 import PartnerSidebar from "../../components/partnerComponents/dashboard/PartnerSidebar";
-import CancelRequests from "../../components/partnerComponents/dashboard/CancelRequests";
+import CancelRequests from "../../components/partnerComponents/dashboard/booking/CancelRequests";
+
 
 const CancelRequestPage = () => {
   return (

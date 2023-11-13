@@ -15,6 +15,7 @@ import CheckOutPage from "../pages/userPages/CheckOutPage";
 import BookingList from "../pages/userPages/BookingList";
 import ProfilePage from "../pages/userPages/ProfilePage";
 import BookingDetailsUser from "../pages/userPages/BookingDetailsUser";
+import WalletHistoryPage from "../pages/userPages/WalletHistoryPage";
 
 const UserRoute = () => {
   return (
@@ -99,6 +100,14 @@ const UserRoute = () => {
         element={
           <UserProtect>
             <BookingDetailsUser/>
+          </UserProtect>
+        }
+      />
+      <Route
+        path="/walletHistory"
+        element={
+          <UserProtect>
+            <WalletHistoryPage/>
           </UserProtect>
         }
       />

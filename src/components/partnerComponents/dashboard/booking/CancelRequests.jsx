@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { allRequestCancel, cancelRequestApproval } from "../../../api/partnerApi";
+import { allRequestCancel, cancelRequestApproval } from "../../../../api/partnerApi";
 import { useState } from "react";
-import Pagination from "../../common/Pagination";
+import Pagination from "../../../common/Pagination";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 

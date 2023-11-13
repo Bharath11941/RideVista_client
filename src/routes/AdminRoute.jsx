@@ -9,6 +9,7 @@ import PartnerListPage from '../pages/adminPages/PartnerListPage'
 import PageNotFound from '../components/error/PageNotFound'
 import CarListPage from '../pages/adminPages/CarListPage'
 import CarDetailPage from '../pages/adminPages/CarDetailPage'
+import ReportedPageList from '../pages/adminPages/ReportedPageList'
 
 const AdminRoute = () => {
   return (
@@ -19,6 +20,7 @@ const AdminRoute = () => {
       <Route path='/partnerList' element={<AdminProtect><PartnerListPage/></AdminProtect>}/>
       <Route path='/carList' element={<AdminProtect><CarListPage/></AdminProtect>}/>
       <Route path='/carDetails/:carId' element={<AdminProtect><CarDetailPage/></AdminProtect>}/>
+      <Route path='/reportedList' element={<AdminProtect><ReportedPageList/></AdminProtect>}/>
       <Route path="*" element={<PageNotFound />} />
       <Route path="/pageNotFound" element={<PageNotFound />} />
     </Routes>

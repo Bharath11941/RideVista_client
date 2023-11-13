@@ -80,3 +80,7 @@ export const cancelRequestApproval = async (bookingId,status) => {
   const data = await partnerAxiosInstance.patch('/approveCancel',{bookingId,status})
   return data
 }
+export const reportUser = async (partnerId,reason,userId) => {
+  const data = await partnerAxiosInstance.patch('/reportUser',{partnerId,reason,userId})
+  return data
+}

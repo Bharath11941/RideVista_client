@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Pagination from "../common/Pagination";
-import Loading from "../loading/Loading";
+import Pagination from "../../common/Pagination";
+import Loading from "../../loading/Loading";
 const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
   const [bookingList, setBookingList] = useState([]);
   const [activeModal, setActiveModal] = useState(null);
@@ -32,6 +32,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
         console.log(err.message);
       })
   }, []);
+  console.log(bookingList,"from boking list table")
   function getStatusColor(status) {
     switch (status) {
       case "Pending":
@@ -141,7 +142,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
           <tbody>
             {carsInSinglePage && carsInSinglePage.length > 0 ? (
               bookingList &&
-              bookingList.map((data) => (
+              carsInSinglePage.map((data) => (
                 <tr
                   key={data._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"

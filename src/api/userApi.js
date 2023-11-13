@@ -81,3 +81,7 @@ export const reviewCar = async (reviewData) => {
   const data = await userAxiosInstance.put('/reviewCar',reviewData)
   return data
 }
+export const reportCarOwner = async (ownerId,reason,userId) => {
+  const data = await userAxiosInstance.patch('/reportOwner',{ownerId,reason,userId})
+  return data
+}
