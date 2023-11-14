@@ -17,6 +17,7 @@ import BookingListPartner from '../pages/partnerPages/BookingListPartner'
 import BookingDetailsPartner from '../pages/partnerPages/BookingDetailsPartner'
 import ReviewsList from '../pages/partnerPages/ReviewsList'
 import CancelRequestPage from '../pages/partnerPages/CancelRequestPage'
+import Error500 from '../components/error/500'
 const PartnerRoute = () => {
   return (
     <Routes>
@@ -35,6 +36,7 @@ const PartnerRoute = () => {
       <Route path='/reviews' element={<PartnerProtect><ReviewsList/></PartnerProtect>}/>
       <Route path='/cancelRequests' element={<PartnerProtect><CancelRequestPage/></PartnerProtect>}/>
       <Route path="/pageNotFound" element={<PageNotFound />} />
+      <Route path="/error-500" element={<Error500 />} />
       <Route path="*" element={<PageNotFound />} />
       
     </Routes>

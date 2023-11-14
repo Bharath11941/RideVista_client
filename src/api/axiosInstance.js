@@ -78,9 +78,9 @@ const handleAxiosError = (error,role) => {
     } else if (error.response.status === 500) {
       toast.error("500 - Internal Server Error");
       if(role === "user"){
-        window.location.href = `/pageNotFound`;
+        window.location.href = `/error-500`;
       }else{
-        window.location.href = `/${role}/pageNotFound`;
+        window.location.href = `/${role}/error-500`;
       }
     } else {
       toast.error(errorMessage);

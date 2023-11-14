@@ -10,6 +10,7 @@ import PageNotFound from '../components/error/PageNotFound'
 import CarListPage from '../pages/adminPages/CarListPage'
 import CarDetailPage from '../pages/adminPages/CarDetailPage'
 import ReportedPageList from '../pages/adminPages/ReportedPageList'
+import Error500 from '../components/error/500'
 
 const AdminRoute = () => {
   return (
@@ -23,6 +24,7 @@ const AdminRoute = () => {
       <Route path='/reportedList' element={<AdminProtect><ReportedPageList/></AdminProtect>}/>
       <Route path="*" element={<PageNotFound />} />
       <Route path="/pageNotFound" element={<PageNotFound />} />
+      <Route path="/error-500" element={<Error500 />} />
     </Routes>
   )
 }

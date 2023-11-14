@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import  { useState } from "react";
+import { useState } from "react";
 import { carValidationSchema } from "../../../validations/partner/carValidation";
 import { addCar } from "../../../api/partnerApi";
 import { toast } from "react-toastify";
@@ -11,17 +11,17 @@ import { useNavigate } from "react-router-dom";
 const AddCar = () => {
   const [certificate, setCertificate] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [carImage, setCarImage] = useState([]);
-  const {_id} = useSelector(state => state.partnerReducer.partner)
-  const partnerId = _id
+  const { _id } = useSelector((state) => state.partnerReducer.partner);
+  const partnerId = _id;
   const onSubmit = async () => {
     try {
       setLoading(true);
-      const res = await addCar({ ...values, certificate, carImage,partnerId });
+      const res = await addCar({ ...values, certificate, carImage, partnerId });
       if (res?.status === 201) {
         setLoading(false);
-        navigate('/partner/myCars')
+        navigate("/partner/myCars");
         toast.success(res?.data?.message);
       }
     } catch (error) {
@@ -30,7 +30,7 @@ const AddCar = () => {
       console.log(error, "response in error");
     }
   };
-  
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: {
@@ -46,7 +46,15 @@ const AddCar = () => {
     });
   const handleCertificateFileChange = (event) => {
     const file = event.target.files[0];
-    setCertificateToBase(file);
+    if (
+      file.type &&
+      (file.type.startsWith("image/jpeg") || file.type.startsWith("image/png"))
+    ) {
+      setCertificateToBase(file);
+    } else {
+      toast.error("Invalid file type. Please select a valid image.");
+      event.target.value = null;
+    }
   };
   const setCertificateToBase = (file) => {
     const reader = new FileReader();
@@ -57,7 +65,18 @@ const AddCar = () => {
   };
   const handleCarImagesChange = (event) => {
     const files = Array.from(event.target.files);
-    setCarImageToBase(files);
+    const isValid = files.every(
+      (file) =>
+        file.type.startsWith("image/jpeg") ||
+        file.type.startsWith("image/png") 
+    );
+    if (isValid) {
+      setCarImageToBase(files);
+    } else {
+      toast.error("Invalid file type. Please select valid image files.");
+
+      event.target.value = null;
+    }
   };
 
   const setCarImageToBase = async (files) => {

@@ -16,6 +16,7 @@ import BookingList from "../pages/userPages/BookingList";
 import ProfilePage from "../pages/userPages/ProfilePage";
 import BookingDetailsUser from "../pages/userPages/BookingDetailsUser";
 import WalletHistoryPage from "../pages/userPages/WalletHistoryPage";
+import Error500 from "../components/error/500";
 
 const UserRoute = () => {
   return (
@@ -113,6 +114,7 @@ const UserRoute = () => {
       />
       <Route path="*" element={<PageNotFound />} />
       <Route path="/pageNotFound" element={<PageNotFound />} />
+      <Route path="/error-500" element={<Error500 />} />
     </Routes>
   );
 };

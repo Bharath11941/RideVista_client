@@ -1,3 +1,5 @@
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation } from "react-router-dom";
 
 const PageNotFound = () => {
@@ -28,28 +30,31 @@ const PageNotFound = () => {
   };
 
   return (
-    <section className="bg-white dark:bg-gray-900">
-      <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        <div className="mx-auto max-w-screen-sm text-center">
-          <h1 className="mb-4 text-7xl tracking-tight font-extrabold lg:text-9xl text-primary-600 dark:text-primary-500">
-            404
-          </h1>
-          <p className="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">
-            Something's missing.
-          </p>
-          <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
-            Sorry, we can't find that page. You'll find lots to explore on the
-            home page.{" "}
-          </p>
-          <Link
-            to={getHomeUrl()}
-            className="inline-flex text-black bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4"
-          >
-            Back to Homepage
-          </Link>
+    <div className="flex h-screen items-center justify-center p-5 w-full bg-gray-100">
+      <div className="text-center">
+        <div className="inline-flex rounded-full bg-blue-200 p-4">
+          <div className="rounded-full bg-white p-4">
+           
+            <FontAwesomeIcon className="w-20 h-20 text-blue-500" icon={faTriangleExclamation} />
+          </div>
         </div>
+        <h1 className="mt-5 text-4xl font-bold text-gray-800 lg:text-6xl">
+          404 - Page Not Found
+        </h1>
+        <p className="text-gray-600 mt-5 text-lg">
+          Something's missing.
+          <br />
+          Sorry, we can't find that page. You'll find lots to explore on the
+          home page.{" "}
+        </p>
+        <Link
+          to={getHomeUrl()}
+          className="mt-8 bg-blue-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-blue-600 inline-block"
+        >
+          Go to Home
+        </Link>
       </div>
-    </section>
+    </div>
   );
 };
 
