@@ -17,6 +17,8 @@ import ProfilePage from "../pages/userPages/ProfilePage";
 import BookingDetailsUser from "../pages/userPages/BookingDetailsUser";
 import WalletHistoryPage from "../pages/userPages/WalletHistoryPage";
 import Error500 from "../components/error/500";
+import ChatPage from "../pages/userPages/ChatPage";
+
 
 const UserRoute = () => {
   return (
@@ -109,6 +111,14 @@ const UserRoute = () => {
         element={
           <UserProtect>
             <WalletHistoryPage/>
+          </UserProtect>
+        }
+      />
+      <Route
+        path="/chat"
+        element={
+          <UserProtect>
+            <ChatPage/>
           </UserProtect>
         }
       />

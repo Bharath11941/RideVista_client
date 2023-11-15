@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const ReportPartnerModal = ({ bookingData,reportApi,role }) => {
+const ReportModal = ({ bookingData,reportApi,role }) => {
   const [activeModal, setActiveModal] = useState(null);
   const [reason, setReason] = useState("");
   const handleReportOwner = async () => {
@@ -104,4 +104,4 @@ const ReportPartnerModal = ({ bookingData,reportApi,role }) => {
   );
 };
 
-export default ReportPartnerModal;
+export default ReportModal;

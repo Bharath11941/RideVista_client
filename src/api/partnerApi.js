@@ -1,14 +1,11 @@
 import { partnerAxiosInstance } from "./axiosInstance";
 
 export const partnerSignup = async (signupData) => {
-  console.log("signup service");
   const data = await partnerAxiosInstance.post("/signup", signupData);
-  console.log(data, "data in service");
   return data;
 };
 
 export const partnerOtpVerification = async (otp, partnerId) => {
-  console.log("front end api serivce");
   const data = await partnerAxiosInstance.post("/otp", { otp, partnerId });
   return data;
 };
@@ -84,3 +81,4 @@ export const reportUser = async (partnerId,reason,userId) => {
   const data = await partnerAxiosInstance.patch('/reportUser',{partnerId,reason,userId})
   return data
 }
+
