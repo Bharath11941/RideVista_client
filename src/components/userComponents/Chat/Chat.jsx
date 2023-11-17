@@ -1,6 +1,5 @@
-import React from "react";
+
 import ChatList from "./ChatList";
-import Conversation from "./Conversation";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -12,12 +11,34 @@ import { useRef } from "react";
 const Chat = () => {
   const { user } = useSelector((state) => state.userReducer);
   const [chats, setChats] = useState([]);
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
-  const socket = useRef()
-  useEffect(()=>{
-    socket.current = io("http://localhost:8800")
-    socket.current.emit('new-user-add',user._id)
-  },[user])
+  const [sendMessage, setSendMessage] = useState(null);
+  const [recieveMessage, setRecieveMessage] = useState(null);
+  const socket = useRef();
+  //sending message to socket server
+  useEffect(() => {
+    if (sendMessage !== null) {
+      socket.current.emit("send-message", sendMessage);
+    }
+  }, [sendMessage]);
+
+  useEffect(() => {
+    socket.current = io("http://localhost:8800");
+    socket.current.emit("new-user-add", user._id);
+    socket.current.on("get-users", (users) => {
+      setOnlineUsers(users);
+    });
+  }, [user]);
+
+ //revieve message from socket server
+ useEffect(()=>{
+  socket.current.on('recieve-message',(data) => {
+    setRecieveMessage(data)
+  })
+},[])
+  
+
   useEffect(() => {
     const getChats = async () => {
       try {
@@ -29,6 +50,12 @@ const Chat = () => {
     };
     getChats();
   }, [user]);
+
+  const checkOnlineStatus = (chat) => {
+    const chatMember = chat.members.find((member) => member !== user._id);
+    const online = onlineUsers.find((user) => user.userId === chatMember);
+    return online ? true : false;
+  };
 
   return (
     <div>
@@ -53,13 +80,14 @@ const Chat = () => {
                   <div className="cursor-pointer">
                     {chats.map((chat) => (
                       <div key={chat._id} onClick={() => setCurrentChat(chat)}>
-                        <ChatList data={chat} currentUserId={user._id} />
+                        <ChatList data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)} />
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
             </div>
+
             <div className="w-full md:w-9/12 mx-2 h-full">
               <div className="bg-gray-100 shadow-sm rounded-sm md:p-1">
                 <div className="flex flex-wrap justify-end font-semibold text-gray-900">
@@ -67,7 +95,12 @@ const Chat = () => {
                     className="flex-1 p:2 sm:p-6 justify-center flex flex-col"
                     style={{ minHeight: "85vh" }}
                   >
-                    <ChatBox chat={currentChat} currentUser={user._id} />
+                    <ChatBox
+                      chat={currentChat}
+                      currentUser={user._id}
+                      setSendMessage={setSendMessage}
+                      recieveMessage={recieveMessage}
+                    />
                   </div>
                 </div>
               </div>

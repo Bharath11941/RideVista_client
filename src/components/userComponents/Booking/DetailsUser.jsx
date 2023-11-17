@@ -1,7 +1,10 @@
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { reportCarOwner } from "../../../api/userApi";
 import ReportPartnerModal from "../../common/ReportModal";
 import ReviewModal from "./ReviewModal";
+import { faCommentAlt } from "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router-dom";
 const DetailsUser = ({ bookingData }) => {
   console.log(bookingData,"from booking details user")
   const startTimestamp = new Date(bookingData.startDate).getTime();
@@ -63,6 +66,7 @@ const DetailsUser = ({ bookingData }) => {
               <span> {bookingData.partner.name}</span>
             </p>
             <ReportPartnerModal bookingData={bookingData} reportApi={reportCarOwner} role="user"/>
+            <Link to='/chat'><FontAwesomeIcon icon={faCommentAlt} className="w-11 h-11" size="lg" style={{color: "#00060f",}} /></Link>
           </div>
           <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             Amount Paid: ₹ {bookingData.totalBookingCharge}

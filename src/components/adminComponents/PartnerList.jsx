@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const PartnerList = () => {
   const [partners, setPartners] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
   const [searchInput, setSearchInput] = useState("");
@@ -51,6 +51,10 @@ const PartnerList = () => {
   const closeModal = () => {
     setActiveModal(null);
   };
+  const handleInputChange = (e) => {
+    setSearchInput(e.target.value)
+    setCurrentPage(1)
+  }
   const filteredData = searchInput
     ? partners.filter((partner) =>
         partner.name.toLowerCase().includes(searchInput.toLowerCase())
@@ -58,7 +62,7 @@ const PartnerList = () => {
     : partners;
   const lastIndex = currentPage * dataPerPage;
   const firstIndex = lastIndex - dataPerPage;
-  const carsInSinglePage = filteredData.slice(firstIndex, lastIndex);
+  const partnersInSinglePage = filteredData.slice(firstIndex, lastIndex);
   const totalPages = Math.ceil(filteredData.length / dataPerPage);
   const numbers = [...Array(totalPages + 1).keys()].slice(1);
   return (
@@ -99,7 +103,7 @@ const PartnerList = () => {
                   <input
                     type="text"
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    onChange={handleInputChange}
                     id="table-search-users"
                     className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search for partners"
@@ -127,7 +131,7 @@ const PartnerList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {carsInSinglePage.map((data) => (
+                  {partnersInSinglePage.map((data) => (
                     <tr
                       key={data._id}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -282,12 +286,14 @@ const PartnerList = () => {
                 </tbody>
               </table>
             </div>
-            <Pagination
-              setCurrentPage={setCurrentPage}
-              numbers={numbers}
-              currentPage={currentPage}
-              totalPages={totalPages}
-            />
+            {partnersInSinglePage.length > 1 && (
+              <Pagination
+                setCurrentPage={setCurrentPage}
+                numbers={numbers}
+                currentPage={currentPage}
+                totalPages={totalPages}
+              />
+            )}
           </div>
         </div>
       )}

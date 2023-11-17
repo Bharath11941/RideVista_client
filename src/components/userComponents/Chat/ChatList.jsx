@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { getPartner } from '../../../api/chatApi'
 
 
-const ChatList = ({data,currentUserId}) => {
+const ChatList = ({data,currentUserId,online}) => {
   const [partnerData,setPartnerData] = useState(null)
   useEffect(()=>{
     const partnerId = data?.members?.find((id) => id !== currentUserId)
@@ -30,7 +30,7 @@ const ChatList = ({data,currentUserId}) => {
       </div>
       <div className="w-full">
         <div className="text-lg font-semibold">{partnerData?.name}</div>
-        <span className="text-gray-500">Online</span>
+        <span className="text-gray-500">{online ? "Online" : "Offline"}</span>
       </div>
     </div>
     <hr style={{width:"85%", border:"0.1px solid #ececec"}}/>

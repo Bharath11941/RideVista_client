@@ -1,4 +1,14 @@
+import { useState } from "react";
+import Pagination from "../common/Pagination";
+
 const WalletHistorylist = ({ user }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const dataPerPage = 2;
+  const lastIndex = currentPage * dataPerPage;
+  const firstIndex = lastIndex - dataPerPage;
+  const dataInSinglePage = user.walletHistory.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(user.walletHistory.length / dataPerPage);
+  const numbers = [...Array(totalPages + 1).keys()].slice(1);
   return (
     <div className="container mx-auto mb-40 mt-10">
       <div className="flex justify-between my-5">
@@ -28,7 +38,7 @@ const WalletHistorylist = ({ user }) => {
           </thead>
           <tbody>
             {user.walletHistory && user.walletHistory.length > 0 ? (
-              user.walletHistory.map((item) => (
+              dataInSinglePage.map((item) => (
                 <tr
                   key={item._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -68,6 +78,14 @@ const WalletHistorylist = ({ user }) => {
           </tbody>
         </table>
       </div>
+      {totalPages > 1 && (
+        <Pagination
+          numbers={numbers}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      )}
     </div>
   );
 };

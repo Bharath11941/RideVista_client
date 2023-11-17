@@ -13,17 +13,16 @@ const AllCars = () => {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const { filterCars, values } = location.state;
+
   const [cars, setCars] = useState(filterCars);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const carPerPage = 1;
+  const carPerPage = 3;
   const lastIndex = currentPage * carPerPage;
   const firstIndex = lastIndex - carPerPage;
   const carsInSinglePage = cars.slice(firstIndex, lastIndex);
   const totalPages = Math.ceil(cars.length / carPerPage);
   const numbers = [...Array(totalPages + 1).keys()].slice(1);
-
-
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
@@ -67,7 +66,11 @@ const AllCars = () => {
                 className="drawer-overlay"
               ></label>
               <div className="p-4 w-80 min-h-full bg-white text-base-content">
-                <FilterSideBar setCars={setCars} filterCars={filterCars} />
+                <FilterSideBar
+                  setCars={setCars}
+                  filterCars={filterCars}
+                  setCurrentPage={setCurrentPage}
+                />
               </div>
             </div>
           </div>
@@ -116,7 +119,14 @@ const AllCars = () => {
                 ))}
             </div>
           )}
-          <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} numbers={numbers} totalPages={totalPages}/>
+          {cars.length > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              numbers={numbers}
+              totalPages={totalPages}
+            />
+          )}
         </div>
       </div>
 

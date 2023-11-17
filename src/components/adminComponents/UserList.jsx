@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [activeModal, setActiveModal] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
@@ -53,6 +53,10 @@ const UserList = () => {
   const closeModal = () => {
     setActiveModal(null);
   };
+  const handleInputChange = (e) => {
+    setSearchInput(e.target.value)
+    setCurrentPage(1)
+  }
 
   const filteredData = !searchInput
     ? users
@@ -103,7 +107,7 @@ const UserList = () => {
                     type="text"
                     id="table-search-users"
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    onChange={handleInputChange}
                     className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search for users"
                   />
@@ -164,7 +168,12 @@ const UserList = () => {
                           )}
                         </td>
                         <td>
-                          <button onClick={() => navigate('/admin/reportedList',{state:data})} className="focus:outline-none w-24 text-white bg-red-700 hover-bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                          <button
+                            onClick={() =>
+                              navigate("/admin/reportedList", { state: data })
+                            }
+                            className="focus:outline-none w-24 text-white bg-red-700 hover-bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                          >
                             Reported
                           </button>
                         </td>
@@ -284,12 +293,14 @@ const UserList = () => {
                 </tbody>
               </table>
             </div>
-            <Pagination
-              numbers={numbers}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              totalPages={totalPages}
-            />
+            {usersInSinglePage.length > 1 && (
+              <Pagination
+                numbers={numbers}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPages={totalPages}
+              />
+            )}
           </div>
         </div>
       )}

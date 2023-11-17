@@ -1,25 +1,23 @@
-import Conversation from "./Conversation";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
-import { getPartner } from "../../../api/chatApi";
-import { addMessage, getMessages } from "../../../api/messageApi";
+import { getUser } from "../../../api/chatApi";
+import Conversation from "./Conversation";
 import InputEmoji from "react-input-emoji";
+import { addMessage, getMessages } from "../../../api/messageApi";
 
-const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
-  const [partnerData, setPartnerData] = useState(null);
+const ChatBox = ({ chat, currentPartner, setSendMessage, recieveMessage }) => {
+  const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-
   const scroll = useRef();
-  
+  console.log(chat,"from chat box")
   useEffect(() => {
     if (recieveMessage !== null && recieveMessage.chatId === chat._id) {
       setMessages([...messages, recieveMessage]);
     }
   }, [recieveMessage]);
 
-  console.log(recieveMessage,"from chat box user")
-
+  console.log(recieveMessage,"from chat box partner")
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
     scroll.current?.scrollIntoView({ behavior: "smooth" });
@@ -27,17 +25,17 @@ const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
 
   //fetching data for the header of the chat box
   useEffect(() => {
-    const partnerId = chat?.members?.find((id) => id !== currentUser);
-    const getPartnerData = async () => {
+    const userId = chat?.members?.find((id) => id !== currentPartner);
+    const getUserData = async () => {
       try {
-        const { data } = await getPartner(partnerId);
-        setPartnerData(data);
+        const { data } = await getUser(userId);
+        setUserData(data);
       } catch (error) {
         console.log(error.message);
       }
     };
-    if (chat !== null) getPartnerData();
-  }, [chat, currentUser]);
+    if (chat !== null) getUserData();
+  }, [chat, currentPartner]);
 
   //fetching data for messages
 
@@ -52,6 +50,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
     };
     if (chat !== null) fetchMessages();
   }, [chat]);
+
   const handleChange = (newMessage) => {
     setNewMessage(newMessage);
   };
@@ -59,10 +58,11 @@ const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
   const handleSend = async (e) => {
     e.preventDefault();
     const message = {
-      senderId: currentUser,
+      senderId: currentPartner,
       text: newMessage,
       chatId: chat._id,
     };
+
     try {
       const { data } = await addMessage(message);
       setMessages([...messages, data]);
@@ -70,8 +70,10 @@ const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
     } catch (error) {
       console.log(error.message);
     }
-    //  send message to socket server
-    const recieverId = chat.members.find((id) => id !== currentUser);
+
+    //send message to socket server
+    const recieverId = chat.members.find((id) => id !== currentPartner);
+    console.log(recieverId, "from submit");
     setSendMessage({ ...message, recieverId });
   };
   return (
@@ -98,9 +100,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
                 </div>
                 <div className="flex flex-col leading-tight">
                   <div className="text-2xl mt-1 flex items-center">
-                    <span className="text-gray-700 mr-3">
-                      {partnerData?.name}
-                    </span>
+                    <span className="text-gray-700 mr-3">{userData?.name}</span>
                   </div>
                 </div>
               </div>
@@ -175,7 +175,10 @@ const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
             >
               {messages.map((message) => (
                 <div ref={scroll} key={message._id}>
-                  <Conversation message={message} currentUser={currentUser} />
+                  <Conversation
+                    message={message}
+                    currentPartner={currentPartner}
+                  />
                 </div>
               ))}
             </div>

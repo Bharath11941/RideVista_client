@@ -20,14 +20,14 @@ const Pagination = ({currentPage,setCurrentPage,totalPages,numbers}) => {
     <div>
       <nav aria-label="Page navigation example" className="mt-4 ml-24 xl:ml-96">
             <ul className="inline-flex -space-x-px">
-              <li>
+              {currentPage !== 1 && <li>
                 <a
                   className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   onClick={prevPage}
                 >
                   Prev
                 </a>
-              </li>
+              </li>}
               {numbers.map((item, i) => {
                 return (
                   <li key={i}>
@@ -44,14 +44,14 @@ const Pagination = ({currentPage,setCurrentPage,totalPages,numbers}) => {
                   </li>
                 );
               })}
-              <li>
+              {currentPage !== totalPages && <li>
                 <a
                   className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   onClick={nextPage}
                 >
                   next
                 </a>
-              </li>
+              </li>}
             </ul>
           </nav>
     </div>

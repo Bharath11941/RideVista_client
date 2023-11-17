@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { partnerLogout } from "../../reduxStore/slices/partnerSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCommentAlt } from "@fortawesome/free-regular-svg-icons";
 
 const PartnerNavbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -31,7 +33,10 @@ const PartnerNavbar = () => {
             Ride Vista
           </span>
         </Link>
-        <div className="flex items-center md:order-2">
+        <div className="flex gap-4 items-center md:order-2">
+          <div>
+          <Link to='/partner/chat'><FontAwesomeIcon icon={faCommentAlt} className="w-8 h-8 mt-1" size="lg" style={{color: "#00060f",}} /></Link>
+          </div>
           <div className="relative" onClick={toggleDropdown}>
             <button
               type="button"
@@ -81,6 +86,7 @@ const PartnerNavbar = () => {
                 </div>
                )}
           </div>
+
           <button
             data-collapse-toggle="navbar-user"
             type="button"

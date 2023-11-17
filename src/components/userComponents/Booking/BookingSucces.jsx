@@ -31,7 +31,7 @@ const BookingSucces = () => {
                 to='/bookingList'
                 className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
               >
-                GO BACK
+                Back to booking details
               </Link>
             </div>
           </div>

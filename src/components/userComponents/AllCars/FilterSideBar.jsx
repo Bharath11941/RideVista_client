@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const FilterSideBar = ({ setCars, filterCars }) => {
+const FilterSideBar = ({ setCars, filterCars,setCurrentPage }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState({
     modelType: { Premium: false, Medium: false, Normal: false },
@@ -51,6 +51,8 @@ const FilterSideBar = ({ setCars, filterCars }) => {
       car.carName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setCars(filtered);
+    setCurrentPage(1)
+    
   };
   return (
     <>
