@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 const ProfileCard = () => {
   const { user } = useSelector((state) => state.userReducer);
+  const [copiedMessageVisible, setCopiedMessageVisible] = useState(false);
   const [userData, setUserData] = useState({});
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     getUserDetails(user._id)
       .then((res) => {
@@ -16,6 +17,21 @@ const ProfileCard = () => {
         console.log(err.message);
       });
   }, []);
+
+  const handleCopyReferralCode = () => {
+    const referralCodeToCopy = userData.referalCode
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(referralCodeToCopy);
+
+    // Show copied message
+    setCopiedMessageVisible(true);
+
+    // Hide the message after a delay (e.g., 2 seconds)
+    setTimeout(() => {
+      setCopiedMessageVisible(false);
+    }, 2000);
+  };
   return (
     <div className="container mx-auto flex items-center justify-center pb-40 mt-10">
       <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -42,12 +58,30 @@ const ProfileCard = () => {
           <h1 className="font-bold text-lg mt-5">
             Wallet Amount : {userData.wallet}
           </h1>
+
+          <div className="mt-3 flex items-center">
+            <p className="text-sm text-gray-500 dark:text-gray-400 me-2">
+              Referral Code: {userData.referalCode}
+            </p>
+            <button
+              type="button"
+              onClick={handleCopyReferralCode}
+              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-1.5"
+            >
+              Copy
+            </button>
+          </div>
+          {/* Copied message */}
+          {copiedMessageVisible && (
+            <p className="text-green-500 text-sm mt-2">Copied to clipboard!</p>
+          )}
+
           <button
             type="button"
-            onClick={()=>navigate("/walletHistory",{state:userData})}
+            onClick={() => navigate("/walletHistory", { state: userData })}
             className="text-white mt-4 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
           >
-           Wallet History
+            Wallet History
           </button>
         </div>
       </div>

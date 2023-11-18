@@ -119,7 +119,7 @@ const AllCars = () => {
                 ))}
             </div>
           )}
-          {cars.length > 1 && (
+          {totalPages > 1  && (
             <Pagination
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}

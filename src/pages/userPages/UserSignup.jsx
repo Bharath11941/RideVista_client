@@ -9,6 +9,7 @@ import Loading from "../../components/loading/Loading";
 const UserSignup = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [referralChecked, setReferralChecked] = useState(false);
   async function onSubmit() {
     try {
       setLoading(true);
@@ -34,10 +35,18 @@ const UserSignup = () => {
         mobile: "",
         password: "",
         cpassword: "",
+        referralCode: "",
       },
       validationSchema: userSchema,
       onSubmit,
     });
+  const handleReferralUsed = (e) => {
+    setReferralChecked(e.target.checked);
+  };
+  
+
+  
+  
   return (
     <>
       {loading ? (
@@ -161,6 +170,38 @@ const UserSignup = () => {
                       <p className="text-red-600">{errors.cpassword}</p>
                     )}
                   </div>
+
+                  <div className="mt-5">
+                    <input
+                      id="referral-checkbox"
+                      type="checkbox"
+                      checked={referralChecked}
+                      onChange={handleReferralUsed}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor="referral-checkbox"
+                      className="ms-2 text-sm font-semibold text-gray-900 dark:text-gray-300"
+                    >
+                      Do you have a referral code?
+                    </label>
+                  </div>
+                  {referralChecked && <div className="mt-2 relative">
+                    <input
+                      type="text"
+                      placeholder="Referral Code"
+                      name="referralCode"
+                      value={values.referralCode}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="border border-gray-400 rounded-md shadow-md py-2 px-3 w-40 text-sm focus:outline-none focus:ring focus:border-blue-500"
+                      // Adjusted the width to w-40 (you can adjust the width based on your preference)
+                    />
+                    {errors.referralCode && touched.referralCode && (
+                      <p className="text-red-600">{errors.referralCode}</p>
+                    )}
+                  </div>}
+                  
                   <div className="mt-5">
                     <button className="w-full bg-purple-500 py-3 text-center text-white rounded-lg shadow-md">
                       Register Now

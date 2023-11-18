@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const FilterSideBar = ({ setCars, filterCars,setCurrentPage }) => {
+const FilterSideBar = ({ setCars, filterCars, setCurrentPage }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState({
     modelType: { Premium: false, Medium: false, Normal: false },
@@ -33,11 +33,11 @@ const FilterSideBar = ({ setCars, filterCars,setCurrentPage }) => {
         selectedTransitionTypes.includes(car.transitionType);
       return modelMatch && fuelMatch && transitionMatch;
     });
-    console.log(filteredCars,"from useeffect")
     setCars(filteredCars);
   }, [filterOptions, filterCars]);
 
   const handleCheckboxChange = (option, type) => {
+    
     setFilterOptions((prevOptions) => ({
       ...prevOptions,
       [type]: {
@@ -45,14 +45,24 @@ const FilterSideBar = ({ setCars, filterCars,setCurrentPage }) => {
         [option]: !prevOptions[type][option],
       },
     }));
+    
   };
   const handleSearch = () => {
     const filtered = filterCars.filter((car) =>
       car.carName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setCars(filtered);
-    setCurrentPage(1)
-    
+    setCurrentPage(1);
+  };
+  const resetFilter = () => {
+    setFilterOptions({
+      modelType: { Premium: false, Medium: false, Normal: false },
+      fuelType: { Diesel: false, Petrol: false },
+      transitionType: { Automatic: false, Manual: false, Electric: false },
+    });
+    setSearchTerm("");
+    setCars(filterCars);
+    setCurrentPage(1);
   };
   return (
     <>
@@ -92,7 +102,7 @@ const FilterSideBar = ({ setCars, filterCars,setCurrentPage }) => {
       </div>
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold my-2 uppercase">Filter</h1>
-        <button onClick={() => setCars(filterCars)}>Clear Filter</button>
+        <button onClick={resetFilter}>Clear Filter</button>
       </div>
       <div className="grid gap-2 my-5">
         <h1 className="px-4 py-2  bg-blue-500 font-bold text-white rounded-md">

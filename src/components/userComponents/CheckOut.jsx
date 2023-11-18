@@ -118,7 +118,7 @@ const CheckOut = () => {
   const handleWalletUsed = (e) => {
     setWalletChecked(e.target.checked);
   };
-  console.log(walletChecked);
+
   return (
     <>
       <div className=" container pb-40 mx-auto mt-10 mb-52 dark:border-gray-700 shadow border border-gray-200">

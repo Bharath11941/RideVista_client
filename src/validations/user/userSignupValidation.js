@@ -1,5 +1,6 @@
 import * as yup from "yup";
-const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,16}$/;
+const passwordRule =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,16}$/;
 export const userSchema = yup.object().shape({
   name: yup
     .string()
@@ -16,13 +17,23 @@ export const userSchema = yup.object().shape({
       /^\d{10}$/.test(val)
     )
     .required("Required"),
-    password: yup.string()
+  password: yup
+    .string()
     .min(5, "Password should contain 5-16 characters")
     .max(16, "Password should contain 5-16 characters")
-    .matches(passwordRule, 'Password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be 5-16 characters long.')
+    .matches(
+      passwordRule,
+      "Password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be 5-16 characters long."
+    )
     .required("Required"),
   cpassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Password must match")
     .required("Required"),
+  referralCode: yup
+    .string()
+    .matches(
+      /^[A-Z0-9]{6}$/,
+      "Referral code must be 6 characters and contain only letters and numbers"
+    ),
 });

@@ -11,6 +11,9 @@ import { useNavigate } from "react-router-dom";
 const AddCar = () => {
   const [certificate, setCertificate] = useState([]);
   const [loading, setLoading] = useState(false);
+  // Separate error states for certificate and car images
+  const [certificateError, setCertificateError] = useState(null);
+  const [carImagesError, setCarImagesError] = useState(null);
   const navigate = useNavigate();
   const [carImage, setCarImage] = useState([]);
   const { _id } = useSelector((state) => state.partnerReducer.partner);
@@ -18,6 +21,16 @@ const AddCar = () => {
   const onSubmit = async () => {
     try {
       setLoading(true);
+      if (certificate.length === 0) {
+        setCertificateError("Please select a certificate file.");
+        setLoading(false); // Stop loading
+        return;
+      }
+      if (carImage.length === 0) {
+        setCarImagesError("Please select at least one image for the car.");
+        setLoading(false);
+        return;
+      }
       const res = await addCar({ ...values, certificate, carImage, partnerId });
       if (res?.status === 201) {
         setLoading(false);
@@ -51,11 +64,14 @@ const AddCar = () => {
       (file.type.startsWith("image/jpeg") || file.type.startsWith("image/png"))
     ) {
       setCertificateToBase(file);
+      setCertificateError(null);
     } else {
-      toast.error("Invalid file type. Please select a valid image.");
+      setCertificateError("Invalid file type. Please select a valid image.");
+      setCertificate([])
       event.target.value = null;
     }
   };
+  
   const setCertificateToBase = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -67,17 +83,20 @@ const AddCar = () => {
     const files = Array.from(event.target.files);
     const isValid = files.every(
       (file) =>
-        file.type.startsWith("image/jpeg") ||
-        file.type.startsWith("image/png") 
+        file.type.startsWith("image/jpeg") || file.type.startsWith("image/png")
     );
     if (isValid) {
       setCarImageToBase(files);
+      setCarImagesError(null); // Clear error if files are valid
     } else {
-      toast.error("Invalid file type. Please select valid image files.");
+      setCarImagesError('Invalid file type. Please select valid image files.');
+      setCarImage([])
 
       event.target.value = null;
     }
   };
+ 
+
 
   const setCarImageToBase = async (files) => {
     for (let i = 0; i < files.length; i++) {
@@ -162,7 +181,7 @@ const AddCar = () => {
                   <div className="text-red-500 text-sm">{errors.fuelType}</div>
                 )}
               </div>
-              <div className="flex items-start mb-6">
+              <div className="flex items-start mb-3">
                 <select
                   name="transitionType"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -175,13 +194,14 @@ const AddCar = () => {
                   <option value="Manual">Manual</option>
                   <option value="Manual">Electric</option>
                 </select>
-                {touched.transitionType && errors.transitionType && (
+                
+              </div>
+              {touched.transitionType && errors.transitionType && (
                   <div className="text-red-500 text-sm">
                     {errors.transitionType}
                   </div>
                 )}
-              </div>
-              <div className="flex items-start mb-6">
+              <div className="flex items-start mb-3">
                 <select
                   name="modelType"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -194,10 +214,11 @@ const AddCar = () => {
                   <option value="Medium">Medium</option>
                   <option value="Normal">Normal</option>
                 </select>
-                {touched.modelType && errors.modelType && (
+               
+              </div>
+              {touched.modelType && errors.modelType && (
                   <div className="text-red-500 text-sm">{errors.modelType}</div>
                 )}
-              </div>
               <label
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 htmlFor="file_input"
@@ -211,8 +232,10 @@ const AddCar = () => {
                 type="file"
                 onChange={handleCertificateFileChange}
                 accept="image/*" // Allow only image files
-                required
               />
+              {certificateError && (
+                <div className="text-red-500 text-sm">{certificateError}</div>
+              )}
               <div className="pb-2">
                 <label
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -228,9 +251,12 @@ const AddCar = () => {
                   accept="image/*" // Allow only image files
                   onChange={handleCarImagesChange}
                   multiple
-                  required
                 />
+                {carImagesError && (
+                  <div className="text-red-500 text-sm">{carImagesError}</div>
+                )}
               </div>
+
               <button
                 type="submit"
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

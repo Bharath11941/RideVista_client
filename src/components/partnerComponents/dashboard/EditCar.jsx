@@ -4,16 +4,22 @@ import { carValidationSchema } from "../../../validations/partner/carValidation"
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteSingleImage, editCar, editCarDetails } from "../../../api/partnerApi";
+import {
+  deleteSingleImage,
+  editCar,
+  editCarDetails,
+} from "../../../api/partnerApi";
 import Loading from "../../loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faL, faTrash } from "@fortawesome/free-solid-svg-icons";
-
 
 const EditCar = () => {
   const [certificate, setCertificate] = useState([]);
   const [certificateImg, setCertificateImg] = useState({});
   const [selectedImages, setSelectedImages] = useState([]);
+  // Separate error states for certificate and car images
+  const [certificateError, setCertificateError] = useState(null);
+  const [carImagesError, setCarImagesError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [carImage, setCarImage] = useState([]);
@@ -22,6 +28,12 @@ const EditCar = () => {
   const onSubmit = async () => {
     try {
       setLoading(true);
+      if (car.carImages.length === 0 && carImage.length ===0) {
+        setCarImagesError("Please select at least one image for the car.");
+        setLoading(false);
+        return;
+      }
+      
       const res = await editCar({ ...values, certificate, carImage, carId });
       if (res?.status === 200) {
         setLoading(false);
@@ -58,9 +70,19 @@ const EditCar = () => {
       enableReinitialize: true,
     });
   const handleCertificateFileChange = (event) => {
-    setCertificateImg(event.target.files[0]);
     const file = event.target.files[0];
-    setCertificateToBase(file);
+    setCertificateImg(file);
+    if (
+      file.type &&
+      (file.type.startsWith("image/jpeg") || file.type.startsWith("image/png"))
+    ) {
+      setCertificateToBase(file);
+      setCertificateError(null);
+    } else {
+      setCertificateError("Invalid file type. Please select a valid image.");
+      setCertificate([]);
+      event.target.value = null;
+    }
   };
   const setCertificateToBase = (file) => {
     const reader = new FileReader();
@@ -69,10 +91,21 @@ const EditCar = () => {
       setCertificate(reader.result);
     };
   };
-
   const handleCarImagesChange = (event) => {
     const files = Array.from(event.target.files);
-    setCarImageToBase(files);
+    const isValid = files.every(
+      (file) =>
+        file.type.startsWith("image/jpeg") || file.type.startsWith("image/png")
+    );
+    if (isValid) {
+      setCarImageToBase(files);
+      setCarImagesError(null); // Clear error if files are valid
+    } else {
+      setCarImagesError("Invalid file type. Please select valid image files.");
+      setCarImage([]);
+
+      event.target.value = null;
+    }
     const newImages = files.map((file) => URL.createObjectURL(file));
     const allImages = [...newImages, ...car.carImages];
     setSelectedImages(allImages);
@@ -89,19 +122,20 @@ const EditCar = () => {
   };
   const handleDeleteImage = async (imageSrc) => {
     try {
-      setLoading(true)
-      const res = await deleteSingleImage(imageSrc,car._id)
-      if(res.status === 200){
-        toast.success(res?.data?.message)
-        setCar(res?.data?.updatedData)
+      setLoading(true);
+      const res = await deleteSingleImage(imageSrc, car._id);
+      if (res.status === 200) {
+        toast.success(res?.data?.message);
+        setCar(res?.data?.updatedData);
       }
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       toast.error(error.response?.data?.message);
       console.log(error.message);
     }
-  }
+  };
+  
   return (
     <>
       {loading ? (
@@ -226,13 +260,15 @@ const EditCar = () => {
                   type="file"
                   onChange={handleCertificateFileChange}
                   accept="image/*" // Allow only image files
-                  required
                 />
+                {certificateError && (
+                  <div className="text-red-500 text-sm">{certificateError}</div>
+                )}
                 <div className="w-60 h-auto pb-5">
                   {certificateImg && certificateImg instanceof Blob ? (
                     <div>
                       <img
-                        src={URL.createObjectURL(certificateImg)} 
+                        src={URL.createObjectURL(certificateImg)}
                         alt="Car Registration Certificate"
                         className="mt-2 max-w-full h-auto"
                       />
@@ -262,9 +298,11 @@ const EditCar = () => {
                   type="file"
                   onChange={handleCarImagesChange}
                   accept="image/*" // Allow only image files
-                  required
                   multiple
                 />
+                {carImagesError && (
+                  <div className="text-red-500 text-sm">{carImagesError}</div>
+                )}
                 <div className="w-60 h-auto overflow-x-auto flex space-x-2">
                   {selectedImages.length > 0
                     ? selectedImages.map((imageURL, index) => (
@@ -284,7 +322,11 @@ const EditCar = () => {
                             alt={`Car Image ${index + 1}`}
                             className="max-w-full h-auto"
                           />
-                          <p onClick={()=>{handleDeleteImage(imageURL)}}>
+                          <p
+                            onClick={() => {
+                              handleDeleteImage(imageURL);
+                            }}
+                          >
                             <FontAwesomeIcon
                               className="w-5 h-5"
                               icon={faTrash}
