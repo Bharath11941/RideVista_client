@@ -82,3 +82,4 @@ export const reportUser = async (partnerId,reason,userId) => {
   return data
 }
 
+export const partnerReport = async (partnerId) => await partnerAxiosInstance.get(`/report/${partnerId}`)

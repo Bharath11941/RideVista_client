@@ -6,8 +6,10 @@ const PartnerEditCarPage = () => {
   return (
     <>
       <PartnerNavbar />
-      <PartnerSidebar />
-      <EditCar />
+      <div className="mx-auto flex mt-5">
+        <PartnerSidebar />
+        <EditCar />
+      </div>
     </>
   );
 };

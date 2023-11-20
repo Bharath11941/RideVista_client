@@ -7,8 +7,10 @@ const UserListPage = () => {
   return (
     <>
     <AdminNavbar/>
+    <div className="mx-auto flex mt-5">
     <AdminSidebar/>
     <UserList/>
+    </div>
     </>
   )
 }

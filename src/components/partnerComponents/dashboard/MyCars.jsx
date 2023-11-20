@@ -46,7 +46,7 @@ const Mycars = () => {
   const totalPages = Math.ceil(filteredData.length / carPerPage);
   const numbers = [...Array(totalPages + 1).keys()].slice(1);
   return (
-    <div className="p-4 sm:ml-64">
+    <div className="w-full md:w-3/4 px-4 mb-5 mt-5">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-semibold mb-8">Cars</h1>

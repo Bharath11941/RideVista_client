@@ -145,7 +145,7 @@ const EditCar = () => {
           </div>
         </div>
       ) : (
-        <div className="p-4 sm:ml-64">
+        <div className="w-full md:w-3/4 px-4 mb-5 mt-5">
           <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
             <h1 className="text-xl pb-2">Edit car</h1>
             <form onSubmit={handleSubmit}>

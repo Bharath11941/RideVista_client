@@ -38,7 +38,7 @@ const AllCars = () => {
   return (
     <>
       <UserNavbar />
-      <div className=" mx-auto flex mt-5">
+      <div className="mx-auto flex mt-5">
         <div className=" w-1/4 hidden shadow-lg md:flex rounded-md mt-5">
           <div className="p-4 w-full">
             <FilterSideBar setCars={setCars} filterCars={filterCars} />

@@ -74,9 +74,9 @@ const PartnerList = () => {
           </div>
         </div>
       ) : (
-        <div className="p-4 sm:ml-64">
+        <div className="w-full md:w-3/4 px-4 mb-5 mt-5">
           <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div className="relative  shadow-md sm:rounded-lg">
               <h1 className="text-3xl pt-2">Partners List</h1>
               <div className="flex items-center justify-end py-4 bg-white dark:bg-gray-800">
                 <label htmlFor="table-search" className="sr-only">

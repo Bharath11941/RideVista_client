@@ -157,16 +157,16 @@ const PartnerNavbar = () => {
         </div>
       </div>
       {/* Mobile menu items */}
-      {isMobileMenuOpen && (
+      {/* {isMobileMenuOpen && (
         <div className="md:hidden">
           <ul className="py-2 bg-gray-100 md:bg-transparent">
             <li>
-              <a
-                href="#"
+              <Link
+                to='/partner'
                 className="block px-4 py-2 text-gray-900 hover-bg-gray-100 md:hover-bg-transparent"
               >
                 Home
-              </a>
+              </Link>
             </li>
 
             <li>
@@ -193,10 +193,11 @@ const PartnerNavbar = () => {
                 About
               </a>
             </li>
-            {/* Add more mobile menu items here */}
+            <Link to='/partner/chat'><FontAwesomeIcon icon={faCommentAlt} className="w-8 h-8 mt-1" size="lg" style={{color: "#00060f",}} /></Link>
+            
           </ul>
         </div>
-      )}
+      )} */}
     </nav>
   )
 }

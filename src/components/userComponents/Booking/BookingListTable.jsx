@@ -31,7 +31,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
         console.log(err.message);
       });
   }, []);
-  console.log(bookingList, "from boking list table");
+
   function getStatusColor(status) {
     switch (status) {
       case "Pending":
@@ -76,7 +76,6 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
     try {
       setLoading(true);
       const res = await cancelBooking(bookingId, reason);
-      console.log(res?.data?.bookingList, "fljlal");
       if (res?.status === 200) {
         setBookingList(res?.data?.bookingList);
         toast.success(res?.data?.message);
@@ -106,34 +105,34 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
           </div>
         </div>
       ) : (
-        <div className="container mx-auto pb-40">
+        <div className={role === "user" ? "container mx-auto pb-20" : "container mx-auto"}>
           <h1 className="text-3xl px-3 mb-5 mt-5">My bookings</h1>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="pl-6 py-3">
                     Booking Id
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="pl-6 py-3">
                     Car
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="pl-6 py-3">
                     Pick Up
                   </th>
-                  <th scope="col" className="px-6 py-3">
-                    Return
+                  <th scope="col" className="pl-6 py-3">
+                    Returl
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="pl-6 py-3">
                     Total rent Paid
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="pl-6 py-3">
                     Status
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="pl-6 py-3">
                     Details
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="pl-6 py-3">
                     Action
                   </th>
                 </tr>
@@ -146,7 +145,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                       key={data._id}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >
-                      <td className="px-6 py-4">{data._id}</td>
+                      <td className="pl-6 py-4">{data._id}</td>
                       <th
                         scope="row"
                         className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
@@ -162,7 +161,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                           </div>
                         </div>
                       </th>
-                      <td className="px-6 py-4">
+                      <td className="pl-6 py-4">
                         <div className="text-base font-semibold">
                           {data.pickUpLocation}
                         </div>
@@ -177,7 +176,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="pl-6 py-4">
                         <div className="text-base font-semibold">
                           {data.returnLocation}
                         </div>
@@ -189,12 +188,12 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                           })}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="pl-6 py-4">
                         <p className="text-lg font-bold">
                           ₹ {data.totalBookingCharge}
                         </p>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="pl-6 py-4">
                         <div className="flex items-center gap-1">
                           <div
                             className={`h-2.5 w-2.5 rounded-full  ${getStatusColor(
@@ -204,7 +203,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                           {getStatusText(data.bookingStatus)}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="pl-6 py-4">
                         <button
                           type="button"
                           onClick={() => handleNavigate(data)}
@@ -213,7 +212,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                           Details
                         </button>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="pl-6 py-4">
                         {data.bookingStatus === "Success" &&
                           !data.cancelStatus && (
                             <button

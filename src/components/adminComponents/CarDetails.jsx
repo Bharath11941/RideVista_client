@@ -57,7 +57,7 @@ const CarDetails = () => {
           </div>
         </div>
       ) : (
-        <div className="md:ml-64">
+        <div className="w-full md:w-3/4 px-4 mb-5 mt-5">
           <div className="bg-white p-4 shadow-xl rounded-lg">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">Car Details</h2>

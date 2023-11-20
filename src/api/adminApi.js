@@ -14,18 +14,18 @@ export const partnerList = async () => {
 };
 
 export const carList = async () => {
-  const data = await adminAxiosInstance.get('/cars')
-  return data
-}
-export const singleCarDetails = async(carId) => {
-  const data = await adminAxiosInstance.get(`/singleCarDetails/${carId}`)
-  return data
-}
+  const data = await adminAxiosInstance.get("/cars");
+  return data;
+};
+export const singleCarDetails = async (carId) => {
+  const data = await adminAxiosInstance.get(`/singleCarDetails/${carId}`);
+  return data;
+};
 
-export const verifyCar = async (carId,action) => {
-  const data = adminAxiosInstance.patch('/verifyCar',{carId,action})
-  return data
-}
+export const verifyCar = async (carId, action) => {
+  const data = adminAxiosInstance.patch("/verifyCar", { carId, action });
+  return data;
+};
 
 export const userBlock = async (userId, status) => {
   const data = await adminAxiosInstance.patch("/blockUser", { userId, status });
@@ -33,7 +33,18 @@ export const userBlock = async (userId, status) => {
 };
 
 export const partnerBlock = async (partnerId, status) => {
-  const data = await adminAxiosInstance.patch("/blockPartner", { partnerId, status });
+  const data = await adminAxiosInstance.patch("/blockPartner", {
+    partnerId,
+    status,
+  });
   return data;
 };
-
+export const adminReport = async () => {
+  const data = await adminAxiosInstance.get("/report");
+  console.log(data);
+  return data;
+};
+export const totalBookings = async () => {
+  const data = await adminAxiosInstance.get("/bookings");
+  return data;
+};

@@ -1,18 +1,21 @@
 import React from "react";
 import AdminNavbar from "../../components/adminComponents/AdminNavbar";
 import AdminSidebar from "../../components/adminComponents/AdminSidebar";
-import DashBoardBody from "../../components/adminComponents/dashBoard/DashBoardBody";
+import BookingDetails from "../../components/adminComponents/BookingDetails";
+import { useLocation } from "react-router-dom";
 
-const AdminDashboard = () => {
+const BookingDetailsPage = () => {
+  const { state } = useLocation();
+  let { data } = state;
   return (
     <>
       <AdminNavbar />
       <div className="mx-auto flex mt-5">
         <AdminSidebar />
-        <DashBoardBody />
+        <BookingDetails bookingData={data} />
       </div>
     </>
   );
 };
 
-export default AdminDashboard;
+export default BookingDetailsPage;

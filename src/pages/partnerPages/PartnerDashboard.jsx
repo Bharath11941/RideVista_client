@@ -1,16 +1,18 @@
-import React from 'react'
-import PartnerSidebar from '../../components/partnerComponents/dashboard/PartnerSidebar'
-import PartnerNavbar from '../../components/partnerComponents/PartnerNavbar'
-import DashboardHome from '../../components/partnerComponents/dashboard/DashboardHome'
+import React from "react";
+import PartnerSidebar from "../../components/partnerComponents/dashboard/PartnerSidebar";
+import PartnerNavbar from "../../components/partnerComponents/PartnerNavbar";
+import DashboardHome from "../../components/partnerComponents/dashboard/home/DashboardHome";
 
 const PartnerDashboard = () => {
   return (
     <>
-    <PartnerNavbar/>
-    <PartnerSidebar/>
-    <DashboardHome/>
+      <PartnerNavbar />
+      <div className="mx-auto flex mt-5">
+        <PartnerSidebar />
+        <DashboardHome />
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default PartnerDashboard
+export default PartnerDashboard;
