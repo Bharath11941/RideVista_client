@@ -1,4 +1,3 @@
-
 import ChatList from "./ChatList";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -6,54 +5,59 @@ import { useEffect } from "react";
 import { userChats } from "../../../api/chatApi";
 import ChatBox from "./ChatBox";
 import { io } from "socket.io-client";
-import { useRef } from "react";
-
+const END_POINT = "http://localhost:3000";
+var socket;
 const Chat = () => {
-  const { user } = useSelector((state) => state.userReducer);
-  const [chats, setChats] = useState([]);
-  const [onlineUsers, setOnlineUsers] = useState([]);
+  const { _id } = useSelector((state) => state.userReducer.user);
+  const userId = _id;
+
+  const [conversations, setConversations] = useState([]);
+  const [onlineUsers,setOnlineUsers] = useState([])
   const [currentChat, setCurrentChat] = useState(null);
-  const [sendMessage, setSendMessage] = useState(null);
-  const [recieveMessage, setRecieveMessage] = useState(null);
-  const socket = useRef();
-  //sending message to socket server
-  useEffect(() => {
-    if (sendMessage !== null) {
-      socket.current.emit("send-message", sendMessage);
-    }
-  }, [sendMessage]);
+  const [messages, setMessages] = useState([]);
+  const [socketConnection, setSocketConnection] = useState(false);
 
   useEffect(() => {
-    socket.current = io("http://localhost:8800");
-    socket.current.emit("new-user-add", user._id);
-    socket.current.on("get-users", (users) => {
-      setOnlineUsers(users);
+    userChats(userId).then((res) => {
+      setConversations(res?.data);
     });
-  }, [user]);
-
- //revieve message from socket server
- useEffect(()=>{
-  socket.current.on('recieve-message',(data) => {
-    setRecieveMessage(data)
-  })
-},[])
-  
+  }, []);
 
   useEffect(() => {
-    const getChats = async () => {
-      try {
-        const { data } = await userChats(user._id);
-        setChats(data);
-      } catch (error) {
-        console.log(error.messaage);
+    socket = io(END_POINT);
+    
+  }, []);
+
+  useEffect(()=>{
+    socket?.emit('setup',currentChat?._id)
+    socket?.on('connection',()=>{
+      setSocketConnection(true)
+    })
+    socket?.on('connected',()=>{
+      setSocketConnection(true)
+    })
+    
+  },[currentChat])
+  useEffect(()=>{
+    socket?.emit('new-user-add',userId)
+    socket?.on('get-users',(users)=>{
+      setOnlineUsers(users)
+    })
+  },[userId])
+  useEffect(()=>{
+    socket.on('recieve_message',(data)=>{
+      if(data?.chatId === currentChat?._id){
+        const message = [...messages,data]
+        setMessages(message);
       }
-    };
-    getChats();
-  }, [user]);
+    })
+  },[messages])
 
   const checkOnlineStatus = (chat) => {
-    const chatMember = chat.members.find((member) => member !== user._id);
+    const chatMember = chat.members.find((member) => member !== userId);
+    console.log(onlineUsers,"online users")
     const online = onlineUsers.find((user) => user.userId === chatMember);
+    console.log(online,"online")
     return online ? true : false;
   };
 
@@ -78,9 +82,15 @@ const Chat = () => {
                  <!-- user list --> */}
                 <div className="pt-20">
                   <div className="cursor-pointer">
-                    {chats.map((chat) => (
-                      <div key={chat._id} onClick={() => setCurrentChat(chat)}>
-                        <ChatList data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)} />
+                    {conversations?.map((chat) => (
+                      <div
+                        key={chat._id}
+                        onClick={() => {
+                          setCurrentChat(chat);
+                          socket?.emit("join room", chat._id);
+                        }}
+                      >
+                        <ChatList data={chat} currentUserId={userId} online={checkOnlineStatus(chat)}/>
                       </div>
                     ))}
                   </div>
@@ -97,9 +107,10 @@ const Chat = () => {
                   >
                     <ChatBox
                       chat={currentChat}
-                      currentUser={user._id}
-                      setSendMessage={setSendMessage}
-                      recieveMessage={recieveMessage}
+                      currentUser={userId}
+                      setMessages={setMessages}
+                      messages={messages}
+                      socket={socket}
                     />
                   </div>
                 </div>

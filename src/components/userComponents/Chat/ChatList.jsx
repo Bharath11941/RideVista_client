@@ -17,7 +17,7 @@ const ChatList = ({data,currentUserId,online}) => {
       }
     }
     getPartnerData()
-  },[])
+  },[data,currentUserId])
   return (
     <>
     <div className="flex flex-row px-5 py-3 justify-center items-center border-b-2 bg-gray-200 hover:bg-gray-50">

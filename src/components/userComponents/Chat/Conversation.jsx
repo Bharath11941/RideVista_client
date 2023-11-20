@@ -3,7 +3,7 @@ import { format } from "timeago.js";
 const Conversation = ({ currentUser, message }) => {
   return (
     <div id="messages" className="">
-      {currentUser === message.senderId ? (
+      {currentUser === message?.senderId ? (
         <div className="chat-message">
           <div className="flex items-end justify-end">
             <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
@@ -12,13 +12,13 @@ const Conversation = ({ currentUser, message }) => {
                   className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white break-words"
                   style={{ maxWidth: "350px" }}
                 >
-                  {message.text}
+                  {message?.text}
                 </span>
               </div>
             </div>
           </div>
           <div className="flex justify-end text-black font-extralight">
-            {format(message.createdAt)}
+            {format(message?.createdAt)}
           </div>
         </div>
       ) : (
@@ -30,9 +30,9 @@ const Conversation = ({ currentUser, message }) => {
                   className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600 break-words"
                   style={{ maxWidth: "350px" }}
                 >
-                  {message.text}
+                  {message?.text}
                 </span>
-                <span> {format(message.createdAt)}</span>
+                <span> {format(message?.createdAt)}</span>
               </div>
             </div>
           </div>

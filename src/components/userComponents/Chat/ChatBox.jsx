@@ -5,20 +5,12 @@ import { getPartner } from "../../../api/chatApi";
 import { addMessage, getMessages } from "../../../api/messageApi";
 import InputEmoji from "react-input-emoji";
 
-const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
+const ChatBox = ({ chat, currentUser, setMessages,messages,socket }) => {
   const [partnerData, setPartnerData] = useState(null);
-  const [messages, setMessages] = useState([]);
+
   const [newMessage, setNewMessage] = useState("");
 
   const scroll = useRef();
-  
-  useEffect(() => {
-    if (recieveMessage !== null && recieveMessage.chatId === chat._id) {
-      setMessages([...messages, recieveMessage]);
-    }
-  }, [recieveMessage]);
-
-  console.log(recieveMessage,"from chat box user")
 
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
@@ -70,9 +62,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
     } catch (error) {
       console.log(error.message);
     }
-    //  send message to socket server
-    const recieverId = chat.members.find((id) => id !== currentUser);
-    setSendMessage({ ...message, recieverId });
+    socket.emit('send_message',message)
   };
   return (
     <>

@@ -28,7 +28,7 @@ const ChatList = ({ data, currentPartnerId,online }) => {
       </div>
       <div className="w-full">
         <div className="text-lg font-semibold">{userData?.name}</div>
-        <span className="text-gray-500">{online ? "Online" : "Offlne"}</span>
+        <span className="text-gray-500">{online ? "Online" : "Offline"}</span>
       </div>
     </div>
   );
