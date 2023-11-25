@@ -1,4 +1,3 @@
-import React from "react";
 import ChatList from "./ChatList";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -6,9 +5,9 @@ import ChatBox from "./ChatBox";
 import { userChats } from "../../../api/chatApi";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
-import { useRef } from "react";
+
 const END_POINT = "http://localhost:3000";
-var socket, selectedChatCompare;
+let socket;
 
 const Chat = () => {
   const { _id } = useSelector((state) => state.partnerReducer.partner);
@@ -17,7 +16,6 @@ const Chat = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [socketConnection, setSocketConnection] = useState(false);
 
   useEffect(() => {
     userChats(partnerId).then((res) => {
@@ -30,24 +28,18 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    socket?.emit("setup", currentChat?._id);
-    socket?.on("connection", () => {
-      setSocketConnection(true);
-    });
-    socket?.on("connected", () => {
-      setSocketConnection(true);
-    });
-   
-  }, [currentChat]);
-  useEffect(()=>{
-    socket?.emit("new-user-add", partnerId);
+    socket?.emit("setup", partnerId);
     socket?.on("get-users", (users) => {
       setOnlineUsers(users);
     });
-  },[partnerId])
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [partnerId]);
+
   useEffect(() => {
-    socket.on("recieve_message", (data) => {
-      console.log("recieve message on", data);
+    socket?.on("recieve_message", (data) => {
       if (data?.chatId === currentChat?._id) {
         const message = [...messages, data];
         setMessages(message);
@@ -57,9 +49,7 @@ const Chat = () => {
 
   const checkOnlineStatus = (chat) => {
     const chatMember = chat.members.find((member) => member !== partnerId);
-    console.log(onlineUsers,"online users")
     const online = onlineUsers.find((user) => user.userId === chatMember);
-    console.log(online,"online")
     return online ? true : false;
   };
 
@@ -92,7 +82,11 @@ const Chat = () => {
                           socket?.emit("join room", chat._id);
                         }}
                       >
-                        <ChatList data={chat} currentUserId={partnerId} online={checkOnlineStatus(chat)}/>
+                        <ChatList
+                          data={chat}
+                          currentUserId={partnerId}
+                          online={checkOnlineStatus(chat)}
+                        />
                       </div>
                     ))}
                   </div>
@@ -113,7 +107,7 @@ const Chat = () => {
                       messages={messages}
                       socket={socket}
                     />
-                    {/* setSendMessage={setSendMessage} recieveMessage={recieveMessage} */}
+                    
                   </div>
                 </div>
               </div>
@@ -126,3 +120,4 @@ const Chat = () => {
 };
 
 export default Chat;
+

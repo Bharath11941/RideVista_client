@@ -5,18 +5,18 @@ import Conversation from "./Conversation";
 import InputEmoji from "react-input-emoji";
 import { addMessage, getMessages } from "../../../api/messageApi";
 
-const ChatBox = ({ chat, currentPartner, setMessages,messages,socket }) => {
+const ChatBox = ({ chat, currentPartner, setMessages, messages, socket }) => {
   const [userData, setUserData] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const scroll = useRef();
-  
 
+  // 👇️ scroll to bottom every time messages change
   useEffect(() => {
-    // 👇️ scroll to bottom every time messages change
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   //fetching data for the header of the chat box
+
   useEffect(() => {
     const userId = chat?.members?.find((id) => id !== currentPartner);
     const getUserData = async () => {
@@ -65,8 +65,9 @@ const ChatBox = ({ chat, currentPartner, setMessages,messages,socket }) => {
     }
 
     //send message to socket server
-    socket.emit('send_message',message)
+    socket.emit("send_message", message);
   };
+
   return (
     <>
       {chat ? (
@@ -84,7 +85,7 @@ const ChatBox = ({ chat, currentPartner, setMessages,messages,socket }) => {
                     </svg>
                   </span>
                   <img
-                    src="../../../assets/Icons/calendar-icon.svg"
+                    src={userData?.profileImage || "../../../assets/Icons/calendar-icon.svg"}
                     alt=""
                     className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
                   ></img>
@@ -96,29 +97,6 @@ const ChatBox = ({ chat, currentPartner, setMessages,messages,socket }) => {
                 </div>
               </div>
               <div className="flex items-center space-x-2">
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
-                >
-                  <svg
-                    className="fill-current text-info"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 512 512"
-                    enableBackground="new 0 0 48 48"
-                    id="Layer_1"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g id="Layer_3">
-                      <path
-                        d="M0,109.7v292.6h402.3v-61.7L512,395.4V116.6l-109.7,54.9v-61.7H0z M36.6,146.3h329.1v219.4H36.6V146.3z M475.4,176v160l-73.1-36.6v-86.9L475.4,176z"
-                        fill="#241F20"
-                        className="fill-current text-info"
-                      />
-                    </g>
-                  </svg>
-                </button>
                 <button
                   type="button"
                   className="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"

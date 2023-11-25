@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 const userBaseURL = baseURL;
@@ -82,7 +83,27 @@ const handleAxiosError = (error,role) => {
       }else{
         window.location.href = `/${role}/error-500`;
       }
-    } else {
+    }else if(error.response?.data?.message === "Access Denied"){
+      if(role === "user"){
+        window.location.href = `/login`;
+      }else if(role === "partner"){
+        window.location.href = `/partner/login`;
+      }else if(role === "admin"){
+        window.location.href = `/admin`;
+      }
+    }else if(error.response?.data?.message === "User is blocked"){
+      if(role === "user"){
+        toast.error("Account blocked by admin");
+        window.location.href = `/login`;
+      }else if(role === "partner"){
+        toast.error("Account blocked by admin");
+        window.location.href = `/partner/login`;
+      }else if(role === "admin"){
+        toast.error("Account blocked by admin");
+        window.location.href = `/admin`;
+      }
+    }
+     else {
       toast.error(errorMessage);
     }
   } else {

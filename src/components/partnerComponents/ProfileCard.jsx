@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { getUserDetails, updateProfileImage } from "../../api/userApi";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPen } from "@fortawesome/free-solid-svg-icons";
-import ProfileEditModal from "../common/ProfileEditModal";
+import { faUserPen } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { getPartner } from '../../api/chatApi';
+import { updateProfileImage } from '../../api/partnerApi';
+import { useSelector } from 'react-redux';
+import ProfileEditModal from '../common/ProfileEditModal';
+
 
 const ProfileCard = () => {
-  const { user } = useSelector((state) => state.userReducer);
-  const [copiedMessageVisible, setCopiedMessageVisible] = useState(false);
+  const { partner } = useSelector((state) => state.partnerReducer);
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [userData, setUserData] = useState({});
   const [selectedImage, setSelectedImage] = useState(null);
   const [profileImageError, setProfileImageError] = useState(null);
   const [profileImage, setProfileImage] = useState([]);
-  const navigate = useNavigate();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setSelectedImage(file);
@@ -35,45 +35,32 @@ const ProfileCard = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setProfileImage(reader?.result);
+      setProfileImage(reader.result);
     };
   };
+  
 
   useEffect(() => {
-    getUserDetails(user._id)
+    getPartner(partner._id)
       .then((res) => {
-        setUserData(res?.data?.userData);
+        console.log(res?.data)
+        setUserData(res?.data);
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, []);
 
-  const handleCopyReferralCode = () => {
-    const referralCodeToCopy = userData?.referalCode;
 
-    // Copy to clipboard
-    navigator.clipboard.writeText(referralCodeToCopy);
-
-    // Show copied message
-    setCopiedMessageVisible(true);
-
-    // Hide the message after a delay (e.g., 2 seconds)
-    setTimeout(() => {
-      setCopiedMessageVisible(false);
-    }, 2000);
-  };
 
   const handleUpdateImage = async () => {
     try {
       setLoading(true);
-      const res = await updateProfileImage(
-        userData?._id,
-        profileImage,
-        userData?.profileImage
-      );
+      const res = await updateProfileImage(userData._id, profileImage,userData?.profileImage);
 
       setUserData(res?.data?.userData);
+      console.log(res?.data?.userData)
+
       setEditMode(false);
       setSelectedImage(null);
       setLoading(false);
@@ -82,6 +69,7 @@ const ProfileCard = () => {
       console.log(error.message);
     }
   };
+  
   return (
     <div className="container mx-auto flex items-center justify-center pb-40 mt-10">
       <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -119,9 +107,9 @@ const ProfileCard = () => {
           </label>
           {loading ? (
             <div className="flex">
-              <span className="loading loading-spinner text-info"></span>
-              <span className="loading loading-spinner text-info"></span>
-              <span className="loading loading-spinner text-info"></span>
+            <span className="loading loading-spinner text-info"></span>
+            <span className="loading loading-spinner text-info"></span>
+            <span className="loading loading-spinner text-info"></span>
             </div>
           ) : (
             selectedImage && (
@@ -148,43 +136,12 @@ const ProfileCard = () => {
           <span className="text-sm text-gray-500 dark:text-gray-400">
             Phone: {userData?.mobile}
           </span>
-          <h1 className="font-bold text-lg mt-5">
-            Wallet Amount : {userData?.wallet}
-          </h1>
 
-          {userData?.referalCode && (
-            <div className="mt-3 flex items-center">
-              <p className="text-sm text-gray-500 dark:text-gray-400 me-2">
-                Referral Code: {userData?.referalCode}
-              </p>
-              <button
-                type="button"
-                onClick={handleCopyReferralCode}
-                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-3 py-1.5"
-              >
-                Copy
-              </button>
-            </div>
-          )}
-          {/* Copied message */}
-          {copiedMessageVisible && (
-            <p className="text-green-500 text-sm mt-2">Copied to clipboard!</p>
-          )}
-
-          <div className="flex">
-            <button
-              type="button"
-              onClick={() => navigate("/walletHistory", { state: userData })}
-              className="text-white mt-4 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-            >
-              Wallet History
-            </button>
-            <ProfileEditModal data={userData} setData={setUserData} role="user" />
-          </div>
+          <ProfileEditModal data={userData} setData={setUserData} role="partner"/>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProfileCard;
+export default ProfileCard

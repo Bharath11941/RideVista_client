@@ -28,10 +28,13 @@ const PartnerNavbar = () => {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link className="flex items-center" to='/partner'>
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Ride Vista
-          </span>
+      <Link className="flex items-center">
+          <img
+            src="/images/depositphotos_268023142-stock-illustration-vector-logo-for-car-rental.jpg" 
+            alt="Logo"
+            className="w-50 h-10 mr-2 object-cover"
+          />
+          
         </Link>
         <div className="flex gap-4 items-center md:order-2">
           <div>
@@ -67,12 +70,12 @@ const PartnerNavbar = () => {
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to='/partner/profile'
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover-bg-gray-600 dark:text-gray-200 dark:hover-text-white"
                       >
                         Profile
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <a

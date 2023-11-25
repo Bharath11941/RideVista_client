@@ -19,7 +19,6 @@ import WalletHistoryPage from "../pages/userPages/WalletHistoryPage";
 import Error500 from "../components/error/500";
 import ChatPage from "../pages/userPages/ChatPage";
 
-
 const UserRoute = () => {
   return (
     <Routes>
@@ -122,6 +121,7 @@ const UserRoute = () => {
           </UserProtect>
         }
       />
+
       <Route path="*" element={<PageNotFound />} />
       <Route path="/pageNotFound" element={<PageNotFound />} />
       <Route path="/error-500" element={<Error500 />} />

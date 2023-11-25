@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { adminLogout } from "../../reduxStore/slices/adminSlice";
@@ -21,12 +21,17 @@ const AdminNavbar = () => {
   }
  
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="bg-white border-b-2 border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Ride Vista
-          </span>
+      <Link className="flex items-center">
+          <img
+            src="/images/depositphotos_268023142-stock-illustration-vector-logo-for-car-rental.jpg" 
+            alt="Logo"
+            className="w-50 h-10 mr-2 object-cover"
+          />
+          
+        </Link>
 
         <div className="flex items-center md:order-2">
           <div className="relative" onClick={toggleDropdown}>

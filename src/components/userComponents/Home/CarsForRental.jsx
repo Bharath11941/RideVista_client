@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { HomeCarList } from "../../../api/userApi";
 import HomeCarCard from "./HomeCarCard";
 
-const CarsForRental = () => {
+const CarsForRental = ({dateRef}) => {
   const [carList, setCarList] = useState([]);
   useEffect(() => {
     HomeCarList()
@@ -22,7 +22,9 @@ const CarsForRental = () => {
         </h1>
         <div className="flex flex-col flex-wrap md:ml-24 md:mr-16 md:flex-row gap-5 md:gap-16">
           {carList.map((car)=>(
-            <HomeCarCard key={car._id} car={car}/>
+            <div key={car._id} onClick={()=>dateRef.current.focus()}>
+              <HomeCarCard  car={car} />
+            </div>
           ))}
         </div>
       </div>

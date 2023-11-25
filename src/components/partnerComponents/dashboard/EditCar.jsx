@@ -11,7 +11,7 @@ import {
 } from "../../../api/partnerApi";
 import Loading from "../../loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faL, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {  faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const EditCar = () => {
   const [certificate, setCertificate] = useState([]);

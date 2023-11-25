@@ -6,7 +6,7 @@ import { userChats } from "../../../api/chatApi";
 import ChatBox from "./ChatBox";
 import { io } from "socket.io-client";
 const END_POINT = "http://localhost:3000";
-var socket;
+let socket;
 const Chat = () => {
   const { _id } = useSelector((state) => state.userReducer.user);
   const userId = _id;
@@ -15,7 +15,7 @@ const Chat = () => {
   const [onlineUsers,setOnlineUsers] = useState([])
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [socketConnection, setSocketConnection] = useState(false);
+
 
   useEffect(() => {
     userChats(userId).then((res) => {
@@ -29,21 +29,18 @@ const Chat = () => {
   }, []);
 
   useEffect(()=>{
-    socket?.emit('setup',currentChat?._id)
-    socket?.on('connection',()=>{
-      setSocketConnection(true)
-    })
-    socket?.on('connected',()=>{
-      setSocketConnection(true)
-    })
+    socket?.emit('setup',userId)
+    socket?.on('get-users', (users) => {
+      setOnlineUsers(users);
+    });
+  
+    return () => {
+      socket.disconnect();
+    };
     
-  },[currentChat])
-  useEffect(()=>{
-    socket?.emit('new-user-add',userId)
-    socket?.on('get-users',(users)=>{
-      setOnlineUsers(users)
-    })
   },[userId])
+  
+  
   useEffect(()=>{
     socket.on('recieve_message',(data)=>{
       if(data?.chatId === currentChat?._id){
@@ -55,9 +52,7 @@ const Chat = () => {
 
   const checkOnlineStatus = (chat) => {
     const chatMember = chat.members.find((member) => member !== userId);
-    console.log(onlineUsers,"online users")
     const online = onlineUsers.find((user) => user.userId === chatMember);
-    console.log(online,"online")
     return online ? true : false;
   };
 

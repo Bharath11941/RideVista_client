@@ -50,7 +50,14 @@ export const getCarDetails = async (carId) => {
   const data = await userAxiosInstance.get(`/carDetails/${carId}`)
   return data;
 }
-
+export const updateProfileImage = async (userId,image,prevImg) => {
+  const data = await userAxiosInstance.patch(`/profileImage`,{userId,image,prevImg})
+  return data
+}
+export const updateUser = async (formData) => {
+  const data = await userAxiosInstance.put('/editProfile',formData)
+  return data
+}
 export const carBooking = async (bookingData) => {
   const data = await userAxiosInstance.post('/carBooking',bookingData)
   return data;

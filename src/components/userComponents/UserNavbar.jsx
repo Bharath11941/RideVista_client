@@ -18,21 +18,22 @@ function UserNavbar() {
   };
   const handleLogout = () => {
     localStorage.removeItem("userToken");
-    dispatch(
-      userLogout()
-    );
-    toast.success("logout successfully")
+    dispatch(userLogout());
+    toast.success("logout successfully");
     navigate("/login");
   };
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a  className="flex items-center">
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Ride Vista
-          </span>
-        </a>
+        <Link className="flex items-center">
+          <img
+            src="/images/depositphotos_268023142-stock-illustration-vector-logo-for-car-rental.jpg" 
+            alt="Logo"
+            className="w-50 h-10 mr-2 object-cover"
+          />
+          
+        </Link>
         <div className="flex items-center md:order-2">
           <div className="relative" onClick={toggleDropdown}>
             <button
@@ -61,12 +62,11 @@ function UserNavbar() {
                     <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
                       {user.email}
                     </span>
-                  
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     <li>
                       <Link
-                        to='/profile'
+                        to="/profile"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover-bg-gray-600 dark:text-gray-200 dark:hover-text-white"
                       >
                         Profile
@@ -82,13 +82,12 @@ function UserNavbar() {
                     </li>
                     <li>
                       <Link
-                      to='/bookingList'
+                        to="/bookingList"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover-bg-gray-600 dark:text-gray-200 dark:hover-text-white"
                       >
                         My bookings
                       </Link>
                     </li>
-                    
                   </ul>
                 </div>
               ) : (
@@ -178,7 +177,6 @@ function UserNavbar() {
         </div>
       </div>
       {/* Mobile menu items */}
-      
     </nav>
   );
 }

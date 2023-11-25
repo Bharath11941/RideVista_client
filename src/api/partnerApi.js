@@ -81,5 +81,13 @@ export const reportUser = async (partnerId,reason,userId) => {
   const data = await partnerAxiosInstance.patch('/reportUser',{partnerId,reason,userId})
   return data
 }
+export const updateProfileImage = async (partnerId,image,prevImg) => {
+  const data = await partnerAxiosInstance.patch(`/profileImage`,{partnerId,image,prevImg})
+  return data
+}
+export const updatePartner = async (formData) => {
+  const data = await partnerAxiosInstance.put('/editProfile',formData)
+  return data
+}
 
 export const partnerReport = async (partnerId) => await partnerAxiosInstance.get(`/report/${partnerId}`)

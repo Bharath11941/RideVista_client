@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import UserHero from '../../components/userComponents/UserHero'
 import UserFooter from '../../components/userComponents/UserFooter'
 import UserNavbar from '../../components/userComponents/UserNavbar'
@@ -7,13 +7,14 @@ import CarsForRental from '../../components/userComponents/Home/CarsForRental'
 import DateLocationForm from '../../components/userComponents/DateLocationForm'
 
 const UserHome = () => {
+  const dateRef = useRef()
   return (
     <>
     <UserNavbar/>
     <UserHero/>
-    <DateLocationForm/>
+    <DateLocationForm dateRef={dateRef}/>
     <RentingProcess/>
-    <CarsForRental/>
+    <CarsForRental dateRef={dateRef}/>
     <UserFooter/>
     </>
   )

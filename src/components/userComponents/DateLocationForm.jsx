@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { dateLocationFilter } from "../../validations/user/carFilterValidation.js";
 import { filterCarsDateLocation } from "../../api/userApi.js";
 import { useNavigate } from "react-router-dom";
-const DateLocationForm = () => {
+const DateLocationForm = ({dateRef}) => {
   const navigate = useNavigate()
   const onSubmit = async () => {
     try {
@@ -38,6 +38,7 @@ const DateLocationForm = () => {
               <div className="relative h-16 rounded-[4px]">
                 <input
                   type="text"
+                  ref={dateRef}
                   id="pickUpLocation"
                   placeholder="Any location"
                   {...getFieldProps("pickUpLocation")}

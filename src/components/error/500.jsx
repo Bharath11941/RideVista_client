@@ -42,7 +42,7 @@ const Error500 = () => {
             </div>
           </div>
           <h1 className="mt-5 text-4xl font-bold text-gray-800 lg:text-6xl">
-            503 - Server Error
+            500 - Server Error
           </h1>
           <p className="text-gray-600 mt-5 text-lg">
             Oops! Something went wrong. Please try refreshing the page or

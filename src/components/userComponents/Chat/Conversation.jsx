@@ -1,4 +1,3 @@
-import React from "react";
 import { format } from "timeago.js";
 const Conversation = ({ currentUser, message }) => {
   return (
@@ -36,9 +35,7 @@ const Conversation = ({ currentUser, message }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-start text-black font-extralight">
-          
-          </div>
+          <div className="flex justify-start text-black font-extralight"></div>
         </div>
       )}
     </div>
