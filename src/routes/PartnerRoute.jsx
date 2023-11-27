@@ -20,10 +20,14 @@ import CancelRequestPage from '../pages/partnerPages/CancelRequestPage'
 import Error500 from '../components/error/500'
 import ChatPage from '../pages/partnerPages/ChatPage'
 import PartnerProfile from '../pages/partnerPages/PartnerProfile'
+import PartnerContactPage from '../pages/partnerPages/PartnerContactPage'
+import AboutPage from '../pages/partnerPages/AboutPage'
 const PartnerRoute = () => {
   return (
     <Routes>
       <Route path='/signup' element={<PartnerPublic><PartnerSignup/></PartnerPublic>}/>
+      <Route path='/contact' element={<PartnerContactPage/>}/>
+      <Route path='/about' element={<AboutPage/>}/>
       <Route path='/otp' element={<PartnerPublic><PartnerOtp/></PartnerPublic>}/>
       <Route path='/login' element={<PartnerPublic><PartnerLogin/></PartnerPublic>}/>
       <Route path='/partnerForget' element={<PartnerPublic><PartnerForgetPass/></PartnerPublic>}/>

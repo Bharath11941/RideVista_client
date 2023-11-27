@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../reduxStore/slices/userSlice";
 import { toast } from "react-toastify";
@@ -7,6 +7,7 @@ function UserNavbar() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const { user } = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
@@ -26,13 +27,12 @@ function UserNavbar() {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img
-            src="/images/depositphotos_268023142-stock-illustration-vector-logo-for-car-rental.jpg" 
+            src="/images/depositphotos_268023142-stock-illustration-vector-logo-for-car-rental.jpg"
             alt="Logo"
             className="w-50 h-10 mr-2 object-cover"
           />
-          
         </Link>
         <div className="flex items-center md:order-2">
           <div className="relative" onClick={toggleDropdown}>
@@ -44,7 +44,7 @@ function UserNavbar() {
               <span className="sr-only">Open user menu</span>
               <img
                 className="w-8 h-8 rounded-full"
-                src="/docs/images/people/profile-picture-3.jpg"
+                src={user?.profileImage}
                 alt="user photo"
               />
             </button>
@@ -150,75 +150,44 @@ function UserNavbar() {
             <li>
               <Link
                 to="/"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark-text-blue-500"
-                aria-current="page"
+                className={
+                  location.pathname === "/"
+                    ? "block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark-text-blue-500"
+                    : "block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:hover-text-blue-700 md:p-0 dark-text-white md:dark-hover-text-blue-500 dark-hover-bg-gray-700 dark-hover-text-white md:dark-hover-bg-transparent dark-border-gray-700"
+                }
               >
                 Home
               </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:hover-text-blue-700 md:p-0 dark-text-white md:dark-hover-text-blue-500 dark-hover-bg-gray-700 dark-hover-text-white md:dark-hover-bg-transparent dark-border-gray-700"
+              <Link
+                to="/contact"
+                className={
+                  location.pathname === "/contact"
+                    ? "block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark-text-blue-500"
+                    : "block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:hover-text-blue-700 md:p-0 dark-text-white md:dark-hover-text-blue-500 dark-hover-bg-gray-700 dark-hover-text-white md:dark-hover-bg-transparent dark-border-gray-700"
+                }
               >
                 Contact
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:hover-text-blue-700 md:p-0 dark-text-white md:dark-hover-text-blue-500 dark-hover-bg-gray-700 dark-hover-text-white md:dark-hover-bg-transparent dark-border-gray-700"
+              <Link
+                to="/about"
+                className={
+                  location.pathname === "/about"
+                    ? "block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark-text-blue-500"
+                    : "block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:hover-text-blue-700 md:p-0 dark-text-white md:dark-hover-text-blue-500 dark-hover-bg-gray-700 dark-hover-text-white md:dark-hover-bg-transparent dark-border-gray-700"
+                }
               >
                 About
-              </a>
+              </Link>
             </li>
-            {/* Add more header items here */}
           </ul>
         </div>
       </div>
-      {/* Mobile menu items */}
     </nav>
   );
 }
 
 export default UserNavbar;
-// {isMobileMenuOpen && (
-//   <div className="md:hidden ">
-//     <ul className="py-2 bg-gray-100 md:bg-transparent">
-//       <li>
-//         <a
-//           href="#"
-//           className="block px-4 py-2 text-gray-900 hover-bg-gray-100 md:hover-bg-transparent"
-//         >
-//           Home
-//         </a>
-//       </li>
-
-//       <li>
-//         <a
-//           href="#"
-//           className="block px-4 py-2 text-gray-900 hover-bg-gray-100 md:hover-bg-transparent"
-//         >
-//           Cars
-//         </a>
-//       </li>
-//       <li>
-//         <a
-//           href="#"
-//           className="block px-4 py-2 text-gray-900 hover-bg-gray-100 md:hover-bg-transparent"
-//         >
-//           Contact
-//         </a>
-//       </li>
-//       <li>
-//         <a
-//           href="#"
-//           className="block px-4 py-2 text-gray-900 hover-bg-gray-100 md:hover-bg-transparent"
-//         >
-//           About
-//         </a>
-//       </li>
-//       {/* Add more mobile menu items here */}
-//     </ul>
-//   </div>
-// )}

@@ -51,6 +51,7 @@ const ChatBox = ({ chat, currentUser, setMessages,messages,socket }) => {
   };
 
   const handleSend = async (e) => {
+    let newOne
     e.preventDefault();
     const message = {
       senderId: currentUser,
@@ -59,12 +60,13 @@ const ChatBox = ({ chat, currentUser, setMessages,messages,socket }) => {
     };
     try {
       const { data } = await addMessage(message);
+      newOne = data
       setMessages([...messages, data]);
       setNewMessage("");
     } catch (error) {
       console.log(error.message);
     }
-    socket.emit('send_message',message)
+    socket.emit('send_message',newOne)
   };
  
   return (
@@ -84,7 +86,7 @@ const ChatBox = ({ chat, currentUser, setMessages,messages,socket }) => {
                     </svg>
                   </span>
                   <img
-                    src={partnerData?.profileImage || "../../../assets/Icons/calendar-icon.svg"}
+                    src={partnerData?.profileImage || "/images/person-304893_1280.png"}
                     alt=""
                     className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
                   ></img>

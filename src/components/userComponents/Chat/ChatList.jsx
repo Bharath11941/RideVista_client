@@ -5,6 +5,7 @@ import { getPartner } from '../../../api/chatApi'
 
 
 const ChatList = ({data,currentUserId,online}) => {
+  
   const [partnerData,setPartnerData] = useState(null)
   useEffect(()=>{
     const partnerId = data?.members?.find((id) => id !== currentUserId)
@@ -23,7 +24,7 @@ const ChatList = ({data,currentUserId,online}) => {
     <div className="flex flex-row px-5 py-3 justify-center items-center border-b-2 bg-gray-200 hover:bg-gray-50">
       <div className="w-1/4">
         <img
-          src={partnerData?.profileImage || "../../../assets/Icons/calendar-icon.svg"}
+          src={partnerData?.profileImage || "/images/person-304893_1280.png"}
           className="object-cover h-12 w-12 rounded-full"
           alt=""
         />

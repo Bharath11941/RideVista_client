@@ -12,10 +12,9 @@ const Chat = () => {
   const userId = _id;
 
   const [conversations, setConversations] = useState([]);
-  const [onlineUsers,setOnlineUsers] = useState([])
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
-
 
   useEffect(() => {
     userChats(userId).then((res) => {
@@ -25,30 +24,43 @@ const Chat = () => {
 
   useEffect(() => {
     socket = io(END_POINT);
-    
   }, []);
 
-  useEffect(()=>{
-    socket?.emit('setup',userId)
-    socket?.on('get-users', (users) => {
+  useEffect(() => {
+    socket?.emit("setup", userId);
+    socket?.on("get-users", (users) => {
       setOnlineUsers(users);
     });
-  
+
     return () => {
       socket.disconnect();
     };
-    
-  },[userId])
-  
-  
-  useEffect(()=>{
-    socket.on('recieve_message',(data)=>{
-      if(data?.chatId === currentChat?._id){
-        const message = [...messages,data]
+  }, [userId]);
+
+  useEffect(() => {
+    socket.on("recieve_message", (data) => {
+      if (data?.chatId === currentChat?._id) {
+        const message = [...messages, data];
         setMessages(message);
       }
-    })
-  },[messages])
+
+      const updatedConversations = conversations.map((chat) => {
+        if (chat._id === data.chatId) {
+          console.log("Setting lastMessage:", data.createdAt);
+          return { ...chat, lastMessage: Date.parse(data.createdAt) };
+        }
+        return chat;
+      });
+
+      const sortedConversations = [...updatedConversations].sort((a, b) => {
+        const aTimestamp = a.lastMessage || 0;
+        const bTimestamp = b.lastMessage || 0;
+        return bTimestamp - aTimestamp;
+      });
+
+      setConversations(sortedConversations);
+    });
+  }, [messages, currentChat, conversations]);
 
   const checkOnlineStatus = (chat) => {
     const chatMember = chat.members.find((member) => member !== userId);
@@ -66,13 +78,7 @@ const Chat = () => {
                 className="bg-gray-200 flex flex-col overflow-y-scroll"
                 style={{ maxHeight: "85vh" }}
               >
-                <div className="bg-gray-200  border-b-2 py-4 px-2 absolute z-10">
-                  <input
-                    type="text"
-                    placeholder="search chatting"
-                    className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
-                  />
-                </div>
+              
                 {/* <!-- end search compt -->
                  <!-- user list --> */}
                 <div className="pt-20">
@@ -85,7 +91,11 @@ const Chat = () => {
                           socket?.emit("join room", chat._id);
                         }}
                       >
-                        <ChatList data={chat} currentUserId={userId} online={checkOnlineStatus(chat)}/>
+                        <ChatList
+                          data={chat}
+                          currentUserId={userId}
+                          online={checkOnlineStatus(chat)}
+                        />
                       </div>
                     ))}
                   </div>

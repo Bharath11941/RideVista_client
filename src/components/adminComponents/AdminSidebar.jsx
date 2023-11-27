@@ -1,8 +1,10 @@
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const AdminSidebar = () => {
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <>
       <div className="drawer flex justify-end  md:hidden z-10">
@@ -31,7 +33,11 @@ const AdminSidebar = () => {
                 <li>
                   <Link
                     to="/admin/dashboard"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/admin/dashboard"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       fill="none"
@@ -52,7 +58,11 @@ const AdminSidebar = () => {
                 <li>
                   <Link
                     to="/admin/userList"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/admin/userList"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       fill="none"
@@ -77,7 +87,11 @@ const AdminSidebar = () => {
                 <li>
                   <Link
                     to="/admin/partnerList"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/admin/userList"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       fill="none"
@@ -101,7 +115,11 @@ const AdminSidebar = () => {
                 <li>
                   <Link
                     to="/admin/carList"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/admin/carList"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       viewBox="0 0 1024 1024"
@@ -121,7 +139,11 @@ const AdminSidebar = () => {
                 <li>
                   <Link
                     to="/admin/bookings"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/admin/bookings"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       fill="none"
@@ -153,7 +175,11 @@ const AdminSidebar = () => {
             <li>
               <Link
                 to="/admin/dashboard"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={
+                  location.pathname === "/admin/dashboard"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
               >
                 <svg
                   fill="none"
@@ -174,7 +200,11 @@ const AdminSidebar = () => {
             <li>
               <Link
                 to="/admin/userList"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={
+                  location.pathname === "/admin/userList"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
               >
                 <svg
                   fill="none"
@@ -199,7 +229,11 @@ const AdminSidebar = () => {
             <li>
               <Link
                 to="/admin/partnerList"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={
+                  location.pathname === "/admin/partnerList"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
               >
                 <svg
                   fill="none"
@@ -223,7 +257,11 @@ const AdminSidebar = () => {
             <li>
               <Link
                 to="/admin/carList"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={
+                  location.pathname === "/admin/carList"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
               >
                 <svg
                   viewBox="0 0 1024 1024"
@@ -243,7 +281,11 @@ const AdminSidebar = () => {
             <li>
               <Link
                 to="/admin/bookings"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={
+                  location.pathname === "/admin/bookings"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
               >
                 <svg
                   fill="none"

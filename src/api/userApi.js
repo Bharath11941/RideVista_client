@@ -70,6 +70,10 @@ export const filterCarsDateLocation = async (formData) => {
   const data = await userAxiosInstance.post('/filterCars',formData)
   return data;
 }
+export const reviewListUser = async (carId) => {
+  const data = await userAxiosInstance.get(`/reviews/${carId}`)
+  return data
+}
 export const myBookings = async (userId) => {
   const data = await userAxiosInstance.get(`/myBookings/${userId}`)
   return data

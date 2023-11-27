@@ -36,7 +36,11 @@ const PartnerSidebar = () => {
                 <li>
                   <Link
                     to="/partner/dashboard"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/partner/dashboard"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       fill="none"
@@ -57,7 +61,11 @@ const PartnerSidebar = () => {
                 <li>
                   <Link
                     to="/partner/myCars"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/partner/myCars"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       viewBox="0 0 1024 1024"
@@ -75,7 +83,11 @@ const PartnerSidebar = () => {
                 <li>
                   <Link
                     to="/partner/addCar"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/partner/addCar"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       viewBox="0 0 1024 1024"
@@ -93,7 +105,11 @@ const PartnerSidebar = () => {
                 <li>
                   <Link
                     to="/partner/bookings"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/partner/bookings"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       fill="none"
@@ -117,7 +133,11 @@ const PartnerSidebar = () => {
                 <li>
                   <Link
                     to="/partner/cancelRequests"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className={
+                      location.pathname === "/partner/cancelRequests"
+                        ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    }
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -143,7 +163,11 @@ const PartnerSidebar = () => {
             <li>
               <Link
                 to="/partner/dashboard"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={
+                  location.pathname === "/partner/dashboard"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
               >
                 <svg
                   fill="none"
@@ -164,7 +188,11 @@ const PartnerSidebar = () => {
             <li>
               <Link
                 to="/partner/myCars"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={
+                  location.pathname === "/partner/myCars"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
               >
                 <svg
                   viewBox="0 0 1024 1024"
@@ -180,7 +208,11 @@ const PartnerSidebar = () => {
             <li>
               <Link
                 to="/partner/addCar"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={
+                  location.pathname === "/partner/addCar"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
               >
                 <svg
                   viewBox="0 0 1024 1024"
@@ -196,8 +228,12 @@ const PartnerSidebar = () => {
             <li>
               <Link
                 to="/partner/bookings"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+                className={
+                  location.pathname === "/partner/bookings"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
+             >
                 <svg
                   fill="none"
                   stroke="currentColor"
@@ -220,7 +256,11 @@ const PartnerSidebar = () => {
             <li>
               <Link
                 to="/partner/cancelRequests"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={
+                  location.pathname === "/partner/cancelRequests"
+                    ? "flex items-center p-2 text-blue-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    : "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                }
               >
                 <svg
                   viewBox="0 0 24 24"

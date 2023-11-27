@@ -24,7 +24,7 @@ const AdminNavbar = () => {
     <nav className="bg-white border-b-2 border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
-      <Link className="flex items-center">
+      <Link to='/dashborad' className="flex items-center">
           <img
             src="/images/depositphotos_268023142-stock-illustration-vector-logo-for-car-rental.jpg" 
             alt="Logo"

@@ -24,7 +24,7 @@ const DashboardHome = () => {
       <div className="p-4 border-2 h-[610px] border-gray-200 border-dashed rounded-lg dark:border-gray-700">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="col-span-1">
-            <div className="bg-white md:h-44 shadow-md md:h-50 p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
+            <div className="bg-white md:h-44 shadow-md  p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
               <article className="icontext flex items-center">
                 <div className="ml-4 ">
                   <div className="flex gap-3">

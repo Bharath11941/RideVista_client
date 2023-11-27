@@ -9,6 +9,7 @@ const CarDetailPage = () => {
       <AdminNavbar />
       <div className="mx-auto flex mt-5">
       <AdminSidebar />
+      
       <CarDetails />
       </div>
     </>

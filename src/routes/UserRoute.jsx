@@ -18,11 +18,15 @@ import BookingDetailsUser from "../pages/userPages/BookingDetailsUser";
 import WalletHistoryPage from "../pages/userPages/WalletHistoryPage";
 import Error500 from "../components/error/500";
 import ChatPage from "../pages/userPages/ChatPage";
+import UserContactPage from "../pages/userPages/UserContactPage";
+import AboutPage from "../pages/userPages/AboutPage";
 
 const UserRoute = () => {
   return (
     <Routes>
       <Route path="/" element={<UserHome />} />
+      <Route path="/contact" element={<UserContactPage/>} />
+      <Route path="/about" element={<AboutPage/>} />
       <Route path="/allCars" element={<AllCars />} />
       <Route path="/carDetails" element={<SingleCarDetails />} />
       <Route

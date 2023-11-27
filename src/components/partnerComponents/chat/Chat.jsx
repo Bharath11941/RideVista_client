@@ -17,6 +17,7 @@ const Chat = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
 
+
   useEffect(() => {
     userChats(partnerId).then((res) => {
       setConversations(res?.data);
@@ -44,8 +45,23 @@ const Chat = () => {
         const message = [...messages, data];
         setMessages(message);
       }
+
+      const updatedConversations = conversations.map((chat) => {
+        if (chat._id === data.chatId) {
+          return { ...chat, lastMessage: Date.parse(data.createdAt) };
+        }
+        return chat;
+      });
+
+      const sortedConversations = [...updatedConversations].sort((a, b) => {
+        const aTimestamp = a.lastMessage || 0; 
+        const bTimestamp = b.lastMessage || 0;
+        return bTimestamp - aTimestamp;
+      });
+
+      setConversations(sortedConversations);
     });
-  }, [messages]);
+  }, [messages, currentChat, conversations]);
 
   const checkOnlineStatus = (chat) => {
     const chatMember = chat.members.find((member) => member !== partnerId);
@@ -63,13 +79,7 @@ const Chat = () => {
                 className="bg-gray-200 flex flex-col overflow-y-scroll"
                 style={{ maxHeight: "85vh" }}
               >
-                <div className="bg-gray-200  border-b-2 py-4 px-2 absolute z-10">
-                  <input
-                    type="text"
-                    placeholder="search chatting"
-                    className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
-                  />
-                </div>
+                
                 {/* <!-- end search compt -->
                  <!-- user list --> */}
                 <div className="pt-20">
@@ -86,6 +96,7 @@ const Chat = () => {
                           data={chat}
                           currentUserId={partnerId}
                           online={checkOnlineStatus(chat)}
+                          
                         />
                       </div>
                     ))}
@@ -107,7 +118,6 @@ const Chat = () => {
                       messages={messages}
                       socket={socket}
                     />
-                    
                   </div>
                 </div>
               </div>
@@ -120,4 +130,3 @@ const Chat = () => {
 };
 
 export default Chat;
-

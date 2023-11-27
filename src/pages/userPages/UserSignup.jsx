@@ -20,8 +20,9 @@ const UserSignup = () => {
         navigate("/otp", {
           state: { userEmail: user.email, otpId: otpId, userId: user._id },
         });
-        setLoading(false);
       }
+      console.log("hi from usersignuup")
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       toast.error(error.response?.data?.status);
