@@ -1,7 +1,6 @@
-import React from "react";
 import PartnerSidebar from "../../components/partnerComponents/dashboard/PartnerSidebar";
 import PartnerNavbar from "../../components/partnerComponents/PartnerNavbar";
-import Mycars from "../../components/partnerComponents/dashboard/Mycars";
+import Mycars from "../../components/partnerComponents/dashboard/MyCars";
 const MyCarsPage = () => {
   return (
     <>
