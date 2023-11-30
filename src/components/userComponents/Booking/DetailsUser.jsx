@@ -1,4 +1,4 @@
-?
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { reportCarOwner } from "../../../api/userApi";
 import ReportPartnerModal from "../../common/ReportModal";

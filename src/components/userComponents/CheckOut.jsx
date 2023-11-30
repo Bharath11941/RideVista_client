@@ -264,7 +264,7 @@ const CheckOut = () => {
                       ₹ {totalAmount}
                     </h1>
                   </div>
-                  {user??.wallet >= totalAmount && (
+                  {user?.wallet >= totalAmount && (
                     <div className="flex items-center justify-between mb-4">
                       <div>
                         <input
@@ -281,7 +281,7 @@ const CheckOut = () => {
                           Use wallet payment
                         </label>
                       </div>
-                      <p>wallet balance: ₹ {user??.wallet}</p>
+                      <p>wallet balance: ₹ {user?.wallet}</p>
                     </div>
                   )}
                   <button
