@@ -142,31 +142,31 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                   bookingList &&
                   carsInSinglePage.map((data) => (
                     <tr
-                      key={data._id}
+                      key={data?._id}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >
-                      <td className="pl-6 py-4">{data._id}</td>
+                      <td className="pl-6 py-4">{data?._id}</td>
                       <th
                         scope="row"
                         className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
                       >
                         <img
                           className="w-10 h-10 rounded-full"
-                          src={data.car.carImages[0]}
+                          src={data?.car?.carImages[0]}
                           alt="Jese image"
                         />
                         <div className="pl-3">
                           <div className="text-base font-semibold">
-                            {data.car.carName}
+                            {data?.car?.carName}
                           </div>
                         </div>
                       </th>
                       <td className="pl-6 py-4">
                         <div className="text-base font-semibold">
-                          {data.pickUpLocation}
+                          {data?.pickUpLocation}
                         </div>
                         <div className="font-normal text-gray-500">
-                          {new Date(data.startDate).toLocaleDateString(
+                          {new Date(data?.startDate).toLocaleDateString(
                             "en-US",
                             {
                               year: "numeric",
@@ -178,7 +178,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                       </td>
                       <td className="pl-6 py-4">
                         <div className="text-base font-semibold">
-                          {data.returnLocation}
+                          {data?.returnLocation}
                         </div>
                         <div className="font-normal text-gray-500">
                           {new Date(data.endDate).toLocaleDateString("en-US", {
@@ -190,17 +190,17 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                       </td>
                       <td className="pl-6 py-4">
                         <p className="text-lg font-bold">
-                          ₹ {data.totalBookingCharge}
+                          ₹ {data?.totalBookingCharge}
                         </p>
                       </td>
                       <td className="pl-6 py-4">
                         <div className="flex items-center gap-1">
                           <div
                             className={`h-2.5 w-2.5 rounded-full  ${getStatusColor(
-                              data.bookingStatus
+                              data?.bookingStatus
                             )}`}
                           ></div>
-                          {getStatusText(data.bookingStatus)}
+                          {getStatusText(data?.bookingStatus)}
                         </div>
                       </td>
                       <td className="pl-6 py-4">
@@ -213,47 +213,47 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                         </button>
                       </td>
                       <td className="pl-6 py-4">
-                        {data.bookingStatus === "Success" &&
-                          !data.cancelStatus && (
+                        {data?.bookingStatus === "Success" &&
+                          !data?.cancelStatus && (
                             <button
                               type="button"
-                              onClick={() => openModal(data._id)}
+                              onClick={() => openModal(data?._id)}
                               className="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                             >
                               Cancel
                             </button>
                           )}
-                        {data.cancelStatus === "Pending" && (
+                        {data?.cancelStatus === "Pending" && (
                           <p className="text-red-700 font-semibold text-sm">
                             Cancel request Pending
                           </p>
                         )}
-                        {data.bookingStatus === "Cancelled" && (
+                        {data?.bookingStatus === "Cancelled" && (
                           <p className="text-red-700 font-semibold text-sm">
                             Booking Cancelled
                           </p>
                         )}
-                        {data.cancelStatus === "Rejected" && (
+                        {data?.cancelStatus === "Rejected" && (
                           <p className="text-blue-700 font-semibold text-sm">
                             Cancel request rejected by partner
                           </p>
                         )}
-                        {data.bookingStatus === "Returned" && (
+                        {data?.bookingStatus === "Returned" && (
                           <p className="text-green-700 font-semibold text-sm">
                             Car returned
                           </p>
                         )}
-                        {data.bookingStatus === "Delivered" && (
+                        {data?.bookingStatus === "Delivered" && (
                           <p className="text-green-700 font-semibold text-sm">
                             Car Delivered
                           </p>
                         )}
                       </td>
                       <div
-                        id={`popup-modal-${data._id}`}
+                        id={`popup-modal-${data?._id}`}
                         tabIndex={-1}
                         className={`fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full ${
-                          activeModal === data._id ? "" : "hidden"
+                          activeModal === data?._id ? "" : "hidden"
                         }`}
                       >
                         <div className="relative w-full max-w-md max-h-full">
@@ -261,7 +261,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                             <button
                               type="button"
                               className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover-bg-gray-600 dark:hover-text-white"
-                              data-modal-hide={`popup-modal-${data._id}`}
+                              data-modal-hide={`popup-modal-${data?._id}`}
                               onClick={() => closeModal()}
                             >
                               <svg
@@ -301,9 +301,9 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                                 credited to your wallet.
                               </p>}
                               <button
-                                data-modal-hide={`popup-modal-${data._id}`}
+                                data-modal-hide={`popup-modal-${data?._id}`}
                                 type="button"
-                                onClick={() => handleCancelBooking(data._id)}
+                                onClick={() => handleCancelBooking(data?._id)}
                                 className=" mt-2 text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
                               >
                                 Submit

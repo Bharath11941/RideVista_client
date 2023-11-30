@@ -17,7 +17,7 @@ const GoogleButtonUser = () => {
       const user = jwt_decode(response.credential);
       const res = await userLoginWithGoogle(user.email)
       if(res.status === 200){
-        const {token,registeredUser} = res.data;
+        const {token,registeredUser} = res?.data ?? {};
         localStorage.setItem("userToken", token);
         dispatch(
           userLogin({

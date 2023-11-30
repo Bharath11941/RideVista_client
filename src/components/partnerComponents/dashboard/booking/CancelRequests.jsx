@@ -65,25 +65,25 @@ const CancelRequests = () => {
             {reqInSinglePage &&  reqInSinglePage.length > 0 ? (
                 reqInSinglePage.map((req) => (
             <tr
-              key={req._id}
+              key={req?._id}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
-              <td className="px-6 py-4">{req._id}</td>
+              <td className="px-6 py-4">{req?._id}</td>
               <th
                 scope="row"
                 className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
               >
                 <img
                   className="w-10 h-10 rounded-full"
-                  src={req.car.carImages[0]}
+                  src={req?.car.carImages[0]}
                   alt="Jese image"
                 />
                 <div className="pl-3">
-                  <div className="text-base font-semibold">{req.car.carName}</div>
+                  <div className="text-base font-semibold">{req?.car.carName}</div>
                 </div>
               </th>
               <td className="px-6 py-4 text-black font-bold">
-                {req.cancelReason}
+                {req?.cancelReason}
               </td>
               <td className="px-6 py-4">
                 <button
@@ -98,14 +98,14 @@ const CancelRequests = () => {
               <td className="px-6 py-4">
               <button
                   type="button"
-                  onClick={() =>handleApprove(req._id,"Approved") }
+                  onClick={() =>handleApprove(req?._id,"Approved") }
                   className="text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                 >
                   Approve
                 </button>
                 <button
                   type="button"
-                  onClick={() =>handleApprove(req._id,"Rejected") }
+                  onClick={() =>handleApprove(req?._id,"Rejected") }
                   className="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                 >
                  Reject

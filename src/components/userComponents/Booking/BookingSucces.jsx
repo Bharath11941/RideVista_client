@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 const BookingSucces = () => {
   const { state } = useLocation();
   const { carDetails, bookingDetails } = state;
-  console.log(carDetails, bookingDetails, "from front end");
   return (
     <>
       {/* component */}

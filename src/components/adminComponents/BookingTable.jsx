@@ -1,4 +1,4 @@
-import React from "react";
+
 import Loading from "../loading/Loading";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -110,31 +110,31 @@ const BookingTable = () => {
                   bookingList &&
                   carsInSinglePage.map((data) => (
                     <tr
-                      key={data._id}
+                      key={data?._id}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >
-                      <td className="px-6 py-4">{data._id}</td>
+                      <td className="px-6 py-4">{data?._id}</td>
                       <th
                         scope="row"
                         className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
                       >
                         <img
                           className="w-10 h-10 rounded-full"
-                          src={data.car.carImages[0]}
+                          src={data?.car?.carImages[0]}
                           alt="Jese image"
                         />
                         <div className="pl-3">
                           <div className="text-base font-semibold">
-                            {data.car.carName}
+                            {data?.car?.carName}
                           </div>
                         </div>
                       </th>
                       <td className="px-6 py-4">
                         <div className="text-base font-semibold">
-                          {data.pickUpLocation}
+                          {data?.pickUpLocation}
                         </div>
                         <div className="font-normal text-gray-500">
-                          {new Date(data.startDate).toLocaleDateString(
+                          {new Date(data?.startDate).toLocaleDateString(
                             "en-US",
                             {
                               year: "numeric",
@@ -146,10 +146,10 @@ const BookingTable = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-base font-semibold">
-                          {data.returnLocation}
+                          {data?.returnLocation}
                         </div>
                         <div className="font-normal text-gray-500">
-                          {new Date(data.endDate).toLocaleDateString("en-US", {
+                          {new Date(data?.endDate).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "long",
                             day: "numeric",
@@ -158,17 +158,17 @@ const BookingTable = () => {
                       </td>
                       <td className="px-6 py-4">
                         <p className="text-lg font-bold">
-                          ₹ {data.totalBookingCharge}
+                          ₹ {data?.totalBookingCharge}
                         </p>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-1">
                           <div
                             className={`h-2.5 w-2.5 rounded-full  ${getStatusColor(
-                              data.bookingStatus
+                              data?.bookingStatus
                             )}`}
                           ></div>
-                          {getStatusText(data.bookingStatus)}
+                          {getStatusText(data?.bookingStatus)}
                         </div>
                       </td>
                       <td className="px-6 py-4">

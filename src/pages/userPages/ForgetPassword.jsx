@@ -6,7 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Loading from "../../components/loading/Loading";
-
+import UserNavbar from '../../components/userComponents/UserNavbar'
+import UserFooter from '../../components/userComponents/UserFooter'
 
 const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -43,14 +44,15 @@ const ForgetPassword = () => {
 
   return (
     <>
-      {loading ? (
-        <div className="fixed inset-0 flex items-center justify-center">
+    <UserNavbar/>
+      {loading ? ( <div className="max-w-4xl mx-auto my-24  h-[50vh]">
+        <div className=" inset-0 flex items-center justify-center">
           <div className="spinnerouter">
             <Loading />
           </div>
         </div>
-      ) : (
-        <div className="max-w-4xl mx-auto mt-24">
+      </div>) : (
+        <div className="max-w-4xl mx-auto my-24">
           <div className="flex flex-col items-center justify-center p-4 space-y-4 antialiased text-gray-900 bg-gray-100">
             <div className="w-full px-8 max-w-lg space-y-6 bg-white rounded-md py-16">
               <h1 className="mb-6 text-3xl font-bold text-center">
@@ -106,6 +108,7 @@ const ForgetPassword = () => {
           </div>
         </div>
       )}
+      <UserFooter/>
     </>
   );
 };

@@ -31,7 +31,7 @@ const CheckOut = () => {
   const endTimestamp = new Date(values.returnDate).getTime();
   const dayDifference = (endTimestamp - startTimestamp) / (1000 * 3600 * 24);
   const totalAmount = dayDifference * car.price;
-
+  const rezorpayKey = import.meta.env.VITE_RAZORPAY_KEY
   const handleSubmit = async () => {
     try {
       setLoading(true);
@@ -71,7 +71,7 @@ const CheckOut = () => {
     }
     setLoading(false);
     var options = {
-      key: "rzp_test_pkUbv7xbv5KNrA", // Enter the Key ID generated from the Dashboard
+      key:rezorpayKey , // Enter the Key ID generated from the Dashboard
       amount: bookingData.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: bookingData.currency,
       name: "Ride Vista",
@@ -140,7 +140,7 @@ const CheckOut = () => {
                     <div className="card h-96 bg-base-100 shadow-xl mb-9">
                       <figure className="px-10 pt-10 mb-5">
                         <img
-                          src={car.carImages[0]}
+                          src={car?.carImages[0]}
                           alt="car image"
                           className="rounded-xl w-96 h-48 object-cover hover:scale-125 transition duration-500 cursor-pointer"
                         />
@@ -153,7 +153,7 @@ const CheckOut = () => {
                             style={{ color: "#3f83f8" }}
                           />
                           <p className="text-gray-700 font-medium text-lg">
-                            {car.fuelType}
+                            {car?.fuelType}
                           </p>
                         </div>
                         <div className="flex justify-between items-center gap-3">
@@ -162,7 +162,7 @@ const CheckOut = () => {
                             style={{ color: "#3f83f8" }}
                           />
                           <p className="text-gray-700 font-medium text-lg">
-                            {car.transitionType}
+                            {car?.transitionType}
                           </p>
                         </div>
                         <div className="flex justify-between items-center gap-3">
@@ -171,7 +171,7 @@ const CheckOut = () => {
                             style={{ color: "#3f83f8" }}
                           />
                           <p className="text-gray-700 font-medium text-lg">
-                            {car.modelType}
+                            {car?.modelType}
                           </p>
                         </div>
                       </div>
@@ -181,7 +181,7 @@ const CheckOut = () => {
                           style={{ color: "#3f83f8" }}
                         />
                         <p className="text-gray-700 font-medium text-lg">
-                          {car.location}
+                          {car?.location}
                         </p>
                       </div>
                       <hr />
@@ -195,7 +195,7 @@ const CheckOut = () => {
                             Pick Up Date{" "}
                           </p>
                           <p className="text-black text-sm font-semibold">
-                            {values.pickUpDate}
+                            {values?.pickUpDate}
                           </p>
                         </div>
                         <div>
@@ -203,7 +203,7 @@ const CheckOut = () => {
                             Return date{" "}
                           </p>
                           <p className="text-black text-sm font-semibold">
-                            {values.returnDate}
+                            {values?.returnDate}
                           </p>
                         </div>
                       </div>
@@ -223,7 +223,7 @@ const CheckOut = () => {
                             Pick Up Location{" "}
                           </p>
                           <p className="text-black text-sm font-semibold">
-                            {values.pickUpLocation}
+                            {values?.pickUpLocation}
                           </p>
                         </div>
                         <div>
@@ -231,7 +231,7 @@ const CheckOut = () => {
                             Return Location{" "}
                           </p>
                           <p className="text-black text-sm font-semibold">
-                            {values.returnLocation}
+                            {values?.returnLocation}
                           </p>
                         </div>
                       </div>
@@ -245,7 +245,7 @@ const CheckOut = () => {
                   <h1 className="text-xl font-semibold">Amount Details</h1>
                   <div className="mt-3 flex mb-4 justify-between">
                     <p className="text-gray-600  text-sm">Price / day :</p>
-                    <h2 className="text-sm font-bold">₹ {car.price}</h2>
+                    <h2 className="text-sm font-bold">₹ {car?.price}</h2>
                   </div>
                   <div className="mt-3 flex  mb-4 justify-between">
                     <p className="text-gray-600  text-sm">Days selected :</p>
@@ -264,7 +264,7 @@ const CheckOut = () => {
                       ₹ {totalAmount}
                     </h1>
                   </div>
-                  {user.wallet >= totalAmount && (
+                  {user??.wallet >= totalAmount && (
                     <div className="flex items-center justify-between mb-4">
                       <div>
                         <input
@@ -281,7 +281,7 @@ const CheckOut = () => {
                           Use wallet payment
                         </label>
                       </div>
-                      <p>wallet balance: ₹ {user.wallet}</p>
+                      <p>wallet balance: ₹ {user??.wallet}</p>
                     </div>
                   )}
                   <button

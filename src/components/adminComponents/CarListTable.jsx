@@ -96,44 +96,44 @@ const CarListTable = () => {
             <tbody>
               {carsInSinglePage.map((car) => (
                 <tr
-                  key={car._id}
+                  key={car?._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <td className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                     <img
                       className="w-24 h-24 rounded-full" // Adjust the width and height as needed
-                      src={car.carImages[0]}
+                      src={car?.carImages[0]}
                       alt="User"
                     />
                     <div className="pl-3">
                       <div className="text-base font-semibold">
-                        {car.carName}
+                        {car?.carName}
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4">{car.partnerId.name}</td>
-                  <td className="px-6 py-4">{car.transitionType}</td>
-                  <td className="px-6 py-4">{car.fuelType}</td>
+                  <td className="px-6 py-4">{car?.partnerId.name}</td>
+                  <td className="px-6 py-4">{car?.transitionType}</td>
+                  <td className="px-6 py-4">{car?.fuelType}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center">
-                      {car.verificationStatus === "Pending" && (
+                      {car?.verificationStatus === "Pending" && (
                         <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2" />
                       )}
-                      {car.verificationStatus === "Pending" && (
+                      {car?.verificationStatus === "Pending" && (
                         <span>Pending</span>
                       )}
 
-                      {car.verificationStatus === "Approved" && (
+                      {car?.verificationStatus === "Approved" && (
                         <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2" />
                       )}
-                      {car.verificationStatus === "Approved" && (
+                      {car?.verificationStatus === "Approved" && (
                         <span>Approved</span>
                       )}
 
-                      {car.verificationStatus === "Rejected" && (
+                      {car?.verificationStatus === "Rejected" && (
                         <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2" />
                       )}
-                      {car.verificationStatus === "Rejected" && (
+                      {car?.verificationStatus === "Rejected" && (
                         <span>Rejected</span>
                       )}
                     </div>
@@ -141,26 +141,26 @@ const CarListTable = () => {
 
                   <td className="px-6 py-4">
                     <div className="flex items-center">
-                      {car.verificationStatus === "Pending" ? (
+                      {car?.verificationStatus === "Pending" ? (
                         <Link
-                          to={`/admin/carDetails/${car._id}`}
+                          to={`/admin/carDetails/${car?._id}`}
                           className="bg-green-500 text-white font-medium py-2 px-4 rounded-full hover:bg-green-600 inline-block"
                         >
                           Verify Car
                         </Link>
                       ) : (
                         <>
-                          {car.verificationStatus === "Approved" && (
+                          {car?.verificationStatus === "Approved" && (
                             <Link
-                              to={`/admin/carDetails/${car._id}`}
+                              to={`/admin/carDetails/${car?._id}`}
                               className="bg-green-500 text-white font-medium py-2 px-4 rounded-full hover:bg-green-600 inline-block"
                             >
                               Car Details
                             </Link>
                           )}
-                          {car.verificationStatus === "Rejected" && (
+                          {car?.verificationStatus === "Rejected" && (
                             <Link
-                              to={`/admin/carDetails/${car._id}`}
+                              to={`/admin/carDetails/${car?._id}`}
                               className="bg-red-500 text-white font-medium py-2 px-4 rounded-full hover:bg-red-600 inline-block"
                             >
                               Car Details

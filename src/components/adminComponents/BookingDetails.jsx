@@ -1,4 +1,3 @@
-import React from "react";
 
 const BookingDetails = ({ bookingData }) => {
   const startTimestamp = new Date(bookingData?.startDate).getTime();
@@ -76,7 +75,7 @@ const BookingDetails = ({ bookingData }) => {
                     Pick Up Date{" "}
                   </p>
                   <p className="text-black text-sm font-semibold">
-                    {new Date(bookingData.startDate).toLocaleDateString(
+                    {new Date(bookingData?.startDate).toLocaleDateString(
                       "en-US",
                       {
                         year: "numeric",
@@ -91,11 +90,14 @@ const BookingDetails = ({ bookingData }) => {
                     Return date{" "}
                   </p>
                   <p className="text-black text-sm font-semibold">
-                    {new Date(bookingData?.endDate).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
+                    {new Date(bookingData?.endDate).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
                   </p>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+?import { useState } from "react";
 import { reviewCar } from "../../../api/userApi";
 import { toast } from "react-toastify";
 import Rating from "react-rating-stars-component";
@@ -56,8 +56,8 @@ const ReviewModal = ({bookingData}) => {
   const handleReviewSubmit = async () => {
     try {
       const res = await reviewCar({
-        carId: bookingData.car._id,
-        userId: bookingData.user,
+        carId: bookingData?.car?._id,
+        userId: bookingData?.user,
         rating: rating,
         reason: reason,
       });

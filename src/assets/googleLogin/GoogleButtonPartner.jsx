@@ -13,11 +13,10 @@ const GoogleButtonPartner = () => {
   const navigate = useNavigate()
   const responseMessage = async (response) => {
     try {
-      const partner = jwt_decode(response.credential);
-      const res = await partnerLoginWithGoogle(partner.email)
+      const partner = jwt_decode(response?.credential);
+      const res = await partnerLoginWithGoogle(partner?.email)
       if (res?.status === 200) {
-        const { token, registeredPartner } = res.data;
-        console.log(registeredPartner,"from front end");
+        const { token, registeredPartner } =  res?.data ?? {};
         localStorage.setItem("partnerToken", token);
         dispatch(
           partnerLogin({

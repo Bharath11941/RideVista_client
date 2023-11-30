@@ -2,8 +2,8 @@ import { toast } from "react-toastify";
 import { changeBookingStatus, reportUser } from "../../../../api/partnerApi";
 import ReportUserModal from "../../../common/ReportModal";
 const DetailsPartner = ({ bookingData, setBookingData }) => {
-  const startTimestamp = new Date(bookingData.startDate).getTime();
-  const endTimestamp = new Date(bookingData.endDate).getTime();
+  const startTimestamp = new Date(bookingData?.startDate).getTime();
+  const endTimestamp = new Date(bookingData?.endDate).getTime();
   const dayDifference = (endTimestamp - startTimestamp) / (1000 * 3600 * 24);
   const getStatusColor = (status) => {
     switch (status) {
@@ -43,9 +43,9 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
       const res = await changeBookingStatus(
         status,
         bookingId,
-        bookingData.startDate,
-        bookingData.endDate,
-        bookingData.car
+        bookingData?.startDate,
+        bookingData?.endDate,
+        bookingData?.car
       );
       setBookingData((prevData) => ({ ...prevData, bookingStatus: status }));
       toast.success(res?.data?.message);
@@ -59,33 +59,33 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
         <div className="md:w-2/4">
           <img
             className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-72 md:rounded-none md:rounded-l-lg"
-            src={bookingData.car.carImages[0]}
+            src={bookingData?.car?.carImages[0]}
             alt=""
           />
         </div>
         <div className="flex flex-col justify-center p-4  w-full leading-normal">
           <div className="flex justify-between">
             <h1 className="mb-2 uppercase text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {bookingData.car.carName}
+              {bookingData?.car?.carName}
             </h1>
 
             <div className="flex justify-end">
-              {bookingData.bookingStatus === "Success" && (
+              {bookingData?.bookingStatus === "Success" && (
                 <button
                   type="button"
                   onClick={() =>
-                    handleBookingStatus("Delivered", bookingData._id)
+                    handleBookingStatus("Delivered", bookingData?._id)
                   }
                   className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                 >
                   Delivered
                 </button>
               )}
-              {bookingData.bookingStatus === "Delivered" && (
+              {bookingData?.bookingStatus === "Delivered" && (
                 <button
                   type="button"
                   onClick={() =>
-                    handleBookingStatus("Returned", bookingData._id)
+                    handleBookingStatus("Returned", bookingData?._id)
                   }
                   className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                 >
@@ -97,7 +97,7 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
           <div className="flex justify-start gap-5">
             <p className="my-3 text-lg font-semibold">
               Booked User:
-              <span> {bookingData.user.name}</span>
+              <span> {bookingData?.user.name}</span>
             </p>
             <ReportUserModal
               bookingData={bookingData}
@@ -106,12 +106,12 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
             />
           </div>
           <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Amount Paid: ₹ {bookingData.totalBookingCharge}
+            Amount Paid: ₹ {bookingData?.totalBookingCharge}
           </h1>
           <p className="my-5 text-lg font-semibold">
             Booking Status:
-            <span className={getStatusColor(bookingData.bookingStatus)}>
-              {getStatusText(bookingData.bookingStatus)}
+            <span className={getStatusColor(bookingData?.bookingStatus)}>
+              {getStatusText(bookingData?.bookingStatus)}
             </span>
           </p>
           <div className="container">
@@ -121,7 +121,7 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
                   Pick Up Date{" "}
                 </p>
                 <p className="text-black text-sm font-semibold">
-                  {new Date(bookingData.startDate).toLocaleDateString("en-US", {
+                  {new Date(bookingData?.startDate).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -133,7 +133,7 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
                   Return date{" "}
                 </p>
                 <p className="text-black text-sm font-semibold">
-                  {new Date(bookingData.endDate).toLocaleDateString("en-US", {
+                  {new Date(bookingData?.endDate).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -155,7 +155,7 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
                   Pick Up Location{" "}
                 </p>
                 <p className="text-black text-sm font-semibold">
-                  {bookingData.pickUpLocation}
+                  {bookingData?.pickUpLocation}
                 </p>
               </div>
               <div>
@@ -163,7 +163,7 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
                   Return Location{" "}
                 </p>
                 <p className="text-black text-sm font-semibold">
-                  {bookingData.returnLocation}
+                  {bookingData?.returnLocation}
                 </p>
               </div>
             </div>

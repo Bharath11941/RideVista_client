@@ -13,7 +13,6 @@ const DashboardHome = () => {
     partnerReport(_id)
       .then((res) => {
         setReportData(res?.data);
-        console.log(res?.data);
       })
       .catch((err) => {
         console.log(err.message);

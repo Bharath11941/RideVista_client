@@ -43,8 +43,8 @@ function UserNavbar() {
             >
               <span className="sr-only">Open user menu</span>
               <img
-                className="w-8 h-8 rounded-full"
-                src={user?.profileImage}
+                className="w-8 h-8 rounded-full object-contain"
+                src={user?.profileImage || "/images/person-304893_1280.png"}
                 alt="user photo"
               />
             </button>

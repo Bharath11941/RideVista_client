@@ -1,4 +1,4 @@
-
+?
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { reportCarOwner } from "../../../api/userApi";
 import ReportPartnerModal from "../../common/ReportModal";
@@ -51,30 +51,30 @@ const DetailsUser = ({ bookingData }) => {
         <div className="md:w-2/4">
           <img
             className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-72 md:rounded-none md:rounded-l-lg"
-            src={bookingData.car.carImages[0]}
+            src={bookingData?.car?.carImages[0]}
             alt=""
           />
           <ReviewModal bookingData={bookingData} />
         </div>
         <div className="flex flex-col justify-center p-4  w-full leading-normal">
           <h1 className="mb-2 uppercase text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {bookingData.car.carName}
+            {bookingData?.car?.carName}
           </h1>
           <div className="flex justify-start gap-5">
             <p className="my-3 text-lg font-semibold">
               Owner Name:
-              <span> {bookingData.partner.name}</span>
+              <span> {bookingData?.partner?.name}</span>
             </p>
             <ReportPartnerModal bookingData={bookingData} reportApi={reportCarOwner} role="user"/>
             <Link to='/chat'><FontAwesomeIcon icon={faCommentAlt} className="w-11 h-11" size="lg" style={{color: "#00060f",}} /></Link>
           </div>
           <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Amount Paid: ₹ {bookingData.totalBookingCharge}
+            Amount Paid: ₹ {bookingData?.totalBookingCharge}
           </h1>
           <p className="my-5 text-lg font-semibold">
             Booking Status:{" "}
-            <span className={getStatusColor(bookingData.bookingStatus)}>
-              {getStatusText(bookingData.bookingStatus)}
+            <span className={getStatusColor(bookingData?.bookingStatus)}>
+              {getStatusText(bookingData?.bookingStatus)}
             </span>
           </p>
           <div className="container">
@@ -84,7 +84,7 @@ const DetailsUser = ({ bookingData }) => {
                   Pick Up Date{" "}
                 </p>
                 <p className="text-black text-sm font-semibold">
-                  {new Date(bookingData.startDate).toLocaleDateString("en-US", {
+                  {new Date(bookingData?.startDate).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -96,7 +96,7 @@ const DetailsUser = ({ bookingData }) => {
                   Return date{" "}
                 </p>
                 <p className="text-black text-sm font-semibold">
-                  {new Date(bookingData.endDate).toLocaleDateString("en-US", {
+                  {new Date(bookingData?.endDate).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -118,7 +118,7 @@ const DetailsUser = ({ bookingData }) => {
                   Pick Up Location{" "}
                 </p>
                 <p className="text-black text-sm font-semibold">
-                  {bookingData.pickUpLocation}
+                  {bookingData?.pickUpLocation}
                 </p>
               </div>
               <div>
@@ -126,7 +126,7 @@ const DetailsUser = ({ bookingData }) => {
                   Return Location{" "}
                 </p>
                 <p className="text-black text-sm font-semibold">
-                  {bookingData.returnLocation}
+                  {bookingData?.returnLocation}
                 </p>
               </div>
             </div>

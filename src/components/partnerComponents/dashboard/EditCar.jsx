@@ -11,12 +11,19 @@ import {
 } from "../../../api/partnerApi";
 import Loading from "../../loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Autocomplete } from "@react-google-maps/api";
+import useGoogleMap from "../../coustomHook/useGoogleMap";
+
 
 const EditCar = () => {
+  const { isLoaded } = useGoogleMap();
   const [certificate, setCertificate] = useState([]);
+  const [car, setCar] = useState({});
   const [certificateImg, setCertificateImg] = useState({});
   const [selectedImages, setSelectedImages] = useState([]);
+  const [location, setLocation] = useState("");
+  const [errorLocation, setErrorLocation] = useState("");
   // Separate error states for certificate and car images
   const [certificateError, setCertificateError] = useState(null);
   const [carImagesError, setCarImagesError] = useState(null);
@@ -24,17 +31,27 @@ const EditCar = () => {
   const navigate = useNavigate();
   const [carImage, setCarImage] = useState([]);
   const { carId } = useParams();
-  const [car, setCar] = useState({});
+  
   const onSubmit = async () => {
     try {
       setLoading(true);
-      if (car.carImages.length === 0 && carImage.length ===0) {
+      if(!location.trim()){
+        setErrorLocation("Location required")
+        return
+      }
+      if (car.carImages.length === 0 && carImage.length === 0) {
         setCarImagesError("Please select at least one image for the car.");
         setLoading(false);
         return;
       }
-      
-      const res = await editCar({ ...values, certificate, carImage, carId });
+
+      const res = await editCar({
+        ...values,
+        certificate,
+        carImage,
+        carId,
+        location,
+      });
       if (res?.status === 200) {
         setLoading(false);
         toast.success(res?.data?.message);
@@ -50,6 +67,7 @@ const EditCar = () => {
     editCarDetails(carId)
       .then((res) => {
         setCar(res?.data?.car);
+        setLocation(res?.data?.car?.location)
       })
       .catch((err) => {
         console.log(err.message);
@@ -60,7 +78,6 @@ const EditCar = () => {
       initialValues: {
         carName: car.carName,
         price: car.price,
-        location: car.location,
         fuelType: car.fuelType,
         transitionType: car.transitionType,
         modelType: car.modelType,
@@ -135,7 +152,26 @@ const EditCar = () => {
       console.log(error.message);
     }
   };
-  
+  useEffect(() => {
+    if (isLoaded) {
+      const autocomplete = new window.google.maps.places.Autocomplete(
+        document.getElementById("location"),
+        {
+          componentRestrictions: { country: "IN" },
+          types: ["(cities)"],
+        }
+      );
+
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        const firstName = place.formatted_address.split(",")[0];
+        setLocation(firstName);
+        setErrorLocation("");
+
+      });
+    }
+  }, [isLoaded]);
+
   return (
     <>
       {loading ? (
@@ -180,18 +216,23 @@ const EditCar = () => {
                 )}
               </div>
               <div className="mb-6">
-                <input
-                  type="text"
-                  name="location"
-                  value={values.location}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
-                  placeholder="Car location"
-                />
-                {touched.location && errors.location && (
-                  <div className="text-red-500 text-sm">{errors.location}</div>
+                {isLoaded && (
+                  <Autocomplete>
+                    <input
+                      type="text"
+                      id="location"
+                      name="location"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                      placeholder="Car location"
+                    />
+                  </Autocomplete>
+                )}
+
+                {errorLocation && (
+                  <div className="text-red-500 text-sm">{errorLocation}</div>
                 )}
               </div>
               <div className="mb-6">

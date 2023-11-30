@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 
 const AdminSidebar = () => {
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <>
       <div className="drawer flex justify-end  md:hidden z-10">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+
 import { Chart as ChartJS, LinearScale, CategoryScale, LineController, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 

@@ -9,7 +9,7 @@ const PieChart = ({count}) => {
     console.error('Invalid count data:', count);
     return null; // or you can return a default chart or an error message
   }
-  console.log(count)
+
   const data = {
     labels: Object.keys(count),
     datasets: [
