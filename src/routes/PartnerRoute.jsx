@@ -1,6 +1,6 @@
 
 import { Route, Routes } from 'react-router-dom'
-import PartnerSignup from '../pages/partnerPages/partnerSignup'
+import PartnerSignup from '../pages/partnerPages/PartnerSignup'
 import PartnerOtp from '../pages/partnerPages/PartnerOtp'
 import PartnerLogin from '../pages/partnerPages/PartnerLogin'
 import PartnerPublic from './partnerPrivate/PartnerPublic'
