@@ -6,7 +6,7 @@ import { userChats } from "../../../api/chatApi";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 
-const END_POINT = "http://localhost:3000";
+const END_POINT = "https://ride-vista.onrender.com";
 let socket;
 
 const Chat = () => {

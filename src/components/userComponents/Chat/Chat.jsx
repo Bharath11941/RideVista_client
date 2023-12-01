@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { userChats } from "../../../api/chatApi";
 import ChatBox from "./ChatBox";
 import { io } from "socket.io-client";
-const END_POINT = "http://localhost:3000";
+const END_POINT = "https://ride-vista.onrender.com";
 let socket;
 const Chat = () => {
   const { _id } = useSelector((state) => state.userReducer.user);
