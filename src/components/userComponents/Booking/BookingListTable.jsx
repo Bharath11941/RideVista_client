@@ -99,7 +99,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
   return (
     <>
       {loading ? (
-        <div className="fixed inset-0 flex items-center justify-center">
+        <div className="inset-0 flex items-center justify-center">
           <div className="spinnerouter">
             <Loading />
           </div>

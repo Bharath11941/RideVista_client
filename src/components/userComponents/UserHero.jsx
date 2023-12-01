@@ -1,7 +1,7 @@
 
 export default function UserHero() {
   return (
-    <div className="bg-cover bg-no-repeat bg-center"  style={{ backgroundImage: "url('/src/assets/images/car3.jpg')" }}>
+    <div className="bg-cover bg-no-repeat bg-center"  style={{ backgroundImage: "url('/images/car3.jpg')" }}>
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
