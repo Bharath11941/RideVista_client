@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { reviewListUser } from "../../api/userApi";
+import { reviewListUser } from "../../../api/userApi";
 import { useState } from "react";
 
 const RatingList = () => {

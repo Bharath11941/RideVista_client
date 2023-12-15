@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getUserDetails, updateProfileImage } from "../../api/userApi";
+import { getUserDetails, updateProfileImage } from "../../../api/userApi";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
-import ProfileEditModal from "../common/ProfileEditModal";
+import ProfileEditModal from "../../common/ProfileEditModal";
+import Loading from "../../loading/Loading";
 
 const ProfileCard = () => {
   const { user } = useSelector((state) => state.userReducer);
@@ -85,7 +86,8 @@ const ProfileCard = () => {
   return (
     <div className="container mx-auto flex items-center justify-center pb-40 mt-10">
       <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <div className="flex flex-col items-center pb-10 mt-5">
+        {!userData?.profileImage ? <Loading/> : (
+          <div className="flex flex-col items-center pb-10 mt-5">
           <label className="relative cursor-pointer">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
@@ -182,6 +184,7 @@ const ProfileCard = () => {
             <ProfileEditModal data={userData} setData={setUserData} role="user" />
           </div>
         </div>
+        )}
       </div>
     </div>
   );

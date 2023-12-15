@@ -12,18 +12,15 @@ export const otpVerification = async (otp, otpId, userId) => {
   return data;
 };
 export const clientResendOtp = async ( userEmail) => {
-  console.log(userEmail,"from userApi");
   const data = await userAxiosInstance.post("/resendOtp", { userEmail });
   return data;
 };
 export const loginVerificaton = async (loginData) => {
-  console.log(loginData,"from instance");
   const data = await userAxiosInstance.post("/login", loginData);
   return data;
 };
 
 export const userLoginWithGoogle = async (userEmail) => {
-  console.log(userEmail);
   const data = await userAxiosInstance.post('/googleLogin',{userEmail})
   return data
 }

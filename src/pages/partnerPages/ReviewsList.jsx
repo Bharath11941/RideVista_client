@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import PartnerNavbar from "../../components/partnerComponents/PartnerNavbar";
+import PartnerNavbar from "../../components/partnerComponents/partnerCommon/PartnerNavbar";
 import PartnerSidebar from "../../components/partnerComponents/dashboard/PartnerSidebar";
 import ReviewListTable from "../../components/partnerComponents/dashboard/booking/ReviewListTable";
 import { useLocation } from "react-router-dom";
@@ -24,7 +24,7 @@ const ReviewsList = () => {
   return (
     <>
       <PartnerNavbar />
-      <div className="mx-auto flex mt-5">
+      <div className="mx-auto w-full flex mt-5">
         <PartnerSidebar />
         <ReviewListTable car={carData} />
       </div>

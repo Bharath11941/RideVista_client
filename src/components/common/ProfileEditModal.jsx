@@ -35,7 +35,6 @@ const ProfileEditModal = ({ data, setData, role }) => {
       const res = await updateUser(values);
       setData(res?.data?.userData);
     } else if (role === "partner") {
-      console.log("hi from partner if")
       const res = await updatePartner(values);
       setData(res?.data?.partnerData);
     }

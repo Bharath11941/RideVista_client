@@ -24,7 +24,6 @@ const DashBoardBody = () => {
     adminReport().then((res) => {
       setLoading(false);
       setReportData(res?.data);
-      console.log(res?.data);
     });
     
   }, []);
@@ -33,23 +32,22 @@ const DashBoardBody = () => {
       <div className="w-full md:w-3/4 px-4 mb-5 mt-5">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
           {loading ? (
-            <div className="inset-0 flex items-center justify-center">
+            <div className="inset-0 flex w-full aspect-[2] items-center justify-center">
               <div className="spinnerouter">
                 <Loading />
               </div>
             </div>
           ) : (
             <div>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <div className="col-span-1">
-                  <div className="bg-white md:h-44 shadow-md  p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <div className="col-span-1 grid">
+                  <div className="bg-white shadow-md  p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
                     <article className="icontext flex items-center">
                       <div className="ml-4 ">
                         <div className="flex gap-3">
                           <FontAwesomeIcon
                             icon={faDollarSign}
-                            size="2xl"
-                            style={{ color: "#3f83f8" }}
+                            className="text-2xl text-blue-500"
                           />
                           <h6 className="mb-2 text-lg font-semibold text-gray-800">
                             Total Earnings
@@ -69,15 +67,14 @@ const DashBoardBody = () => {
                     </article>
                   </div>
                 </div>
-                <div className="col-span-1">
-                  <div className="bg-white md:h-44 shadow-md  p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
+                <div className="col-span-1 grid">
+                  <div className="bg-white shadow-md  p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
                     <article className="icontext flex items-center">
                       <div className="ml-4 ">
                         <div className="flex gap-3">
                           <FontAwesomeIcon
                             icon={faDollarSign}
-                            size="2xl"
-                            style={{ color: "#3f83f8" }}
+                            className="text-2xl text-blue-500"
                           />
                           <h6 className="mb-2 text-lg font-semibold text-gray-800">
                             Currnet month
@@ -98,15 +95,14 @@ const DashBoardBody = () => {
                     </article>
                   </div>
                 </div>
-                <div className="col-span-1">
-                  <div className="bg-white md:h-44 shadow-md  p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
+                <div className="col-span-1 grid">
+                  <div className="bg-white shadow-md  p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
                     <article className="icontext flex items-center">
                       <div className="ml-4">
                         <div className="flex gap-3">
                           <FontAwesomeIcon
                             icon={faUser}
-                            size="2xl"
-                            style={{ color: "#3f83f8" }}
+                            className="text-2xl text-blue-500"
                           />
                           <h6 className="mb-2 text-lg font-semibold text-gray-800">
                             Total Users
@@ -122,15 +118,14 @@ const DashBoardBody = () => {
                     </article>
                   </div>
                 </div>
-                <div className="col-span-1">
-                  <div className="bg-white md:h-44 shadow-md  p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
+                <div className="col-span-1 grid">
+                  <div className="bg-white shadow-md  p-6 mb-4 rounded-lg transition-transform transform hover:scale-105">
                     <article className="icontext flex items-center">
                       <div className="ml-4">
                         <div className="flex gap-3">
                           <FontAwesomeIcon
                             icon={faUser}
-                            size="2xl"
-                            style={{ color: "#3f83f8" }}
+                            className="text-2xl text-blue-500"
                           />
                           <h6 className="mb-2 text-lg font-semibold text-gray-800">
                             Total Partners

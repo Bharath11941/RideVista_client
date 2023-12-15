@@ -3,12 +3,24 @@ import { reviewCar } from "../../../api/userApi";
 import { toast } from "react-toastify";
 import Rating from "react-rating-stars-component";
 
+const debounce = (func, delay) => {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+};
+
 const ReviewModal = ({bookingData}) => {
   const [activeModal, setActiveModal] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const [rating, setRating] = useState(1); // State to hold the rating
   const [reason, setReason] = useState("");
   const handleReasonChange = (event) => {
     setReason(event.target.value);
+    setErrorMessage("");
   };
   const getRatingMessage = (value) => {
     switch (value) {
@@ -47,6 +59,7 @@ const ReviewModal = ({bookingData}) => {
   };
 
   const closeModal = () => {
+    setErrorMessage("");
     setActiveModal(null);
   };
 
@@ -54,6 +67,10 @@ const ReviewModal = ({bookingData}) => {
     setRating(newRating);
   };
   const handleReviewSubmit = async () => {
+    if (!reason.trim()) {
+      setErrorMessage("Please provide a review."); // Show error if textarea is empty
+      return;
+    }
     try {
       const res = await reviewCar({
         carId: bookingData?.car?._id,
@@ -70,6 +87,11 @@ const ReviewModal = ({bookingData}) => {
       closeModal();
       console.log(error.message);
     }
+  };
+  const debouncedHandleReview = debounce(handleReviewSubmit, 1000); // Adjust the delay as needed
+
+  const handleReviewDebounced = async () => {
+    debouncedHandleReview();
   };
   return (
     <>
@@ -152,11 +174,14 @@ const ReviewModal = ({bookingData}) => {
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Write your reason here..."
               />
+              {errorMessage && (
+                <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+              )}
 
               <button
                 data-modal-hide="popup-modal"
                 type="button"
-                onClick={handleReviewSubmit}
+                onClick={handleReviewDebounced}
                 className="text-white-500 mt-2 bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
               >
                 Submit

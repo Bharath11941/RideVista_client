@@ -1,10 +1,28 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
+
+const debounce = (func, delay) => {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+};
+
 const ReportModal = ({ bookingData,reportApi,role }) => {
   const [activeModal, setActiveModal] = useState(null);
   const [reason, setReason] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+
   const handleReportOwner = async () => {
+    if (!reason.trim()) {
+      setErrorMessage("Please provide a reason."); // Show error if textarea is empty
+      return;
+    }
     if(role === "user"){
       const res = await reportApi(bookingData.partner._id,reason,bookingData.user);
     if (res?.status === 200) {
@@ -19,16 +37,25 @@ const ReportModal = ({ bookingData,reportApi,role }) => {
       }
     }
     setReason("")
+    setErrorMessage("");
+  };
+  const debouncedHandleReportOwner = debounce(handleReportOwner, 1000); // Adjust the delay as needed
+
+  const handleReportOwnerDebounced = async () => {
+    debouncedHandleReportOwner();
   };
   const openModal = (modalId) => {
     setActiveModal(modalId);
+
   };
 
   const closeModal = () => {
     setActiveModal(null);
+    setErrorMessage("");
   };
   const handleReasonChange = (event) => {
     setReason(event.target.value);
+    setErrorMessage("");
   };
   return (
     <>
@@ -37,7 +64,7 @@ const ReportModal = ({ bookingData,reportApi,role }) => {
         onClick={() => openModal("popup-modal")}
         className="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
       >
-        Report owner
+       {role === "user" ? "Report Owner" : "Report User"}
       </button>
       <div
         id="popup-modal"
@@ -87,11 +114,14 @@ const ReportModal = ({ bookingData,reportApi,role }) => {
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Write your reason here..."
               />
+              {errorMessage && (
+                <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+              )}
 
               <button
                 data-modal-hide="popup-modal"
                 type="button"
-                onClick={handleReportOwner}
+                onClick={handleReportOwnerDebounced}
                 className="text-white-500 mt-2 bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
               >
                 Submit

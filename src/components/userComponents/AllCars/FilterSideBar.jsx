@@ -4,8 +4,8 @@ const FilterSideBar = ({ setCars, filterCars, setCurrentPage }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilterOptions] = useState({
     modelType: { Premium: false, Medium: false, Normal: false },
-    fuelType: { Diesel: false, Petrol: false },
-    transitionType: { Automatic: false, Manual: false, Electric: false },
+    fuelType: { Diesel: false, Petrol: false, Electric: false },
+    transitionType: { Automatic: false, Manual: false },
   });
 
   useEffect(() => {
@@ -57,8 +57,8 @@ const FilterSideBar = ({ setCars, filterCars, setCurrentPage }) => {
   const resetFilter = () => {
     setFilterOptions({
       modelType: { Premium: false, Medium: false, Normal: false },
-      fuelType: { Diesel: false, Petrol: false },
-      transitionType: { Automatic: false, Manual: false, Electric: false },
+      fuelType: { Diesel: false, Petrol: false, Electric: false },
+      transitionType: { Automatic: false, Manual: false },
     });
     setSearchTerm("");
     setCars(filterCars);

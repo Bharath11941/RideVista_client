@@ -6,8 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Loading from "../../components/loading/Loading";
-import UserNavbar from '../../components/userComponents/UserNavbar'
-import UserFooter from '../../components/userComponents/UserFooter'
+import UserNavbar from '../../components/userComponents/userCommon/UserNavbar'
+import UserFooter from '../../components/userComponents/userCommon/UserFooter'
 
 const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);

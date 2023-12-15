@@ -4,11 +4,11 @@ import { filterCarsDateLocation } from "../../../api/userApi";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Autocomplete } from "@react-google-maps/api";
-import useGoogleMap from "../../coustomHook/useGoogleMap";
+import useGoogleMapApi from "../../coustomHook/useGoogleMapApi";
 
 
 const SelectedDateLocation = ({ selectedData, setLoading }) => {
-  const { isLoaded } = useGoogleMap();
+  const { isLoaded } = useGoogleMapApi();
 
   const [pickUpLocation, setPickUpLocation] = useState(
     selectedData.pickUpLocation

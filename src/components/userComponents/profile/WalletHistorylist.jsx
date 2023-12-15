@@ -1,13 +1,13 @@
 import { useState } from "react";
-import Pagination from "../common/Pagination";
+import Pagination from "../../common/Pagination";
 
 const WalletHistorylist = ({ user }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const dataPerPage = 2;
+  const dataPerPage = 5;
   const lastIndex = currentPage * dataPerPage;
   const firstIndex = lastIndex - dataPerPage;
-  const dataInSinglePage = user.walletHistory.slice(firstIndex, lastIndex);
-  const totalPages = Math.ceil(user.walletHistory.length / dataPerPage);
+  const dataInSinglePage = user?.walletHistory.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(user?.walletHistory?.length / dataPerPage);
   const numbers = [...Array(totalPages + 1).keys()].slice(1);
   return (
     <div className="container mx-auto mb-40 mt-10">
@@ -17,7 +17,7 @@ const WalletHistorylist = ({ user }) => {
             type="button"
             className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
           >
-           Balance : {user.wallet} 
+           Balance : {user?.wallet} 
           </button>
         </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -37,31 +37,31 @@ const WalletHistorylist = ({ user }) => {
             </tr>
           </thead>
           <tbody>
-            {user.walletHistory && user.walletHistory.length > 0 ? (
+            {user?.walletHistory && user?.walletHistory?.length > 0 ? (
               dataInSinglePage.map((item) => (
                 <tr
                   key={item._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <td className="px-6 py-4 text-sm  text-black ">
-                  {new Date(item.date).toLocaleDateString("en-US", {
+                  {new Date(item?.date).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "long",
                         day: "numeric",
                       })}
 
                   </td>
-                  {item.amount > 0 ? (
+                  {item?.amount > 0 ? (
                     <td className="px-6 py-4 text-sm text-green-500 ">
-                      +{item.amount}
+                      +{item?.amount}
                     </td>
                   ) : (
                     <td className="px-6 py-4 text-sm text-red-800 ">
-                      {item.amount}
+                      {item?.amount}
                     </td>
                   )}
                   <td className="px-6 py-4 text-sm  text-black ">
-                    {item.description}
+                    {item?.description}
                   </td>
                 </tr>
               ))

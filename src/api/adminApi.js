@@ -41,7 +41,6 @@ export const partnerBlock = async (partnerId, status) => {
 };
 export const adminReport = async () => {
   const data = await adminAxiosInstance.get("/report");
-  console.log(data);
   return data;
 };
 export const totalBookings = async () => {

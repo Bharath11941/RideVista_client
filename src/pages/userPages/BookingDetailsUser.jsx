@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
-import UserNavbar from "../../components/userComponents/UserNavbar";
-import UserFooter from "../../components/userComponents/UserFooter";
+import UserNavbar from "../../components/userComponents/userCommon/UserNavbar";
+import UserFooter from "../../components/userComponents/userCommon/UserFooter";
 import { useState } from "react";
 import DetailsUser from "../../components/userComponents/Booking/DetailsUser";
 

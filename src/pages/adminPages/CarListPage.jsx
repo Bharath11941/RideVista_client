@@ -6,7 +6,7 @@ const CarListPage = () => {
   return (
     <>
       <AdminNavbar />
-      <div className="mx-auto flex mt-5">
+      <div className="mx-auto w-full flex mt-5">
         <AdminSidebar />
         <CarListTable />
       </div>

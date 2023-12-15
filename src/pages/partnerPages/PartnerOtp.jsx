@@ -113,7 +113,7 @@ const PartnerOtp = () => {
   return (
     <>
       {loading ? (
-        <div className="fixed inset-0 flex items-center justify-center">
+        <div className="fixed inset-0 flex w-full aspect-[2] items-center justify-center">
           <div className="spinnerouter">
             <Loading />
           </div>

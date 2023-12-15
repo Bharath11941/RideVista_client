@@ -59,7 +59,7 @@ const Mycars = () => {
       <div className="w-full md:w-3/4 px-4 mb-5 mt-5">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
           {loading ? (
-            <div className="inset-0 flex items-center justify-center">
+            <div className="inset-0 flex w-full aspect-[2] items-center justify-center">
               <div className="spinnerouter">
                 <Loading />
               </div>
@@ -119,78 +119,81 @@ const Mycars = () => {
               {filteredData.length > 0 &&
                 carsInSinglePage.map((car) => {
                   return (
-                    <Card
-                      className="w-full max-w-[80rem] mb-6 flex-row"
-                      key={car._id}
-                    >
-                      <CardHeader
-                        shadow={false}
-                        floated={false}
-                        className="m-0 w-2/5 shrink-0 rounded-r-none"
+                    <>
+                   
+                      <Card
+                        className="w-full max-w-[80rem] mb-6 flex-row"
+                        key={car._id}
                       >
-                        <img
-                          src={car.carImages[0]}
-                          alt="card-image"
-                          className="h-96 w-96 object-cover"
-                        />
-                      </CardHeader>
-                      <CardBody>
-                        <Typography
-                          variant="h2"
-                          color="gray"
-                          className="mb-4 uppercase"
+                        <CardHeader
+                          shadow={false}
+                          floated={false}
+                          className="m-0 w-2/5 shrink-0 rounded-r-none"
                         >
-                          {car.carName}
-                        </Typography>
-                        <Typography
-                          variant="h4"
-                          color="blue-gray"
-                          className="mb-2"
-                        >
-                          Price / day : {car.price} RS
-                        </Typography>
-                        <Typography
-                          variant="h4"
-                          color="blue-gray"
-                          className="mb-2"
-                        >
-                          Location : {car.location}
-                        </Typography>
-                        <Typography
-                          variant="h4"
-                          color="blue-gray"
-                          className="mb-2"
-                        >
-                          Model : {car.modelType}
-                        </Typography>
-                        <Typography color="gray" className="mb-8 font-normal">
-                          {car.transitionType} || {car.fuelType}
-                        </Typography>
-
-                        <div className="flex justify-start gap-3">
-                          <Link
-                            to={`/partner/editCar/${car._id}`}
-                            className="inline-block"
+                          <img
+                            src={car.carImages[0]}
+                            alt="card-image"
+                            className="h-96  object-cover"
+                          />
+                        </CardHeader>
+                        <CardBody>
+                          <Typography
+                            variant="h2"
+                            color="gray"
+                            className="mb-4 uppercase"
                           >
+                            {car.carName}
+                          </Typography>
+                          <Typography
+                            variant="h4"
+                            color="blue-gray"
+                            className="mb-2"
+                          >
+                            Price / day : {car.price} RS
+                          </Typography>
+                          <Typography
+                            variant="h4"
+                            color="blue-gray"
+                            className="mb-2"
+                          >
+                            Location : {car.location}
+                          </Typography>
+                          <Typography
+                            variant="h4"
+                            color="blue-gray"
+                            className="mb-2"
+                          >
+                            Model : {car.modelType}
+                          </Typography>
+                          <Typography color="gray" className="mb-8 font-normal">
+                            {car.transitionType} || {car.fuelType}
+                          </Typography>
+
+                          <div className="flex justify-start gap-3">
+                            <Link
+                              to={`/partner/editCar/${car._id}`}
+                              className="inline-block"
+                            >
+                              <Button
+                                variant="text"
+                                className="flex bg-blue-500 items-center gap-2"
+                              >
+                                Edit car
+                              </Button>
+                            </Link>
                             <Button
                               variant="text"
+                              onClick={() =>
+                                navigate("/partner/reviews", { state: { car } })
+                              }
                               className="flex bg-blue-500 items-center gap-2"
                             >
-                              Edit car
+                              Get Reviews
                             </Button>
-                          </Link>
-                          <Button
-                            variant="text"
-                            onClick={() =>
-                              navigate("/partner/reviews", { state: { car } })
-                            }
-                            className="flex bg-blue-500 items-center gap-2"
-                          >
-                            Get Reviews
-                          </Button>
-                        </div>
-                      </CardBody>
-                    </Card>
+                          </div>
+                        </CardBody>
+                      </Card>
+                    </>
                   );
                 })}
               {filteredData.length > carPerPage && (

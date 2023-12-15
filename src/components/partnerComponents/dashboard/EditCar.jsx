@@ -13,11 +13,11 @@ import Loading from "../../loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Autocomplete } from "@react-google-maps/api";
-import useGoogleMap from "../../coustomHook/useGoogleMap";
+import useGoogleMapApi from "../../coustomHook/useGoogleMapApi";
 
 
 const EditCar = () => {
-  const { isLoaded } = useGoogleMap();
+  const { isLoaded } = useGoogleMapApi();
   const [certificate, setCertificate] = useState([]);
   const [car, setCar] = useState({});
   const [certificateImg, setCertificateImg] = useState({});
@@ -246,6 +246,7 @@ const EditCar = () => {
                   <option value="">Choose a fuel type</option>
                   <option value="Petrol">Petrol</option>
                   <option value="Diesel">Diesel</option>
+                  <option value="Electric">Electric</option>
                 </select>
                 {touched.fuelType && errors.fuelType && (
                   <div className="text-red-500 text-sm">{errors.fuelType}</div>
@@ -262,7 +263,7 @@ const EditCar = () => {
                   <option value="">Choose a transition type</option>
                   <option value="Automatic">Automatic</option>
                   <option value="Manual">Manual</option>
-                  <option value="Manual">Electric</option>
+                 
                 </select>
                 {touched.transitionType && errors.transitionType && (
                   <div className="text-red-500 text-sm">

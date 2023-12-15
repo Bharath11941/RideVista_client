@@ -1,6 +1,6 @@
-import UserNavbar from '../../components/userComponents/UserNavbar'
+import UserNavbar from '../../components/userComponents/userCommon/UserNavbar'
 import Contact from '../../components/common/Contact/Contact'
-import UserFooter from '../../components/userComponents/UserFooter';
+import UserFooter from '../../components/userComponents/userCommon/UserFooter';
 
 
 const UserContactPage = () => {

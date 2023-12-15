@@ -26,6 +26,7 @@ const PartnerList = () => {
       });
   }, []);
   const blockUnblockPartner = async (partnerId, status) => {
+    console.log("hi from block")
     try {
       const res = await partnerBlock(partnerId, status);
       if (res?.status === 200) {
@@ -140,11 +141,11 @@ const PartnerList = () => {
                         scope="row"
                         className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        {/* <img
+                        <img
                       className="w-10 h-10 rounded-full"
-                      src="/docs/images/people/profile-picture-1.jpg"
+                      src={data?.profileImage ?data?.profileImage:"/images/person-304893_1280.png" }
                       alt="Jese image"
-                    /> */}
+                    />
                         <div className="pl-3">
                           <div className="text-base font-semibold">
                             {data?.name}
@@ -286,14 +287,14 @@ const PartnerList = () => {
                 </tbody>
               </table>
             </div>
-            {partnersInSinglePage.length > 1 && (
+            
               <Pagination
                 setCurrentPage={setCurrentPage}
                 numbers={numbers}
                 currentPage={currentPage}
                 totalPages={totalPages}
               />
-            )}
+            
           </div>
         </div>
       )}

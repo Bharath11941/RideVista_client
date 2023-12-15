@@ -46,7 +46,6 @@ const Chat = () => {
 
       const updatedConversations = conversations.map((chat) => {
         if (chat._id === data.chatId) {
-          console.log("Setting lastMessage:", data.createdAt);
           return { ...chat, lastMessage: Date.parse(data.createdAt) };
         }
         return chat;

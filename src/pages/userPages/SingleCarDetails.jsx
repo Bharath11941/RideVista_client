@@ -1,7 +1,7 @@
-import CarDetails from "../../components/userComponents/CarDetails"
-import RatingList from "../../components/userComponents/RatingList"
-import UserFooter from "../../components/userComponents/UserFooter"
-import UserNavbar from "../../components/userComponents/UserNavbar"
+import CarDetails from "../../components/userComponents/car/CarDetails"
+import RatingList from "../../components/userComponents/rating/RatingList"
+import UserFooter from "../../components/userComponents/userCommon/UserFooter"
+import UserNavbar from "../../components/userComponents/userCommon/UserNavbar"
 
 const SingleCarDetails = () => {
   return (

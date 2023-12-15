@@ -1,7 +1,7 @@
 import React from 'react'
-import PartnerNavbar from '../../components/partnerComponents/PartnerNavbar'
-import PartnerFooter from '../../components/partnerComponents/PartnerFooter'
-import { PartnerCarousel } from '../../components/partnerComponents/PartnerHero'
+import PartnerNavbar from '../../components/partnerComponents/partnerCommon/PartnerNavbar'
+import PartnerFooter from '../../components/partnerComponents/partnerCommon/PartnerFooter'
+import { PartnerCarousel } from '../../components/partnerComponents/home/PartnerHero'
 
 const PartnerHome = () => {
   return (

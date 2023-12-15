@@ -1,5 +1,5 @@
 import React from 'react'
-import PartnerNavbar from '../../components/partnerComponents/PartnerNavbar'
+import PartnerNavbar from '../../components/partnerComponents/partnerCommon/PartnerNavbar'
 import Chat from '../../components/partnerComponents/chat/Chat'
 
 const ChatPage = () => {

@@ -8,11 +8,11 @@ import Loading from "../../loading/Loading";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Autocomplete } from "@react-google-maps/api";
-import useGoogleMap from "../../coustomHook/useGoogleMap";
+import useGoogleMapApi from "../../coustomHook/useGoogleMapApi";
 
 
 const AddCar = () => {
-  const { isLoaded } = useGoogleMap();
+  const { isLoaded } = useGoogleMapApi();
   const [certificate, setCertificate] = useState([]);
   const [location, setLocation] = useState("");
   const [errorLocation, setErrorLocation] = useState("");
@@ -209,6 +209,7 @@ const AddCar = () => {
                   <option value="">Choose a fuel type</option>
                   <option value="Petrol">Petrol</option>
                   <option value="Diesel">Diesel</option>
+                  <option value="Electric">Electric</option>
                 </select>
                 {touched.fuelType && errors.fuelType && (
                   <div className="text-red-500 text-sm">{errors.fuelType}</div>
@@ -225,7 +226,7 @@ const AddCar = () => {
                   <option value="">Choose a transition type</option>
                   <option value="Automatic">Automatic</option>
                   <option value="Manual">Manual</option>
-                  <option value="Manual">Electric</option>
+                  
                 </select>
               </div>
               {touched.transitionType && errors.transitionType && (

@@ -1,9 +1,9 @@
-import UserNavbar from "../../components/userComponents/UserNavbar";
-import UserFooter from "../../components/userComponents/UserFooter";
+import UserNavbar from "../../components/userComponents/userCommon/UserNavbar";
+import UserFooter from "../../components/userComponents/userCommon/UserFooter";
 import SelectedDateLocation from "../../components/userComponents/AllCars/SelectedDateLocation";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import CarCard from "../../components/userComponents/CarCard";
+import CarCard from "../../components/userComponents/car/CarCard";
 import { faCar, faBars } from "@fortawesome/free-solid-svg-icons"; // Import the car icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterSideBar from "../../components/userComponents/AllCars/FilterSideBar";
@@ -38,7 +38,7 @@ const AllCars = () => {
   return (
     <>
       <UserNavbar />
-      <div className="mx-auto flex mt-5">
+      <div className="mx-auto flex w-full mt-5">
         <div className=" w-1/4 hidden shadow-lg md:flex rounded-md mt-5">
           <div className="p-4 w-full">
             <FilterSideBar setCars={setCars} filterCars={filterCars} />
@@ -112,7 +112,7 @@ const AllCars = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
               {carsInSinglePage &&
                 carsInSinglePage.map((car) => (
                   <CarCard key={car._id} car={car} values={values} />

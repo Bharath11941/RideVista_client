@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import  { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../../reduxStore/slices/userSlice";
+import { userLogout } from "../../../reduxStore/slices/userSlice";
 import { toast } from "react-toastify";
+import { initFlowbite } from "flowbite";
 function UserNavbar() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -10,6 +11,9 @@ function UserNavbar() {
   const location = useLocation();
 
   const { user } = useSelector((state) => state.userReducer);
+  useEffect(() => {
+    initFlowbite();
+  }, []);
   const navigate = useNavigate();
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -25,7 +29,7 @@ function UserNavbar() {
   };
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="bg-white border-b-2 border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center">
           <img

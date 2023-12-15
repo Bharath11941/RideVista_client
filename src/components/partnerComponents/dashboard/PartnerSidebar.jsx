@@ -10,7 +10,7 @@ const PartnerSidebar = () => {
   }, []);
   return (
     <>
-      <div className="drawer flex justify-end  md:hidden z-10">
+      <div className="drawer  flex justify-end  md:hidden z-10">
         <input
           id="my-drawer"
           type="checkbox"

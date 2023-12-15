@@ -1,14 +1,15 @@
 import { useFormik } from "formik";
-import { dateLocationFilter } from "../../validations/user/carFilterValidation.js";
-import { filterCarsDateLocation } from "../../api/userApi.js";
+import { dateLocationFilter } from "../../../validations/user/carFilterValidation.js";
+import { filterCarsDateLocation } from "../../../api/userApi.js";
 import { useNavigate } from "react-router-dom";
 import { Autocomplete } from "@react-google-maps/api";
 
 import { useEffect, useState } from "react";
-import useGoogleMap from "../coustomHook/useGoogleMap.jsx";
+import useGoogleMapApi from "../../coustomHook/useGoogleMapApi.jsx";
+
 
 const DateLocationForm = ({ dateRef }) => {
-  const { isLoaded } = useGoogleMap();
+  const { isLoaded } = useGoogleMapApi()
 
   const [pickUpLocation, setPickUpLocation] = useState("");
   const [pickUpError, setPickUpError] = useState("");
@@ -80,9 +81,9 @@ const DateLocationForm = ({ dateRef }) => {
   }, [isLoaded]);
 
   return (
-    <div className="wrapper">
+    <div >
       <form onSubmit={handleSubmit}>
-        <div className="relative bg-white px-10 sm:px-[76px] py-9 sm:py-[70px] mt-5 sm:-mt-[166px] min-h-[330px] shadow-lg rounded-xl flex flex-col gap-8">
+        <div className="relative bg-white px-10 sm:px-[76px] py-9 sm:py-[70px] mt-5 sm:-mt-[170px] min-h-[330px] shadow-lg rounded-xl flex flex-col gap-8">
           <div className="flex flex-col xl:flex-row gap-5">
             <div className="flex flex-col gap-2.5 w-full lg:w-2/3 mx-0 lg:mx-auto xl:w-[272px] max-w-full">
               <label htmlFor="Pick up location" className="text-blue-500">

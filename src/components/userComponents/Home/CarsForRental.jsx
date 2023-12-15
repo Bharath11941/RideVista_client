@@ -14,16 +14,17 @@ const CarsForRental = ({ dateRef }) => {
         console.log(err.message);
       });
   }, []);
+ 
   return (
     <div className="pt-20 pb-32">
-      <div className="wrapper">
+      <div >
         <h1 className="head_text mb-9 text-center">
           Cars for <span className="text-blue-500">Rental</span>
         </h1>
-        {carList.length > 0 ? (
+        {carList && carList.length > 0 ? (
           <div className="flex flex-col justify-center flex-wrap md:ml-14 lg:ml-24 lg:mr-10 md:flex-row gap-3 md:gap-5 lg:gap-8 xl:gap-16">
             {carList.map((car) => (
-              <div key={car._id} onClick={() => dateRef.current.focus()}>
+              <div key={car._id} onClick={() => dateRef.current.focus()} >
                 <HomeCarCard car={car} />
               </div>
             ))}

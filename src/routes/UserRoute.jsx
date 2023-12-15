@@ -25,8 +25,8 @@ const UserRoute = () => {
   return (
     <Routes>
       <Route path="/" element={<UserHome />} />
-      <Route path="/contact" element={<UserContactPage/>} />
-      <Route path="/about" element={<AboutPage/>} />
+      <Route path="/contact" element={<UserContactPage />} />
+      <Route path="/about" element={<AboutPage />} />
       <Route path="/allCars" element={<AllCars />} />
       <Route path="/carDetails" element={<SingleCarDetails />} />
       <Route
@@ -89,7 +89,7 @@ const UserRoute = () => {
         path="/bookingList"
         element={
           <UserProtect>
-            <BookingList/>
+            <BookingList />
           </UserProtect>
         }
       />
@@ -97,7 +97,7 @@ const UserRoute = () => {
         path="/profile"
         element={
           <UserProtect>
-            <ProfilePage/>
+            <ProfilePage />
           </UserProtect>
         }
       />
@@ -105,7 +105,7 @@ const UserRoute = () => {
         path="/bookingDetails"
         element={
           <UserProtect>
-            <BookingDetailsUser/>
+            <BookingDetailsUser />
           </UserProtect>
         }
       />
@@ -113,7 +113,7 @@ const UserRoute = () => {
         path="/walletHistory"
         element={
           <UserProtect>
-            <WalletHistoryPage/>
+            <WalletHistoryPage />
           </UserProtect>
         }
       />
@@ -121,7 +121,7 @@ const UserRoute = () => {
         path="/chat"
         element={
           <UserProtect>
-            <ChatPage/>
+            <ChatPage />
           </UserProtect>
         }
       />

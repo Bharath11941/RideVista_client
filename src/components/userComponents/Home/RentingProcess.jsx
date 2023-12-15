@@ -3,7 +3,7 @@ import React from "react";
 const RentingProcess = () => {
   return (
     <div className="pt-36">
-      <div className="wrapper">
+      <div >
         <h1 className="head_text mb-9 text-center">
           Our Renting <span className="text-blue-500">Process</span>
         </h1>

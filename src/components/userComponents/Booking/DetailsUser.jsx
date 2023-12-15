@@ -2,11 +2,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { reportCarOwner } from "../../../api/userApi";
 import ReportPartnerModal from "../../common/ReportModal";
-import ReviewModal from "./ReviewModal";
+import ReviewModal from "../rating/ReviewModal";
 import { faCommentAlt } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 const DetailsUser = ({ bookingData }) => {
-  console.log(bookingData,"from booking details user")
   const startTimestamp = new Date(bookingData.startDate).getTime();
   const endTimestamp = new Date(bookingData.endDate).getTime();
   const dayDifference = (endTimestamp - startTimestamp) / (1000 * 3600 * 24);

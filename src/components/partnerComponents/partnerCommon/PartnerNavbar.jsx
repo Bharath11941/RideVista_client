@@ -1,17 +1,23 @@
-import  { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { partnerLogout } from "../../reduxStore/slices/partnerSlice";
+import { partnerLogout } from "../../../reduxStore/slices/partnerSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentAlt } from "@fortawesome/free-regular-svg-icons";
+import { initFlowbite } from "flowbite";
 
 const PartnerNavbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {partner} = useSelector((state) => state.partnerReducer)
+  const { partner } = useSelector((state) => state.partnerReducer);
+
+  useEffect(() => {
+    initFlowbite();
+  }, []);
+
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -19,26 +25,32 @@ const PartnerNavbar = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
   const handleLogout = () => {
-    localStorage.removeItem("partnerToken")
-    dispatch(partnerLogout())
-    toast.success("Logout successfully")
-    navigate("/partner/login")
-  }
+    localStorage.removeItem("partnerToken");
+    dispatch(partnerLogout());
+    toast.success("Logout successfully");
+    navigate("/partner/login");
+  };
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="bg-white border-b-2 border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <Link to='/partner' className="flex items-center">
+        <Link to="/partner" className="flex  items-center">
           <img
-            src="/images/depositphotos_268023142-stock-illustration-vector-logo-for-car-rental.jpg" 
+            src="/images/depositphotos_268023142-stock-illustration-vector-logo-for-car-rental.jpg"
             alt="Logo"
-            className="w-50 h-10 mr-2 object-cover"
+            className="w-40 md:w-50 h-10 md:mr-2 overflow-visible object-contain md:object-cover"
           />
-          
         </Link>
         <div className="flex gap-4 items-center md:order-2">
           <div>
-          <Link to='/partner/chat'><FontAwesomeIcon icon={faCommentAlt} className="w-8 h-8 mt-1" size="lg" style={{color: "#00060f",}} /></Link>
+            <Link to="/partner/chat">
+              <FontAwesomeIcon
+                icon={faCommentAlt}
+                className="w-8 h-8 mt-1"
+                size="lg"
+                style={{ color: "#00060f" }}
+              />
+            </Link>
           </div>
           <div className="relative" onClick={toggleDropdown}>
             <button
@@ -54,40 +66,39 @@ const PartnerNavbar = () => {
               />
             </button>
             {/* Dropdown menu */}
-            {isDropdownOpen &&
-              (
-                <div
-                  className="absolute z-50 right-0 mt-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-                  id="user-dropdown"
-                >
-                  <div className="px-4 py-3">
-                    <span className="block text-sm text-gray-900 dark:text-white">
-                      {partner.name}
-                    </span>
-                    <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
-                      {partner.email}
-                    </span>
-                  </div>
-                  <ul className="py-2" aria-labelledby="user-menu-button">
-                    <li>
-                      <Link
-                        to='/partner/profile'
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover-bg-gray-600 dark:text-gray-200 dark:hover-text-white"
-                      >
-                        Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <a
-                        onClick={handleLogout}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover-bg-gray-600 dark:text-gray-200 dark:hover-text-white"
-                      >
-                        Logout
-                      </a>
-                    </li>
-                  </ul>
+            {isDropdownOpen && (
+              <div
+                className="absolute z-50 right-0 mt-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                id="user-dropdown"
+              >
+                <div className="px-4 py-3">
+                  <span className="block text-sm text-gray-900 dark:text-white">
+                    {partner.name}
+                  </span>
+                  <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
+                    {partner.email}
+                  </span>
                 </div>
-               )}
+                <ul className="py-2" aria-labelledby="user-menu-button">
+                  <li>
+                    <Link
+                      to="/partner/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover-bg-gray-600 dark:text-gray-200 dark:hover-text-white"
+                    >
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      onClick={handleLogout}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover-bg-gray-600 dark:text-gray-200 dark:hover-text-white"
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
 
           <button
@@ -136,14 +147,13 @@ const PartnerNavbar = () => {
 
             <li>
               <Link
-                to='/partner/dashboard'
+                to="/partner/dashboard"
                 className={
                   location.pathname === "/partner/dashboard"
                     ? "block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark-text-blue-500"
                     : "block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:hover-text-blue-700 md:p-0 dark-text-white md:dark-hover-text-blue-500 dark-hover-bg-gray-700 dark-hover-text-white md:dark-hover-bg-transparent dark-border-gray-700"
                 }
               >
-
                 Dashboard
               </Link>
             </li>
@@ -218,7 +228,7 @@ const PartnerNavbar = () => {
         </div>
       )} */}
     </nav>
-  )
-}
+  );
+};
 
-export default PartnerNavbar
+export default PartnerNavbar;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { carBooking, verifyPayment } from "../../api/userApi";
+import { carBooking, verifyPayment } from "../../../api/userApi";
 import {
   faCar,
   faGasPump,
@@ -10,17 +10,17 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { loadScript } from "../../utils/razorpay/loadScript";
-import Loading from "../loading/Loading";
-import { userLogin } from "../../reduxStore/slices/userSlice";
+import { loadScript } from "../../../utils/razorpay/loadScript";
+import Loading from "../../loading/Loading";
+import { userLogin } from "../../../reduxStore/slices/userSlice";
 
 const CheckOut = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [walletChecked, setWalletChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { user,token } = useSelector((state) => state.userReducer);
+  const { user, token } = useSelector((state) => state.userReducer);
   const { car, values } = state;
   const startDate = values.pickUpDate;
   const endDate = values.returnDate;
@@ -31,7 +31,7 @@ const CheckOut = () => {
   const endTimestamp = new Date(values.returnDate).getTime();
   const dayDifference = (endTimestamp - startTimestamp) / (1000 * 3600 * 24);
   const totalAmount = dayDifference * car.price;
-  const rezorpayKey = import.meta.env.VITE_RAZORPAY_KEY
+  const rezorpayKey = import.meta.env.VITE_RAZORPAY_KEY;
   const handleSubmit = async () => {
     try {
       setLoading(true);
@@ -47,7 +47,7 @@ const CheckOut = () => {
       });
       if (walletChecked) {
         toast.success(res?.data?.message);
-        dispatch(userLogin({user:res?.data?.user,token}))
+        dispatch(userLogin({ user: res?.data?.user, token }));
         navigate("/bookingSuccess", {
           state: {
             orderDetails: res?.data?.bookingDetails,
@@ -71,7 +71,7 @@ const CheckOut = () => {
     }
     setLoading(false);
     var options = {
-      key:rezorpayKey , // Enter the Key ID generated from the Dashboard
+      key: rezorpayKey, // Enter the Key ID generated from the Dashboard
       amount: bookingData.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: bookingData.currency,
       name: "Ride Vista",
@@ -121,15 +121,15 @@ const CheckOut = () => {
 
   return (
     <>
-      <div className=" container pb-40 mx-auto mt-10 mb-52 dark:border-gray-700 shadow border border-gray-200">
-        {loading ? (
-          <div className="fixed inset-0 flex items-center justify-center">
-            <div className="spinnerouter">
-              <Loading />
-            </div>
+      {loading ? (
+        <div className="fixed inset-0 aspect-[4] flex items-center justify-center">
+          <div className="spinnerouter">
+            <Loading />
           </div>
-        ) : (
-          <>
+        </div>
+      ) : (
+        <>
+          <div className=" container pb-40 mx-auto mt-10 mb-52 dark:border-gray-700 shadow border border-gray-200">
             <div className="grid grid-cols-12 mb-20">
               <div className="md:col-span-8   col-span-12">
                 <div className="grid grid-cols-12">
@@ -311,9 +311,9 @@ const CheckOut = () => {
                 </div>
               </div>
             </div>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

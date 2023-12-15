@@ -15,11 +15,11 @@ const CarCard = ({ car, values }) => {
     ratings
   } = car;
   return (
-    <div className="flex-shrink-0 pb-3  bg-white border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 rounded-md hover:bg-blue-100">
+    <div className="flex-shrink-0 pb-3  bg-white border border-gray-200 shadow-md pt-4 dark:bg-gray-800 dark:border-gray-700 rounded-md hover:bg-blue-100">
       <img
         src={carImages[0]}
         alt=""
-        className="mx-auto object-cover h-40 w-80 hover:scale-105 transition duration-500 cursor-pointer"
+        className="mx-auto object-cover h-40 w-80 hover:scale-105 transition duration-500 cursor-pointer rounded-md"
       />
       <div className="px-5 ">
         <div className="flex justify-between mr-1">

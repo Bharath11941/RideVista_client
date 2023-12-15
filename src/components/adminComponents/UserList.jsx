@@ -12,7 +12,7 @@ const UserList = () => {
   const [loading, setLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const dataPerPage = 3;
+  const dataPerPage = 5;
 
   useEffect(() => {
     setLoading(true);
@@ -54,9 +54,9 @@ const UserList = () => {
     setActiveModal(null);
   };
   const handleInputChange = (e) => {
-    setSearchInput(e.target.value)
-    setCurrentPage(1)
-  }
+    setSearchInput(e.target.value);
+    setCurrentPage(1);
+  };
 
   const filteredData = !searchInput
     ? users
@@ -144,6 +144,15 @@ const UserList = () => {
                           scope="row"
                           className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
                         >
+                          <img
+                            className="w-10 h-10 rounded-full"
+                            src={
+                              data?.profileImage
+                                ? data?.profileImage
+                                : "/images/person-304893_1280.png"
+                            }
+                            alt="Jese image"
+                          />
                           <div className="pl-3">
                             <div className="text-base font-semibold">
                               {data?.name}
@@ -293,14 +302,13 @@ const UserList = () => {
                 </tbody>
               </table>
             </div>
-            {usersInSinglePage.length > 1 && (
-              <Pagination
-                numbers={numbers}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPages={totalPages}
-              />
-            )}
+
+            <Pagination
+              numbers={numbers}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+            />
           </div>
         </div>
       )}
