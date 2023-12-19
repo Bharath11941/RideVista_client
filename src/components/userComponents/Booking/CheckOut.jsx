@@ -122,11 +122,11 @@ const CheckOut = () => {
   return (
     <>
       {loading ? (
-        <div className="fixed inset-0 aspect-[4] flex items-center justify-center">
-          <div className="spinnerouter">
-            <Loading />
-          </div>
+        <div className="inset-0 flex-1 flex items-center aspect-[2] justify-center">
+        <div className="spinnerouter">
+          <Loading />
         </div>
+      </div>
       ) : (
         <>
           <div className=" container pb-40 mx-auto mt-10 mb-52 dark:border-gray-700 shadow border border-gray-200">
