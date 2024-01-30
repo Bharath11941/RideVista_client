@@ -6,7 +6,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({count}) => {
   if (!count || typeof count !== 'object') {
-    console.error('Invalid count data:', count);
     return null; // or you can return a default chart or an error message
   }
 

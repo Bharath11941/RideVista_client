@@ -86,7 +86,7 @@ const ProfileCard = () => {
   return (
     <div className="container mx-auto flex items-center justify-center pb-40 mt-10">
       <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        {!userData?.profileImage ? <Loading/> : (
+        {loading ? <Loading/> : (
           <div className="flex flex-col items-center pb-10 mt-5">
           <label className="relative cursor-pointer">
             <img

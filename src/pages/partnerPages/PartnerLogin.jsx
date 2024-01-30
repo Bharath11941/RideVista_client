@@ -154,6 +154,11 @@ const PartnerLogin = () => {
                       </Link>
                     </p>
                   </div>
+                  <div className="mt-5 border border-gray-400 rounded-lg shadow-md py-3 px-4">
+                    <h6 className="text-lg font-semibold mb-2">Demo User</h6>
+                    <p>Email: demo@gmail.com</p>
+                    <p>Password: Demo@10</p>
+                  </div>
                 </form>
               </div>
             </div>

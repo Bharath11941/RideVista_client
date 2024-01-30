@@ -74,7 +74,7 @@ const UserLogin = () => {
                 </div>
               </div>
               <div className="w-full lg:w-1/2 py-16 px-12">
-                <div className="pb-2">
+                <div className="pb-2 flex justify-between">
                   <Link to="/">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,9 @@ const UserLogin = () => {
                     <span className="text-blue-600">Return Home</span>
                   </Link>
                 </div>
-                <h2 className="text-3xl mb-4">User Login</h2>
+                <div className="flex justify-between">
+                  <h2 className="text-3xl mb-4">User Login</h2>
+                </div>
                 <p className="mb-4">
                   Login to your account. It’s free and only takes a minute
                 </p>
@@ -147,6 +149,11 @@ const UserLogin = () => {
                         Forgot Password?
                       </Link>
                     </p>
+                  </div>
+                  <div className="mt-5 border border-gray-400 rounded-lg shadow-md py-3 px-4">
+                    <h6 className="text-lg font-semibold mb-2">Demo User</h6>
+                    <p>Email: demo@gmail.com</p>
+                    <p>Password: Demo@10</p>
                   </div>
                 </form>
               </div>
