@@ -30,7 +30,7 @@ export default function UserHero({dateRef}) {
                 Get started
               </a>
               <a
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm font-semibold leading-6 text-white"
               >
                 Learn more <span aria-hidden="true">→</span>
               </a>
