@@ -44,7 +44,7 @@ const PageNotFound = () => {
         <p className="text-gray-600 mt-5 text-lg">
           Something's missing.
           <br />
-          Sorry, we can't find that page. You'll find lots to explore on the
+          Sorry, we can't find that page. You will find lots to explore on the
           home page.{" "}
         </p>
         <Link
