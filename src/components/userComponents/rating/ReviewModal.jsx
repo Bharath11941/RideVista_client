@@ -68,7 +68,7 @@ const ReviewModal = ({bookingData}) => {
   };
   const handleReviewSubmit = async () => {
     if (!reason.trim()) {
-      setErrorMessage("Please provide a review."); // Show error if textarea is empty
+      setErrorMessage("Please provide a review.");
       return;
     }
     try {
@@ -88,7 +88,7 @@ const ReviewModal = ({bookingData}) => {
       console.log(error.message);
     }
   };
-  const debouncedHandleReview = debounce(handleReviewSubmit, 1000); // Adjust the delay as needed
+  const debouncedHandleReview = debounce(handleReviewSubmit, 1000); 
 
   const handleReviewDebounced = async () => {
     debouncedHandleReview();
