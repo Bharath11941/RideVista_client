@@ -52,7 +52,7 @@ function UserNavbar() {
                 alt="user photo"
               />
             </button>
-            {/* Dropdown menu */}
+            
             {isDropdownOpen &&
               (user ? (
                 <div

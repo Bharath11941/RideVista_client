@@ -73,15 +73,14 @@ const Chat = () => {
     <div>
       <div className="pt-5">
         <div>
-          <div className="md:flex no-wrap md:-mx-2 ">
+          <div className="md:flex no-wrap md:-mx-2">
             <div className="w-full md:w-3/12 md:mx-2 bg-gray-200">
               <div
                 className="bg-gray-200 flex flex-col overflow-y-scroll"
                 style={{ maxHeight: "85vh" }}
               >
                 
-                {/* <!-- end search compt -->
-                 <!-- user list --> */}
+                
                 <div className="pt-20">
                   <div className="cursor-pointer">
                     {conversations?.map((chat) => (
