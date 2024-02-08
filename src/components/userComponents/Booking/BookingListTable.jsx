@@ -105,7 +105,11 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
           </div>
         </div>
       ) : (
-        <div className={role === "user" ? "container mx-auto pb-20" : "container mx-auto"}>
+        <div
+          className={
+            role === "user" ? "container mx-auto pb-20" : "container mx-auto"
+          }
+        >
           <h1 className="text-3xl px-3 mb-5 mt-5">My bookings</h1>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -194,6 +198,12 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                         </p>
                       </td>
                       <td className="pl-6 py-4">
+                      {new Date() > new Date(data?.endDate) ? (
+                          <p className="text-green-700 font-semibold text-sm">
+                            Completed
+                          </p>
+                        ):(
+
                         <div className="flex items-center gap-1">
                           <div
                             className={`h-2.5 w-2.5 rounded-full  ${getStatusColor(
@@ -202,6 +212,7 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                           ></div>
                           {getStatusText(data?.bookingStatus)}
                         </div>
+                        )}
                       </td>
                       <td className="pl-6 py-4">
                         <button
@@ -214,7 +225,8 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                       </td>
                       <td className="pl-6 py-4">
                         {data?.bookingStatus === "Success" &&
-                          !data?.cancelStatus && (
+                          !data?.cancelStatus &&
+                          new Date(data?.endDate) > new Date() && (
                             <button
                               type="button"
                               onClick={() => openModal(data?._id)}
@@ -223,27 +235,33 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                               Cancel
                             </button>
                           )}
-                        {data?.cancelStatus === "Pending" && (
+                        {new Date() > new Date(data?.endDate) && (
+                          <p className="text-green-700 font-semibold text-sm">
+                            Completed
+                          </p>
+                        )}
+
+                        {new Date(data?.endDate) > new Date() && data?.cancelStatus === "Pending" && (
                           <p className="text-red-700 font-semibold text-sm">
                             Cancel request Pending
                           </p>
                         )}
-                        {data?.bookingStatus === "Cancelled" && (
+                        {new Date(data?.endDate) > new Date() && data?.bookingStatus === "Cancelled" && (
                           <p className="text-red-700 font-semibold text-sm">
                             Booking Cancelled
                           </p>
                         )}
-                        {data?.cancelStatus === "Rejected" && (
+                        {new Date(data?.endDate) > new Date() && data?.cancelStatus === "Rejected" && (
                           <p className="text-blue-700 font-semibold text-sm">
                             Cancel request rejected by partner
                           </p>
                         )}
-                        {data?.bookingStatus === "Returned" && (
+                        {new Date(data?.endDate) > new Date() && data?.bookingStatus === "Returned" && (
                           <p className="text-green-700 font-semibold text-sm">
                             Car returned
                           </p>
                         )}
-                        {data?.bookingStatus === "Delivered" && (
+                        {new Date(data?.endDate) > new Date() && data?.bookingStatus === "Delivered" && (
                           <p className="text-green-700 font-semibold text-sm">
                             Car Delivered
                           </p>
@@ -296,10 +314,12 @@ const BookingListTable = ({ id, BookingList, cancelBooking, role }) => {
                                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Write your reason here..."
                               />
-                              {role === "user" && <p className="text-red-600 mt-2 text-sm">
-                                Note: Only 90% of the booking charge will be
-                                credited to your wallet.
-                              </p>}
+                              {role === "user" && (
+                                <p className="text-red-600 mt-2 text-sm">
+                                  Note: Only 90% of the booking charge will be
+                                  credited to your wallet.
+                                </p>
+                              )}
                               <button
                                 data-modal-hide={`popup-modal-${data?._id}`}
                                 type="button"

@@ -70,28 +70,31 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
             </h1>
 
             <div className="flex justify-end">
-              {bookingData?.bookingStatus === "Success" && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleBookingStatus("Delivered", bookingData?._id)
-                  }
-                  className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                >
-                  Delivered
-                </button>
-              )}
-              {bookingData?.bookingStatus === "Delivered" && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleBookingStatus("Returned", bookingData?._id)
-                  }
-                  className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                >
-                  Returned
-                </button>
-              )}
+              {new Date(bookingData?.endDate) > new Date() &&
+                bookingData?.bookingStatus === "Success" && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleBookingStatus("Delivered", bookingData?._id)
+                    }
+                    className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                  >
+                    Delivered
+                  </button>
+                )}
+              {new Date(bookingData?.endDate) > new Date() &&
+                bookingData?.bookingStatus === "Delivered" && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleBookingStatus("Returned", bookingData?._id)
+                    }
+                    className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                  >
+                    Returned
+                  </button>
+                )}
+              
             </div>
           </div>
           <div className="flex justify-start gap-5">
@@ -109,10 +112,17 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
             Amount Paid: ₹ {bookingData?.totalBookingCharge}
           </h1>
           <p className="my-5 text-lg font-semibold">
-            Booking Status:
+            Booking Status: {" "}
+            {new Date() > new Date(bookingData?.endDate) ? (
+                <span className="text-green-700 font-semibold text-sm">
+                  Completed
+                </span>
+              ):(
+
             <span className={getStatusColor(bookingData?.bookingStatus)}>
               {getStatusText(bookingData?.bookingStatus)}
             </span>
+              )}
           </p>
           <div className="container">
             <div className="flex justify-between items-center mb-4">
@@ -121,11 +131,14 @@ const DetailsPartner = ({ bookingData, setBookingData }) => {
                   Pick Up Date{" "}
                 </p>
                 <p className="text-black text-sm font-semibold">
-                  {new Date(bookingData?.startDate).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  {new Date(bookingData?.startDate).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}
                 </p>
               </div>
               <div>

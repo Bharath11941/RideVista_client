@@ -71,7 +71,7 @@ const DetailsUser = ({ bookingData }) => {
             Amount Paid: ₹ {bookingData?.totalBookingCharge}
           </h1>
           <p className="my-5 text-lg font-semibold">
-            Booking Status:{" "}
+            Booking Status:{" "} 
             <span className={getStatusColor(bookingData?.bookingStatus)}>
               {getStatusText(bookingData?.bookingStatus)}
             </span>

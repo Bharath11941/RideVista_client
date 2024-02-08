@@ -103,7 +103,7 @@ const CancelRequests = () => {
                       </button>
                     </td>
 
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 flex">
                       <button
                         type="button"
                         onClick={() => handleApprove(req?._id, "Approved")}
@@ -120,12 +120,6 @@ const CancelRequests = () => {
                       </button>
                     </td>
                   </tr>
-                  <Pagination
-                    currentPage={currentPage}
-                    numbers={numbers}
-                    setCurrentPage={setCurrentPage}
-                    totalPages={totalPages}
-                  />
                 </>
               ))
             ) : (
@@ -138,6 +132,12 @@ const CancelRequests = () => {
                 </td>
               </tr>
             )}
+            <Pagination
+              currentPage={currentPage}
+              numbers={numbers}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+            />
           </tbody>
         </table>
       </div>
