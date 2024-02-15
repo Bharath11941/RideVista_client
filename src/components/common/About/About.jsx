@@ -16,7 +16,7 @@ const About = () => {
               vehicles that blend style with reliability to a user-friendly
               booking process, RideVista is your trusted partner on the road. We
               believe in making travel accessible, convenient, and memorable.
-              Whether you're planning a weekend getaway or an extended road
+              Whether you are planning a weekend getaway or an extended road
               trip, RideVista is here to elevate your travel experience. Join us
               in exploring new horizons and creating lasting memories—one ride
               at a time.

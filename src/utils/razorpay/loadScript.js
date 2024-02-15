@@ -10,4 +10,4 @@ export function loadScript(src) {
     };
     document.body.appendChild(script);
   });
-}
+} 
