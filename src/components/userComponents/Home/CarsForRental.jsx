@@ -5,29 +5,35 @@ import HomeCardShimmer from "../Shimmer/HomeCardShimmer";
 
 const CarsForRental = ({ dateRef }) => {
   const [carList, setCarList] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     HomeCarList()
       .then((res) => {
+        setLoading(false);
         setCarList(res?.data?.cars);
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err.message);
       });
   }, []);
- 
+
   return (
     <div className="pt-20 pb-32">
-      <div >
+      <div>
         <h1 className="head_text mb-9 text-center">
           Cars for <span className="text-blue-500">Rental</span>
         </h1>
-        {carList && carList.length > 0 ? (
+        {!loading ? (
           <div className="flex flex-col justify-center flex-wrap md:ml-14 lg:ml-24 lg:mr-10 md:flex-row gap-3 md:gap-5 lg:gap-8 xl:gap-16">
-            {carList.map((car) => (
-              <div key={car._id} onClick={() => dateRef.current.focus()} >
-                <HomeCarCard car={car} />
-              </div>
-            ))}
+            {carList &&
+              carList.length > 0 &&
+              carList.map((car) => (
+                <div key={car._id} onClick={() => dateRef.current.focus()}>
+                  <HomeCarCard car={car} />
+                </div>
+              ))}
           </div>
         ) : (
           <HomeCardShimmer />
